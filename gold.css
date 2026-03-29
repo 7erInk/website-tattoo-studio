@@ -1,0 +1,64 @@
+/* Gold Gradient & Shine Effect */
+.gold-gradient {
+  background: linear-gradient(90deg, #f9e7b4 0%, #e7c873 40%, #bfa14b 60%, #fffbe6 100%);
+  color: #111;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+}
+
+.gold-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.0) 60%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.0) 100%);
+  transform: rotate(25deg);
+  animation: shine 2.5s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% { left: -60%; }
+  100% { left: 100%; }
+}
+
+.gold-btn {
+  background: linear-gradient(90deg, #f9e7b4 0%, #e7c873 40%, #bfa14b 60%, #fffbe6 100%);
+  color: #111;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7em 2em;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 16px 0 rgba(191,161,75,0.15);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.gold-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 32px 0 rgba(191,161,75,0.25);
+}
+.gold-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.0) 60%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.0) 100%);
+  transform: rotate(25deg);
+  animation: shine 2.5s infinite linear;
+  pointer-events: none;
+}
