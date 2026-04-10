@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-          server-dir: /public_html/academy/
+          server-dir: /domains/7erink.com/public_html/academy/
           local-dir: ./academy/
           exclude: |
             **/.git*
