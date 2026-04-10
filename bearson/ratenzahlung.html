@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ratenzahlung – Bearson Tattoo</title>
+  <!-- PayPal SDK – ersetze DEINE_CLIENT_ID mit deiner echten PayPal Client-ID -->
+  <script src="https://www.paypal.com/sdk/js?client-id=DEINE_CLIENT_ID&currency=EUR&components=buttons,messages&enable-funding=paylater&locale=de_DE" defer></script>
+  <style>
+    @font-face { font-family:'ElMessiri'; src:url('https://assets.zyrosite.com/YNqOoPgyjjipQ9zJ/El%20Messiri%20Medium%20Regular.woff2') format('woff2'); font-display:swap; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#e8dfd4;--bg-2:#dfd6ca;--card:#d8cec3;--border:rgba(0,0,0,0.1);--ink:#1a1612;--muted:#6b5e54;--accent:#1c3a2c;--accent-2:#2a5540;--btn-text:#f5f0ea}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'ElMessiri',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.5rem;background:rgba(232,223,212,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo img{height:38px;width:auto;display:block}
+    .nav-back{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+    .nav-back:hover{color:var(--accent)}
+    .nav-cta{background:linear-gradient(180deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.04) 45%,rgba(0,0,0,0.12) 100%),linear-gradient(135deg,#1a3528 0%,#2e6645 40%,#1c4a34 65%,#3a7a55 100%);color:var(--btn-text);padding:.55rem 1.4rem;border-radius:2px;text-decoration:none;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(58,122,85,0.5);box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 4px 14px rgba(28,58,44,0.25)}
+
+    main{max-width:640px;margin:0 auto;padding:8rem 2rem 6rem}
+    .page-label{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1rem}
+    h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:400;line-height:1.15;margin-bottom:.8rem}
+    h1 em{font-style:normal;color:var(--accent-2)}
+    .intro{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:3rem}
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.6rem;margin-bottom:2.5rem}
+    .how-it-works h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent-2);margin-bottom:1.2rem}
+    .hiw-steps{display:flex;flex-direction:column;gap:.8rem}
+    .hiw-step{display:flex;align-items:flex-start;gap:.9rem}
+    .hiw-icon{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--btn-text);
+      background:linear-gradient(180deg,rgba(255,255,255,0.18) 0%,rgba(0,0,0,0.12) 100%),linear-gradient(135deg,#1a3528,#2e6645);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 2px 8px rgba(28,58,44,0.25);margin-top:.1rem}
+    .hiw-text strong{display:block;font-size:.88rem;color:var(--ink);margin-bottom:.1rem}
+    .hiw-text span{font-size:.82rem;color:var(--muted)}
+
+    /* ── CALCULATOR ── */
+    .calc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:2rem;margin-bottom:1.5rem}
+    .calc-card h2{font-size:1rem;font-weight:700;margin-bottom:1.6rem}
+
+    .field{margin-bottom:1.4rem}
+    .field label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent-2);margin-bottom:.5rem}
+    .field input[type="number"]{
+      width:100%;background:var(--bg);border:1px solid var(--border);border-radius:4px;
+      padding:.85rem 1rem;font-size:1.3rem;font-family:inherit;color:var(--ink);
+      transition:border-color .2s;outline:none;
+    }
+    .field input[type="number"]:focus{border-color:var(--accent)}
+    .field input[type="number"]::placeholder{color:var(--muted);font-size:1rem}
+
+    /* PayPal messaging banner */
+    #paypal-message-container{margin-bottom:1rem;min-height:24px}
+
+    /* PayPal button container */
+    #paypal-button-container{min-height:55px}
+
+    .paypal-hint{font-size:.78rem;color:var(--muted);margin-top:.8rem;line-height:1.6;text-align:center}
+
+    /* Setup notice */
+    .setup-notice{background:#fffbe6;border:1px solid #e6d55a;border-radius:8px;padding:1.2rem 1.4rem;margin-bottom:2rem;font-size:.84rem;color:#5a4e00;line-height:1.7}
+    .setup-notice strong{color:#3a3000}
+    .setup-notice code{background:rgba(0,0,0,0.08);padding:.1rem .3rem;border-radius:3px;font-size:.8rem}
+
+    footer{border-top:1px solid var(--border);padding:1.8rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .footer-copy{font-size:.78rem;color:var(--muted)}
+    .footer-links{display:flex;gap:1.5rem}
+    .footer-links a{font-size:.78rem;color:var(--muted);text-decoration:none}
+    .footer-links a:hover{color:var(--ink)}
+    @media(max-width:600px){nav{padding:1rem 1.5rem}main{padding:6rem 1.5rem 4rem}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://assets.zyrosite.com/YNqOoPgyjjipQ9zJ/bearsontattoo3-YrD1QbDNDbtb2bWV.svg" alt="Bearson Tattoo" />
+  </a>
+  <a href="index.html" class="nav-back">← Zurück zur Startseite</a>
+  <a href="https://wa.me/491789751672" target="_blank" class="nav-cta">Termin anfragen</a>
+</nav>
+
+<main>
+  <p class="page-label">Flexible Zahlung</p>
+  <h1>Ratenzahlung –<br><em>du zahlst in Raten,<br>ich bekomme alles sofort.</em></h1>
+  <p class="intro">
+    Du bezahlst den vollen Betrag per <strong>PayPal Pay Later</strong> – PayPal zahlt mir sofort den Gesamtbetrag aus und zieht deine monatlichen Raten direkt bei dir ein. Kein Vertrauen nötig, kein Nachlaufen.
+  </p>
+
+  <div class="how-it-works">
+    <h3>So funktioniert es</h3>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-icon">1</div>
+        <div class="hiw-text">
+          <strong>Betrag eingeben</strong>
+          <span>Gib den vereinbarten Tattoo-Preis ein.</span>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-icon">2</div>
+        <div class="hiw-text">
+          <strong>„Später bezahlen" wählen</strong>
+          <span>PayPal zeigt dir die monatlichen Raten direkt an – du entscheidest dich für deinen Plan.</span>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-icon">3</div>
+        <div class="hiw-text">
+          <strong>Simon bekommt alles sofort</strong>
+          <span>PayPal zahlt den Gesamtbetrag direkt an Simon aus. Die Raten laufen ausschließlich zwischen dir und PayPal.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⚠️ Diese Box verschwindet sobald die Client-ID eingetragen ist -->
+  <div class="setup-notice" id="setup-notice">
+    <strong>Einrichtung erforderlich:</strong> Damit PayPal Pay Later funktioniert, musst du einmalig eine kostenlose <strong>PayPal Client-ID</strong> erstellen:<br><br>
+    1. Gehe zu <strong>developer.paypal.com</strong> → Log in mit deinem PayPal-Konto (bearson@web.de)<br>
+    2. → <em>Apps &amp; Credentials</em> → <em>Create App</em> → Name z. B. „Bearson Tattoo"<br>
+    3. Kopiere die <strong>Live Client-ID</strong><br>
+    4. Ersetze in dieser Datei <code>DEINE_CLIENT_ID</code> im Script-Tag ganz oben mit deiner echten Client-ID<br><br>
+    Das kostet nichts – PayPal verdient nur an der Transaktion (Standard PayPal-Gebühren).
+  </div>
+
+  <div class="calc-card">
+    <h2>Gesamtbetrag eingeben</h2>
+
+    <div class="field">
+      <label for="total">Vereinbarter Tattoo-Preis (€)</label>
+      <input type="number" id="total" placeholder="z. B. 300" min="30" step="1" />
+    </div>
+
+    <!-- PayPal Pay Later Nachricht (zeigt z. B. "3 × 100 € – 0% Zinsen") -->
+    <div id="paypal-message-container"></div>
+
+    <!-- PayPal Button + Pay Later Option -->
+    <div id="paypal-button-container"></div>
+
+    <p class="paypal-hint">PayPal zeigt dir automatisch alle verfügbaren Zahlungsoptionen – inklusive Ratenzahlung ohne Zinsen.</p>
+  </div>
+</main>
+
+<footer>
+  <span class="footer-copy">© 2025 Bearson Tattoo · Simon Brik · Landsberg am Lech</span>
+  <div class="footer-links">
+    <a href="impressum.html">Impressum</a>
+    <a href="agb.html">AGB &amp; Datenschutz</a>
+    <a href="pflegeanleitung.html">Pflegeanleitung</a>
+  </div>
+</footer>
+
+<script>
+  // Warte bis PayPal SDK geladen ist
+  window.addEventListener('load', function() {
+    if (typeof paypal === 'undefined') return; // SDK noch nicht bereit (Client-ID fehlt)
+
+    const input = document.getElementById('total');
+    let currentAmount = 0;
+
+    function getAmount() {
+      const v = parseFloat(input.value);
+      return (!isNaN(v) && v >= 1) ? v.toFixed(2) : null;
+    }
+
+    // Pay Later Nachricht
+    function renderMessage(amount) {
+      document.getElementById('paypal-message-container').innerHTML = '';
+      if (!amount) return;
+      paypal.Messages({
+        amount: parseFloat(amount),
+        currency: 'EUR',
+        placement: 'payment',
+        style: { layout: 'text', logo: { type: 'inline' } }
+      }).render('#paypal-message-container');
+    }
+
+    // Button
+    let buttonsRendered = false;
+    function renderButtons() {
+      if (buttonsRendered) return;
+      buttonsRendered = true;
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' },
+        fundingSource: undefined, // zeigt alle Optionen inkl. Pay Later
+        createOrder: function(data, actions) {
+          const amount = getAmount();
+          if (!amount) { alert('Bitte gib einen gültigen Betrag ein.'); return; }
+          return actions.order.create({
+            purchase_units: [{
+              description: 'Tattoo – Bearson Tattoo, Landsberg am Lech',
+              amount: { currency_code: 'EUR', value: amount }
+            }],
+            application_context: { shipping_preference: 'NO_SHIPPING' }
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Zahlung erfolgreich! Vielen Dank, ' + (details.payer.name.given_name || '') + '. Simon wurde bereits informiert.');
+          });
+        },
+        onError: function(err) {
+          console.error(err);
+          alert('Ein Fehler ist aufgetreten. Bitte versuche es erneut oder schreib Simon direkt.');
+        }
+      }).render('#paypal-button-container');
+    }
+
+    input.addEventListener('input', function() {
+      const amount = getAmount();
+      renderMessage(amount);
+      if (amount) renderButtons();
+    });
+  });
+</script>
+</body>
+</html>

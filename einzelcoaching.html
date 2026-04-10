@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Calls – 7er Ink Tattoo Academy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0d0f; color: #f3eee7; font-family: system-ui, -apple-system, sans-serif; }
+    a { text-decoration: none; }
+
+    .gold-gradient {
+      background: linear-gradient(90deg, #c6a15b 0%, #f0d080 40%, #c6a15b 70%, #a07830 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    @keyframes shine {
+      0% { background-position: -200% center; } 100% { background-position: 200% center; }
+    }
+    .gold-shine {
+      background: linear-gradient(90deg, #c6a15b 0%, #f0d080 30%, #fff8dc 50%, #f0d080 70%, #c6a15b 100%);
+      background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; animation: shine 3s linear infinite;
+    }
+    .gold-btn-solid {
+      background: linear-gradient(135deg, #c6a15b 0%, #f0d080 100%);
+      color: #0d0d0f; -webkit-text-fill-color: #0d0d0f; border: none;
+      padding: .75rem 2rem; font-size: 1rem; font-weight: 700; border-radius: 9999px;
+      display: inline-block; cursor: pointer; box-shadow: 0 4px 24px rgba(198,161,91,.35);
+      transition: box-shadow .2s, transform .15s;
+    }
+    .gold-btn-solid:hover { box-shadow: 0 6px 32px rgba(198,161,91,.55); transform: translateY(-1px); }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,13,15,0.9); border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem;
+    }
+    .logo img { height: 52px; width: auto; display: block; }
+
+    .hero {
+      padding: 5rem 1.5rem 3rem;
+      max-width: 800px; margin: 0 auto; text-align: center;
+    }
+    .hero h1 { font-family: Georgia, serif; font-size: 2.6rem; font-weight: 600; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero p { color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.7; }
+
+    .section-label { font-size: .78rem; letter-spacing: .3em; text-transform: uppercase; margin-bottom: .6rem; color: #c6a15b; -webkit-text-fill-color: #c6a15b; background: none; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(198,161,91,0.12); border: 1px solid rgba(198,161,91,0.3);
+      border-radius: 9999px; padding: .4rem 1rem; font-size: .88rem; color: #c6a15b;
+      -webkit-text-fill-color: #c6a15b; margin-bottom: 1.5rem;
+    }
+
+    .info-grid {
+      max-width: 800px; margin: 0 auto 3rem; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;
+    }
+    .info-card {
+      background: #111114; border: 1px solid rgba(198,161,91,0.15); border-radius: 1rem; padding: 1.3rem;
+      display: flex; gap: .8rem; align-items: flex-start;
+    }
+    .info-card .icon { font-size: 1.5rem; flex-shrink: 0; }
+    .info-card h4 { font-size: .95rem; font-weight: 700; color: #f3eee7; margin-bottom: .3rem; }
+    .info-card p { font-size: .83rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    .form-wrap {
+      max-width: 700px; margin: 0 auto; padding: 0 1.5rem 5rem;
+    }
+    .form-box {
+      background: #111114; border: 1px solid rgba(198,161,91,0.2); border-radius: 1.4rem; padding: 2.5rem 2rem;
+    }
+    .form-box h2 { font-family: Georgia, serif; font-size: 1.5rem; margin-bottom: .4rem; }
+    .form-box .sub { color: rgba(255,255,255,0.5); font-size: .9rem; margin-bottom: 2rem; line-height: 1.5; }
+
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.2rem; }
+    .form-group label { font-size: .85rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: .7rem; padding: .75rem 1rem; color: #f3eee7; font-size: .95rem;
+      font-family: inherit; width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline: none; border-color: #c6a15b; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group select option { background: #1a1a1f; }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 0; }
+
+    .submit-area { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+    .submit-area button { width: 100%; font-size: 1.05rem; padding: .9rem; }
+    .submit-area p { color: rgba(255,255,255,0.3); font-size: .8rem; text-align: center; }
+
+    #coachMsg { display: none; text-align: center; color: #c6a15b; font-weight: 600; margin-top: 1.5rem; font-size: 1rem; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08); padding: 2rem 1.5rem; text-align: center;
+      color: rgba(255,255,255,0.35); font-size: .85rem;
+    }
+    footer a { color: #c6a15b; -webkit-text-fill-color: #c6a15b; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.9rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-box { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><img src="bilder 7er ink website/7erink-logo.png" alt="7er Ink" /></a>
+    <a href="index.html" style="color:rgba(255,255,255,0.6);font-size:.9rem;">← Zurück zur Startseite</a>
+    <a href="https://calendly.com/besprechungst" target="_blank" class="gold-btn-solid" style="padding:.55rem 1.2rem;font-size:.88rem;">Termin buchen</a>
+  </div>
+</header>
+
+<div class="hero">
+  <p class="section-label">7er Ink Academy</p>
+  <div class="badge">🤝 Nur vor Ort · Bad Wörishofen</div>
+  <h1>Persönliches<br><span class="gold-gradient gold-shine">Live Calls</span></h1>
+  <p>1-zu-1 mit Tom. Arbeite direkt an deinen Schwächen, verfeinere deine Technik und bringe deine Tattoos auf das nächste Level – individuell, intensiv und praxisnah.</p>
+</div>
+
+<div class="info-grid">
+  <div class="info-card">
+    <div class="icon">📍</div>
+    <div>
+      <h4>Nur vor Ort</h4>
+      <p>Das Coaching findet ausschließlich in unserem Studio in Bad Wörishofen statt. Kein Online-Coaching.</p>
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="icon">🎯</div>
+    <div>
+      <h4>Individuell</h4>
+      <p>Kein Standardprogramm – wir arbeiten gezielt an deinen persönlichen Schwächen und Zielen.</p>
+    </div>
+  </div>
+  <div class="info-card">
+    <div class="icon">⏱️</div>
+    <div>
+      <h4>Auf Anfrage</h4>
+      <p>Termine und Konditionen werden nach deiner Anfrage individuell besprochen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="form-wrap">
+  <div class="form-box">
+    <h2>Coaching <span class="gold-gradient gold-shine">anfragen</span></h2>
+    <p class="sub">Füll das Formular aus – Tom meldet sich persönlich bei dir. Je genauer du deine Situation beschreibst, desto besser können wir uns vorbereiten.</p>
+
+    <form id="coachForm" action="https://formspree.io/f/xdapeprj" method="POST">
+      <input type="hidden" name="_subject" value="Live Calls Anfrage – 7er Ink" />
+
+      <hr class="divider" />
+      <p style="font-size:.8rem;color:#c6a15b;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:1rem;">Deine Kontaktdaten</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-name">Vor- & Nachname *</label>
+          <input type="text" id="c-name" name="name" placeholder="Max Mustermann" required />
+        </div>
+        <div class="form-group">
+          <label for="c-tel">Telefon *</label>
+          <input type="tel" id="c-tel" name="telefon" placeholder="+49 ..." required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="c-email">E-Mail *</label>
+        <input type="email" id="c-email" name="email" placeholder="deine@email.de" required />
+      </div>
+
+      <hr class="divider" />
+      <p style="font-size:.8rem;color:#c6a15b;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:1rem;">Deine Erfahrung</p>
+
+      <div class="form-group">
+        <label for="c-erfahrung">Wie lange tätowierst du bereits? *</label>
+        <select id="c-erfahrung" name="erfahrung" required>
+          <option value="" disabled selected>Bitte wählen</option>
+          <option>Ich habe noch nicht angefangen</option>
+          <option>Weniger als 6 Monate</option>
+          <option>6 Monate – 1 Jahr</option>
+          <option>1–3 Jahre</option>
+          <option>3–5 Jahre</option>
+          <option>Mehr als 5 Jahre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="c-stil">Welchen Stil übst du hauptsächlich?</label>
+        <input type="text" id="c-stil" name="stil" placeholder="z. B. Realismus, Fineline, Linework …" />
+      </div>
+
+      <hr class="divider" />
+      <p style="font-size:.8rem;color:#c6a15b;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:1rem;">Wo kann ich dir helfen?</p>
+
+      <div class="form-group">
+        <label for="c-schwierigkeiten">Wo liegen deine aktuellen Schwierigkeiten? *</label>
+        <textarea id="c-schwierigkeiten" name="schwierigkeiten" placeholder="z. B. Schattierung, Linienstabilität, Maschineneinstellung, Motiventwicklung …" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="c-ziel">Was erhoffst du dir vom Coaching?</label>
+        <textarea id="c-ziel" name="ziel" placeholder="Was soll sich nach dem Coaching verbessert haben?"></textarea>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="gold-btn-solid">Anfrage absenden →</button>
+        <p>Tom meldet sich persönlich bei dir – in der Regel innerhalb von 24h.</p>
+      </div>
+    </form>
+    <p id="coachMsg">✓ Deine Anfrage ist angekommen! Tom meldet sich bald persönlich bei dir.</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 7er Ink Academy · <a href="index.html">Startseite</a> · <a href="index.html#academy">Academy</a></p>
+</footer>
+
+<script>
+  document.getElementById('coachForm').addEventListener('submit', function(e) {
+    var form = this;
+    // If using real Formspree, let it submit normally
+    // form submits to Formspree normally
+  });
+</script>
+
+<script src="chatbot.js?v=6" defer></script>
+</body>
+</html>

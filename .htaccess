@@ -1,0 +1,80 @@
+# ================================================
+#  7er Ink Tattoo Studio — 7erink.com
+#  Redirects, Cache & Performance
+# ================================================
+
+Options -Indexes
+
+# --- HTTPS Redirect ---
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- www → non-www ---
+RewriteCond %{HTTP_HOST} ^www\.7erink\.com [NC]
+RewriteRule ^(.*)$ https://7erink.com/$1 [L,R=301]
+
+# --- Alte Academy-Seiten → academy.7erink.com ---
+RewriteRule ^einzelcoaching\.html$ https://academy.7erink.com/coaching.html [L,R=301]
+RewriteRule ^paket\.html$ https://academy.7erink.com/paket.html [L,R=301]
+RewriteRule ^coaching\.html$ https://academy.7erink.com/coaching.html [L,R=301]
+RewriteRule ^online-grundkurs\.html$ https://academy.7erink.com/online-grundkurs.html [L,R=301]
+RewriteRule ^realismus-kurs\.html$ https://academy.7erink.com/realismus-kurs.html [L,R=301]
+RewriteRule ^business-kurs\.html$ https://academy.7erink.com/business-kurs.html [L,R=301]
+RewriteRule ^programm\.html$ https://academy.7erink.com/paket.html [L,R=301]
+RewriteRule ^quiz\.html$ https://academy.7erink.com/ [L,R=301]
+RewriteRule ^freebie\.html$ https://academy.7erink.com/freebie.html [L,R=301]
+RewriteRule ^datenschutz\.html$ https://7erink.com/agb.html [L,R=301]
+
+# --- Alte Academy-Unterordner ---
+RewriteRule ^academy/(.*)$ https://academy.7erink.com/$1 [L,R=301]
+
+# --- Alte WordPress Academy-URLs ---
+RewriteRule ^kurse https://academy.7erink.com/programm.html [L,R=301]
+RewriteRule ^seminare https://academy.7erink.com/programm.html [L,R=301]
+RewriteRule ^produkt-kategorie https://academy.7erink.com/paket.html [L,R=301]
+RewriteRule ^regional https://academy.7erink.com/ [L,R=301]
+RewriteRule ^tattoo-studio https://7erink.com/ [L,R=301]
+RewriteRule ^pflegecreme https://7erink.com/ [L,R=301]
+
+# --- Browser Caching ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp             "access plus 1 year"
+  ExpiresByType image/jpeg             "access plus 1 year"
+  ExpiresByType image/png              "access plus 1 year"
+  ExpiresByType image/svg+xml         "access plus 1 year"
+  ExpiresByType image/x-icon          "access plus 1 year"
+  ExpiresByType text/css               "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/html              "access plus 1 hour"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpg|jpeg|png|gif|svg|ico)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "max-age=3600, public, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# --- GZIP Compression ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+
+# --- WebP MIME Type ---
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+
+# --- Security Headers ---
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

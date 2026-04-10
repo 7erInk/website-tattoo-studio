@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tom – Black & Grey Realismus | 7er Ink Bad Wörishofen</title>
+  <meta name="description" content="Tom ist spezialisiert auf Black & Grey Realismus. Seit 2010, über 50 Convention Awards. Jetzt Termin anfragen bei 7er Ink Bad Wörishofen." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0d0f; color: #f3eee7; font-family: system-ui, -apple-system, sans-serif; }
+    a { text-decoration: none; }
+    .gold-gradient { background: linear-gradient(90deg,#c6a15b 0%,#f0d080 40%,#c6a15b 70%,#a07830 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    @keyframes shine { 0%{background-position:-200% center} 100%{background-position:200% center} }
+    .gold-shine { background:linear-gradient(90deg,#c6a15b 0%,#f0d080 30%,#fff8dc 50%,#f0d080 70%,#c6a15b 100%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:shine 3s linear infinite; }
+    .gold-btn-solid { background:linear-gradient(135deg,#c6a15b 0%,#f0d080 100%); color:#0d0d0f; -webkit-text-fill-color:#0d0d0f; border:none; padding:.75rem 2rem; font-size:1rem; font-weight:700; border-radius:9999px; display:inline-block; cursor:pointer; box-shadow:0 4px 24px rgba(198,161,91,.35); transition:box-shadow .2s,transform .15s; }
+    .gold-btn-solid:hover { box-shadow:0 6px 32px rgba(198,161,91,.55); transform:translateY(-1px); }
+    header { position:sticky; top:0; z-index:50; background:rgba(13,13,15,0.9); border-bottom:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(10px); }
+    .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; }
+    .logo img { height:52px; width:auto; display:block; }
+    .section-label { font-size:.78rem; letter-spacing:.3em; text-transform:uppercase; margin-bottom:.6rem; color:#c6a15b; -webkit-text-fill-color:#c6a15b; }
+
+    /* Hero */
+    .artist-hero { max-width:900px; margin:0 auto; padding:4rem 1.5rem 3rem; display:grid; grid-template-columns:280px 1fr; gap:3rem; align-items:center; }
+    .artist-photo { width:260px; height:260px; border-radius:50%; overflow:hidden; border:3px solid rgba(198,161,91,0.5); box-shadow:0 0 0 8px rgba(198,161,91,0.08),0 20px 60px rgba(0,0,0,0.7); margin:0 auto; }
+    .artist-photo img { width:100%; height:100%; object-fit:cover; object-position:center 10%; }
+    .artist-hero-text h1 { font-family:Georgia,serif; font-size:2.4rem; font-weight:600; line-height:1.1; margin-bottom:.5rem; }
+    .artist-hero-text .style-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(198,161,91,0.12); border:1px solid rgba(198,161,91,0.3); border-radius:9999px; padding:.35rem .9rem; font-size:.85rem; color:#c6a15b; -webkit-text-fill-color:#c6a15b; margin-bottom:1rem; }
+    .artist-hero-text .intro-quote { font-family:Georgia,serif; font-size:1.15rem; color:rgba(255,255,255,0.8); font-style:italic; line-height:1.7; border-left:3px solid #c6a15b; padding-left:1rem; margin-top:1rem; }
+    .awards-row { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:1.5rem; }
+    .award-chip { background:rgba(198,161,91,0.1); border:1px solid rgba(198,161,91,0.2); border-radius:.6rem; padding:.4rem .8rem; font-size:.8rem; color:rgba(255,255,255,0.7); }
+
+    /* Q&A */
+    .qa-section { max-width:780px; margin:0 auto; padding:0 1.5rem 3rem; }
+    .qa-item { border-top:1px solid rgba(255,255,255,0.08); padding:1.8rem 0; }
+    .qa-item:last-child { border-bottom:1px solid rgba(255,255,255,0.08); }
+    .qa-item .question { font-size:1rem; font-weight:700; color:#c6a15b; -webkit-text-fill-color:#c6a15b; margin-bottom:.8rem; }
+    .qa-item .answer { color:rgba(255,255,255,0.75); font-size:.95rem; line-height:1.8; }
+    .qa-item .answer strong { color:#f3eee7; }
+
+    /* Notice */
+    .notice-box { max-width:780px; margin:0 auto 3rem; padding:0 1.5rem; }
+    .notice-inner { background:linear-gradient(135deg,#1a1200,#2a1e00); border:1px solid rgba(198,161,91,0.35); border-radius:1.2rem; padding:2rem; }
+    .notice-inner h3 { font-size:1.1rem; font-weight:700; color:#f3eee7; margin-bottom:.6rem; }
+    .notice-inner p { color:rgba(255,255,255,0.65); font-size:.9rem; line-height:1.7; }
+
+    /* Booking */
+    .booking-section { max-width:780px; margin:0 auto; padding:0 1.5rem 5rem; }
+    .booking-section h2 { font-family:Georgia,serif; font-size:1.8rem; margin-bottom:.5rem; }
+    .booking-section .sub { color:rgba(255,255,255,0.55); font-size:.9rem; margin-bottom:2rem; }
+    .booking-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    .booking-card { background:#111114; border:1px solid rgba(198,161,91,0.2); border-radius:1.2rem; padding:1.8rem; }
+    .booking-card h4 { font-size:1rem; font-weight:700; color:#f3eee7; margin-bottom:.6rem; }
+    .booking-card p { color:rgba(255,255,255,0.5); font-size:.85rem; line-height:1.6; margin-bottom:1rem; }
+    .wa-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; background:#25d366; color:#fff; -webkit-text-fill-color:#fff; border-radius:9999px; padding:.75rem 1.5rem; font-weight:700; font-size:.95rem; transition:opacity .2s; }
+    .wa-btn:hover { opacity:.9; }
+
+    /* Form */
+    .form-group { display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem; }
+    .form-group label { font-size:.82rem; font-weight:600; color:rgba(255,255,255,0.6); }
+    .form-group input, .form-group textarea, .form-group select { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:.6rem; padding:.65rem .9rem; color:#f3eee7; font-size:.9rem; font-family:inherit; width:100%; }
+    .form-group input:focus, .form-group textarea:focus { outline:none; border-color:#c6a15b; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color:rgba(255,255,255,0.3); }
+    .form-group textarea { min-height:90px; resize:vertical; }
+
+    /* PayPal */
+    .paypal-box { background:#111114; border:1px solid rgba(198,161,91,0.15); border-radius:1.2rem; padding:1.5rem; margin-top:1.5rem; }
+    .paypal-box h4 { font-size:.95rem; font-weight:700; color:#f3eee7; margin-bottom:.5rem; }
+    .paypal-box p { color:rgba(255,255,255,0.5); font-size:.82rem; line-height:1.6; margin-bottom:1rem; }
+    .paypal-methods { display:flex; gap:.7rem; flex-wrap:wrap; }
+    .paypal-btn { display:inline-flex; align-items:center; gap:.4rem; background:#003087; color:#fff; -webkit-text-fill-color:#fff; border-radius:.6rem; padding:.55rem 1.1rem; font-size:.82rem; font-weight:700; transition:opacity .2s; }
+    .paypal-btn:hover { opacity:.85; }
+
+    footer { border-top:1px solid rgba(255,255,255,0.08); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,0.35); font-size:.85rem; }
+    footer a { color:#c6a15b; -webkit-text-fill-color:#c6a15b; }
+
+    @media(max-width:700px) {
+      .artist-hero { grid-template-columns:1fr; text-align:center; padding:3rem 1.5rem 2rem; }
+      .artist-hero-text .intro-quote { text-align:left; }
+      .booking-grid { grid-template-columns:1fr; }
+    }
+  </style>
+  <link rel="canonical" href="https://7erink.com/tom.html" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><img src="bilder 7er ink website/7erink-logo.png" alt="7er Ink" /></a>
+    <a href="index.html#artists" style="color:rgba(255,255,255,0.6);font-size:.9rem;">← Alle Artists</a>
+    <a href="#termin" class="gold-btn-solid" style="padding:.55rem 1.2rem;font-size:.88rem;">Termin anfragen</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="artist-hero">
+  <div>
+    <div class="artist-photo">
+      <img src="bilder 7er ink website/Tom.png" alt="Tom – Black & Grey Realismus" />
+    </div>
+  </div>
+  <div class="artist-hero-text">
+    <p class="section-label">Artist</p>
+    <h1>Tom<br><span class="gold-gradient gold-shine">Black & Grey Realismus</span></h1>
+    <div class="style-badge">Seit 2010 · 50+ Convention Awards</div>
+    <p class="intro-quote">"Ich mache keine Tattoos für den Moment.<br>Ich mache Tattoos, die in 10 Jahren noch funktionieren."</p>
+    <div class="awards-row">
+      <span class="award-chip">🏆 50+ Convention Awards</span>
+      <span class="award-chip">⭐ Best of Show</span>
+      <span class="award-chip">👨‍⚖️ Jurymitglied</span>
+    </div>
+  </div>
+</div>
+
+<!-- Q&A -->
+<div class="qa-section">
+  <p class="section-label">Im Gespräch mit Tom</p>
+
+  <div class="qa-item">
+    <p class="question">Seit wann tätowierst du?</p>
+    <p class="answer">Seit 2010. Über 50 Awards auf Conventions, mehrere „Best of Show". Ich habe nicht nur tätowiert, sondern auch in der Jury bewertet.</p>
+  </div>
+
+  <div class="qa-item">
+    <p class="question">Worauf legst du am meisten Wert?</p>
+    <p class="answer"><strong>Haltbarkeit. Kontrast. Tiefe.</strong><br><br>Ein Tattoo muss altern können – sonst ist es Müll.</p>
+  </div>
+
+  <div class="qa-item">
+    <p class="question">Was nervt dich an der Szene?</p>
+    <p class="answer">Instagram-Tattoos, die nach 2 Jahren weg sind.<br><br>Zu viele sagen „ja" zu Motiven, obwohl es eigentlich „nein" heissen müsste.</p>
+  </div>
+
+  <div class="qa-item">
+    <p class="question">Wie arbeitest du mit Kunden?</p>
+    <p class="answer"><strong>Ehrlich. Direkt. Ohne Ego-Streicheln.</strong><br><br>Wenn dein Motiv keinen Sinn macht, sage ich dir das.</p>
+  </div>
+
+  <div class="qa-item">
+    <p class="question">Für wen bist du der richtige Artist?</p>
+    <p class="answer">Für Leute, die Qualität verstehen – nicht nur den Preis vergleichen.</p>
+  </div>
+
+  <div class="qa-item">
+    <p class="question">Für wen nicht?</p>
+    <p class="answer">Für Schnäppchenjäger und Leute, die einfach nur „irgendwas" wollen.</p>
+  </div>
+</div>
+
+<!-- Notice -->
+<div class="notice-box">
+  <div class="notice-inner">
+    <h3>⚠️ Kein Tattoo ohne vorherigen Termin</h3>
+    <p>Wir schauen uns jedes Motiv gemeinsam an und sagen dir ehrlich, was funktioniert – und was nicht. Erst das Gespräch, dann das Tattoo.</p>
+    <p style="margin-top:.8rem;color:rgba(255,255,255,0.6);font-size:.88rem;">Tom macht ausschließlich <strong style="color:#c6a15b;">Tagessterminen</strong> – das Motiv wird in einer Session fertiggestellt.</p>
+    <p style="margin-top:.6rem;color:rgba(255,255,255,0.5);font-size:.82rem;">Für die Terminreservierung ist eine Anzahlung von <strong style="color:#c6a15b;">200 €</strong> fällig.<br>Zahlungsmöglichkeiten: bar vor Ort · PayPal · Überweisung (nur mit vorheriger Absprache)</p>
+  </div>
+</div>
+
+<!-- Booking -->
+<div class="booking-section" id="termin">
+  <p class="section-label">Termin</p>
+  <h2 class="gold-gradient gold-shine">Jetzt anfragen</h2>
+  <p class="sub">Wähle deinen bevorzugten Weg – Tom meldet sich persönlich bei dir.</p>
+
+  <div class="booking-grid">
+    <!-- WhatsApp -->
+    <div class="booking-card">
+      <h4>💬 WhatsApp</h4>
+      <p>Schreib Tom direkt. Schick deine Idee, ein Referenzbild und deine Wunschkörperstelle.</p>
+      <a href="https://wa.me/4915568673202?text=Hallo%20Tom%2C%20ich%20m%C3%B6chte%20einen%20Tattoo-Termin%20anfragen." target="_blank" class="wa-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp schreiben
+      </a>
+    </div>
+
+    <!-- Formular -->
+    <div class="booking-card">
+      <h4>📝 Anfrage-Formular</h4>
+      <form action="https://formspree.io/f/xwvwlwdn" method="POST">
+        <input type="hidden" name="_subject" value="Termin-Anfrage bei Tom – 7er Ink" />
+        <input type="hidden" name="artist" value="Tom – Black & Grey Realismus" />
+        <div class="form-group">
+          <label>Name *</label>
+          <input type="text" name="name" placeholder="Dein Name" required />
+        </div>
+        <div class="form-group">
+          <label>Telefon *</label>
+          <input type="tel" name="telefon" placeholder="+49 ..." required />
+        </div>
+        <div class="form-group">
+          <label>E-Mail *</label>
+          <input type="email" name="email" placeholder="deine@email.de" required />
+        </div>
+        <div class="form-group">
+          <label>Wunschmotiv & Körperstelle</label>
+          <textarea name="motiv" placeholder="z. B. Porträt, Oberarm, ca. 15×10 cm …"></textarea>
+        </div>
+        <button type="submit" class="gold-btn-solid" style="width:100%;margin-top:.5rem;">Anfrage senden →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PayPal Anzahlung -->
+  <div class="paypal-box">
+    <h4>💳 Anzahlung 200 €</h4>
+    <p>Nach Terminbestätigung wird die Anzahlung fällig. Sie wird beim Termin vollständig auf den Gesamtpreis angerechnet.<br><br>
+    <strong style="color:#f3eee7;">Bar vor Ort</strong> · <strong style="color:#f3eee7;">PayPal</strong> (online) · <strong style="color:#f3eee7;">Überweisung</strong> nur mit vorheriger Absprache – Bankdaten auf Anfrage.</p>
+    <div class="paypal-methods">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info%407erink.com&currency_code=EUR&amount=200&item_name=Tattoo+Anzahlung+Tom" target="_blank" class="paypal-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#009cde"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.082-8.558 6.082H9.825l-1.333 8.5h3.932l.532-3.373a1.07 1.07 0 011.055-.9h.665c4.293 0 7.659-1.743 8.643-6.788.43-2.19.023-3.983-1.097-5.234z"/></svg>
+        Per PayPal zahlen
+      </a>
+      <span style="color:rgba(255,255,255,0.4);font-size:.82rem;align-self:center;">PayPal: info@7erink.com</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 7er Ink · <a href="index.html">Startseite</a> · <a href="index.html#artists">Alle Artists</a></p>
+</footer>
+
+<script src="chatbot.js?v=6" defer></script>
+</body>
+</html>

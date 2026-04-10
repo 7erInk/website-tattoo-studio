@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Das Tattoo ABC | 7er Ink Tattoo Academy</title>
+  <meta name="description" content="Das Tattoo ABC für Tätowierer und angehende Artists. Von Academy bis Zunft – alles, was du als Tätowierer wissen musst, erklärt von der 7er Ink Academy.">
+  <link rel="canonical" href="https://academy.7erink.com/tattoo-abc.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/7erink-logo.png">
+  <link rel="stylesheet" href="academy.css?v=2">
+  <style>
+    .abc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .abc-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      position: relative;
+      transition: border-color var(--ease), transform var(--ease);
+    }
+    .abc-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .abc-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.25;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+    }
+    .abc-term {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .abc-term span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .abc-text {
+      font-size: 0.9rem;
+      color: rgba(242,242,242,0.6);
+      line-height: 1.75;
+    }
+    .abc-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+    .abc-filter a {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--lighter);
+      transition: all var(--ease);
+    }
+    .abc-filter a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    @media (max-width: 900px) {
+      .abc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .abc-grid { grid-template-columns: 1fr; }
+      .abc-letter { font-size: 3.5rem; }
+    }
+  </style>
+  <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/tattoo-abc.html">
+  <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/tattoo-abc.html">
+  <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/tattoo-abc.html">
+  <link rel="alternate" hreflang="de" href="https://academy.7erink.com/tattoo-abc.html">
+  <link rel="alternate" hreflang="x-default" href="https://academy.7erink.com/tattoo-abc.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"7er Ink Academy","item":"https://academy.7erink.com/"},
+      {"@type":"ListItem","position":2,"name":"Wissen"},
+      {"@type":"ListItem","position":3,"name":"Tattoo ABC","item":"https://academy.7erink.com/tattoo-abc.html"}
+    ]
+  }
+  </script>
+<script src="nav.js" defer></script>
+  <style>
+  /* Critical mobile menu — inline to bypass cache */
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
+  @media(max-width:900px){.mobile-menu{display:flex}}
+  .mobile-menu.open{transform:translateX(0)}
+  .mobile-menu-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:rgba(255,255,255,.75);font-size:1rem;cursor:pointer;width:2.3rem;height:2.3rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:border-color .2s,color .2s}
+  .mobile-menu-close:hover{border-color:#c9a84c;color:#c9a84c}
+  .mobile-nav-inner{flex:1;overflow-y:auto;padding:4.2rem 1.8rem 2rem;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+  .nav-group{margin-bottom:1.6rem}
+  .nav-group-label{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:.35rem;display:block}
+  .mobile-nav-inner a.nav-item{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;transition:color .15s}
+  .mobile-nav-inner .nav-group:last-of-type a.nav-item:last-of-type{border-bottom:none}
+  .mobile-nav-inner a.nav-item:hover,.mobile-nav-inner a.nav-item:active{color:#c9a84c}
+  .mobile-nav-inner a.nav-item span{font-size:.82rem;opacity:.4}
+  .mobile-nav-cta{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}
+  .mobile-nav-cta .btn{width:100% !important;text-align:center !important;justify-content:center !important}
+  .mobile-freebie-link{display:block;text-align:center;color:rgba(255,255,255,.6) !important;font-size:.8rem;font-weight:500 !important;padding:.2rem 0 !important;font-family:inherit !important}
+  .mobile-freebie-link:hover{color:#c9a84c !important}
+  </style>
+</head>
+<body>
+<nav id="nav" class="solid"><div class="nav-inner"><a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a><ul class="nav-links">
+      <li class="nav-dropdown">
+        <a>Kurse</a>
+        <div class="dropdown-menu">
+          <a href="paket.html">Tattoo Ausbildung</a>
+          <a href="quiz.html">🎯 Passt das zu mir?</a>
+          <a href="online-grundkurs.html">Grundkurs</a>
+          <a href="realismus-kurs.html">Realismus-Kurs</a>
+          <a href="business-kurs.html">Business-Kurs</a>
+          <a href="coaching.html">Live Calls</a>
+        </div>
+      </li>      <li class="nav-dropdown">
+        <a>Wissen</a>
+        <div class="dropdown-menu">
+          <a href="taetowieren-lernen.html">Tätowieren lernen</a>
+          <a href="tattoo-stile.html">Tattoo Stile</a>
+          <a href="tattoo-abc.html">Tattoo ABC</a>
+          <a href="standorte.html">Städte</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a>Ratgeber</a>
+        <div class="dropdown-menu">
+          <a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a>
+          <a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a>
+          <a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a>
+          <a href="tattoo-preise-berechnen.html">Preise berechnen</a>
+          <a href="tattoo-business-starten.html">Business starten</a>
+          <a href="tattoo-ausbildung-kosten.html">Ausbildung Kosten</a>
+        </div>
+      </li>
+        <li><a href="tom.html">Über Tom</a></li>
+        <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="index.html#freebie" class="nav-freebie-link">🎁 Freebie</a></li>
+    </ul><a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a><button class="burger" id="burger"><span></span><span></span><span></span></button></div></nav>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose" aria-label="Menü schließen">✕</button>
+  <div class="mobile-nav-inner">
+    <div class="nav-group">
+      <span class="nav-group-label">Kurse</span>
+      <a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a>
+      <a href="quiz.html" class="nav-item">🎯 Passt das zu mir? <span>→</span></a>
+      <a href="online-grundkurs.html" class="nav-item">Grundkurs <span>→</span></a>
+      <a href="realismus-kurs.html" class="nav-item">Realismus-Kurs <span>→</span></a>
+      <a href="business-kurs.html" class="nav-item">Business-Kurs <span>→</span></a>
+      <a href="coaching.html" class="nav-item">Live Calls <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Wissen</span>
+      <a href="taetowieren-lernen.html" class="nav-item">Tätowieren lernen <span>→</span></a>
+      <a href="tattoo-stile.html" class="nav-item">Tattoo Stile <span>→</span></a>
+      <a href="tattoo-abc.html" class="nav-item">Tattoo ABC <span>→</span></a>
+      <a href="standorte.html" class="nav-item">Städte <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Ratgeber</span>
+      <a href="wie-viel-verdient-ein-taetowierer.html" class="nav-item">Tätowierer Verdienst <span>→</span></a>
+      <a href="tattoo-maschine-anfaenger.html" class="nav-item">Maschinen für Anfänger <span>→</span></a>
+      <a href="tattoo-apprenticeship-vs-online.html" class="nav-item">Apprenticeship vs. Online <span>→</span></a>
+      <a href="tattoo-preise-berechnen.html" class="nav-item">Preise berechnen <span>→</span></a>
+      <a href="tattoo-business-starten.html" class="nav-item">Business starten <span>→</span></a>
+      <a href="tattoo-ausbildung-kosten.html" class="nav-item">Ausbildung Kosten <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Academy</span>
+      <a href="tom.html" class="nav-item">Über Tom <span>→</span></a>
+      <a href="vorher-nachher.html" class="nav-item">Vorher &amp; Nachher <span>→</span></a>
+    </div>
+    <div class="mobile-nav-cta">
+      <a href="index.html#freebie" class="mobile-freebie-link">🎁 Gratis PDF holen</a>
+      <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a>
+    </div>
+  </div>
+</div>
+<div class="inner-hero">
+  <div class="container">
+    <nav class="breadcrumb"><a href="index.html">Academy</a><span>›</span><span>Das Tattoo ABC</span></nav>
+    <span class="inner-hero-badge">Wissen · Von A bis Z</span>
+    <h1>Das Tattoo<br><em>ABC</em></h1>
+    <p class="inner-hero-sub">Von Academy bis Zunft – alles, was Tätowierer und angehende Artists wissen müssen. Klar erklärt, praxisnah formuliert.</p>
+    <a href="index.html#kontakt" class="btn btn-gold">Kurs anfragen</a>
+  </div>
+</div>
+
+<section style="padding:5rem 0 7rem;">
+  <div class="container">
+
+    <div class="abc-filter">
+      <a href="#a">A</a><a href="#b">B</a><a href="#c">C</a><a href="#d">D</a><a href="#e">E</a>
+      <a href="#f">F</a><a href="#g">G</a><a href="#h">H</a><a href="#i">I</a><a href="#k">K</a>
+      <a href="#l">L</a><a href="#m">M</a><a href="#n">N</a><a href="#o">O</a><a href="#p">P</a>
+      <a href="#q">Q</a><a href="#r">R</a><a href="#s">S</a><a href="#t">T</a><a href="#u">U</a>
+      <a href="#v">V</a><a href="#w">W</a><a href="#x">X</a><a href="#y">Y</a><a href="#z">Z</a>
+    </div>
+
+    <div class="abc-grid">
+
+      <div class="abc-card fade-in" id="a">
+        <div class="abc-letter">A</div>
+        <div class="abc-term"><span>A wie</span>Academy</div>
+        <p class="abc-text">Warum macht eine Tattoo Academy Sinn? Weil Selbststudium dir zeigt, was du machst – aber nicht, was du falsch machst. Eine Academy gibt dir strukturiertes Feedback, komprimiertes Wissen aus Jahren Erfahrung und einen klaren Entwicklungsweg. Statt Jahre zu verlieren, springst du auf das Niveau, das andere erst nach einem Jahrzehnt erreichen.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="b">
+        <div class="abc-letter">B</div>
+        <div class="abc-term"><span>B wie</span>Blackwork</div>
+        <p class="abc-text">Blackwork ist eine der anspruchsvollsten Stilrichtungen im Tattooing. Fette, solide schwarze Flächen, kontrastreiche Linien, geometrische Präzision. Fehler verstecken sich nicht – sie sind sofort sichtbar. Blackwork verlangt absolute Kontrolle über Druck, Geschwindigkeit und Nadelführung. Wer Blackwork beherrscht, beherrscht sein Handwerk.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="c">
+        <div class="abc-letter">C</div>
+        <div class="abc-term"><span>C wie</span>Color Packing</div>
+        <p class="abc-text">Farbe ins Motiv zu bringen klingt einfach – ist es nicht. Beim Color Packing geht es darum, gleichmäßige Farbflächen ohne Lücken oder Übersättigungen zu erzeugen. Zu wenig Druck: die Farbe hält nicht. Zu viel: die Haut wird geschädigt, die Farbe bricht in der Heilung aus. Das richtige Gleichgewicht ist reine Erfahrungssache.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="d">
+        <div class="abc-letter">D</div>
+        <div class="abc-term"><span>D wie</span>Druck & Tiefe</div>
+        <p class="abc-text">Die größte unsichtbare Variable beim Tätowieren: Druck und Einstichtiefe. Die Nadel muss die Dermis erreichen – nicht die Epidermis (zu flach, Tattoo fällt raus), nicht tiefer (Narbenbildung). Je nach Körperstelle, Hauttyp und Motivstil variiert die nötige Tiefe. Das Gespür dafür entwickelt sich durch Übung – und gezieltes Feedback.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="e">
+        <div class="abc-letter">E</div>
+        <div class="abc-term"><span>E wie</span>Einzelnadel</div>
+        <p class="abc-text">Die Einzelnadel (Single Needle) ist das Präzisionswerkzeug des Tätowierens. Für feinste Details, haarfeine Linien und Micro-Realismus unersetzlich. Gleichzeitig das gnadenloseste Werkzeug: keine Fehler verstecken sich. Wer mit der Einzelnadel sauber arbeitet, hat das Fundament des Handwerks verstanden.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="f">
+        <div class="abc-letter">F</div>
+        <div class="abc-term"><span>F wie</span>Farbverlauf / Shading</div>
+        <p class="abc-text">Ein sauberer Farbverlauf ist das Markenzeichen handwerklicher Reife. Vom tiefen Schwarz ins helle Grau – ohne harte Kanten, ohne Lücken. Shading entscheidet, ob ein Tattoo flach wirkt oder Tiefe und Dreidimensionalität bekommt. Die Technik: kreisende Bewegungen, Nadeldruck variieren, Hautspannung halten.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="g">
+        <div class="abc-letter">G</div>
+        <div class="abc-term"><span>G wie</span>Grippe & Hygiene</div>
+        <p class="abc-text">Hygiene ist keine Option – sie ist die Basis. Sterile Nadeln, single-use Patronen, Handschuhe, desinfizierte Arbeitsflächen, korrekte Entsorgung von Sharps. Ein Hygienefehler kann deinen Kunden krank machen und deine Karriere beenden. Professionelles Tattooing beginnt mit einer professionellen Hygienepraxis.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="h">
+        <div class="abc-letter">H</div>
+        <div class="abc-term"><span>H wie</span>Haut verstehen</div>
+        <p class="abc-text">Haut ist nicht gleich Haut. Alter, Hauttyp, Körperstelle, Hautfarbe, Vorbehandlung – all das beeinflusst, wie ein Tattoo aufgenommen wird und wie es heilt. Dünne Haut am Unterarm verhält sich anders als dicke am Oberschenkel. Helle Haut nimmt Farbe anders an als dunkle. Wer das versteht, passt seine Technik an – statt zu hoffen, dass es klappt.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="i">
+        <div class="abc-letter">I</div>
+        <div class="abc-term"><span>I wie</span>Ink – Qualität zählt</div>
+        <p class="abc-text">Nicht jede Tinte ist gleich. Günstige Tinten können schlechter heilen, ausbleichen oder Reaktionen auslösen. Professionelle Tattoo-Tinten sind auf Verträglichkeit, Farbbrillanz und Langlebigkeit getestet. Investiere in hochwertige Tinte – dein Kunde trägt das Ergebnis für den Rest seines Lebens auf der Haut.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="k">
+        <div class="abc-letter">K</div>
+        <div class="abc-term"><span>K wie</span>Kundengespräch</div>
+        <p class="abc-text">Das Kundengespräch entscheidet, bevor die erste Linie gestochen ist. Erwartungen abfragen, Machbarkeit einschätzen, Risiken besprechen – wer hier schlampig ist, produziert Enttäuschungen. Ein strukturiertes Erstgespräch schützt beide Seiten: den Kunden vor unerfüllten Erwartungen, dich vor schlechten Bewertungen und Nachbesserungen.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="l">
+        <div class="abc-letter">L</div>
+        <div class="abc-term"><span>L wie</span>Linework</div>
+        <p class="abc-text">Saubere Linien sind die Visitenkarte eines Tätowierers. Zittrige, ungleichmäßige oder ausfranste Linien zeigen sofort: hier fehlt Kontrolle. Gutes Linework braucht eine stabile Handhaltung, gleichmäßige Geschwindigkeit, Hautspannung und die richtige Nadelkonfiguration. Es gibt keinen Filter, der schlechtes Linework kaschiert.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="m">
+        <div class="abc-letter">M</div>
+        <div class="abc-term"><span>M wie</span>Maschine</div>
+        <p class="abc-text">Coil oder Rotary? Pen oder traditionell? Die Maschinentypen unterscheiden sich in Schwingung, Rückstoß und Präzision. Rotary-Pen-Maschinen dominieren heute – leiser, präziser, schonender. Aber die beste Maschine ersetzt kein Handwerk. Verstehe, was deine Maschine macht, und passe ihre Einstellungen bewusst an dein Motiv an.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="n">
+        <div class="abc-letter">N</div>
+        <div class="abc-term"><span>N wie</span>Nadeln</div>
+        <p class="abc-text">Rund Liner, Magnum, Curved Mag, Flat – jede Nadelkonfiguration hat ihren Zweck. Liner für Konturen, Magnums für Shading und Color Packing, Curved Mags für weiche Übergänge, Flats für geometrische Flächen. Wer nur mit einer Nadel arbeitet, limitiert sich selbst. Die richtige Nadel für den richtigen Einsatz ist kein Detail – es ist Grundwissen.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="o">
+        <div class="abc-letter">O</div>
+        <div class="abc-term"><span>O wie</span>Originalität</div>
+        <p class="abc-text">Referenzen sind erlaubt. Kopieren ist Diebstahl. Der Unterschied liegt in der Absicht: Inspiration nehmen, um eigene Arbeit zu entwickeln – oder fremdes Werk 1:1 reproduzieren. Artists mit eigenem Stil werden weiterempfohlen. Artists, die kopieren, werden irgendwann gestoppt. Entwickle eine eigene Handschrift – das ist dein wertvollstes Asset.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="p">
+        <div class="abc-letter">P</div>
+        <div class="abc-term"><span>P wie</span>Positionierung</div>
+        <p class="abc-text">Wer für jeden tätowiert, fällt niemandem auf. Wer sich klar positioniert – Stil, Zielgruppe, Preissegment – wird zur ersten Anlaufstelle für genau diese Kunden. Positionierung bedeutet nicht, Kunden abzuweisen. Es bedeutet, klar zu kommunizieren, wofür du stehst. Klarheit zieht die richtigen Kunden an – und hält die falschen fern.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="q">
+        <div class="abc-letter">Q</div>
+        <div class="abc-term"><span>Q wie</span>Qualität über Quantität</div>
+        <p class="abc-text">Drei außergewöhnliche Tattoos pro Woche sind wertvoller als zehn mittelmäßige. Quantität füllt den Kalender kurzfristig. Qualität baut Reputation langfristig. Jedes Tattoo, das du mit deinem Namen verbindest, ist Werbung – für dich oder gegen dich. Entscheide entsprechend, welche Aufträge du annimmst und wie viel Zeit du dir nimmst.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="r">
+        <div class="abc-letter">R</div>
+        <div class="abc-term"><span>R wie</span>Realismus</div>
+        <p class="abc-text">Realismus ist der technisch anspruchsvollste Tattoo-Stil. Licht und Schatten müssen so präzise gesetzt werden, dass das Motiv plastisch und dreidimensional wirkt. Hauttextur, Portrait-Arbeit, Tierportraits – Realismus vergibt keine Fehler. Er setzt voraus: beherrschtes Shading, fundiertes Verständnis von Lichtführung und Geduld bei der Ausführung.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="s">
+        <div class="abc-letter">S</div>
+        <div class="abc-term"><span>S wie</span>Stencil</div>
+        <p class="abc-text">Der Stencil ist die Übertragung des Designs auf die Haut – und die letzte Kontrolle vor dem ersten Stich. Ein schlecht gesetzter Stencil produziert ein schlecht platziertes Tattoo, egal wie gut die Technik ist. Stencils müssen sauber sein, korrekt positioniert, an der Körperform ausgerichtet und vollständig trocken, bevor du anfängst. Kein Schritt ist zu klein, um präzise zu sein.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="t">
+        <div class="abc-letter">T</div>
+        <div class="abc-term"><span>T wie</span>Technik schlägt Talent</div>
+        <p class="abc-text">Talent öffnet die Tür. Technik entscheidet, ob du drin bleibst. Die meisten talentierten Artists stagnieren, weil sie aufgehört haben, systematisch zu lernen. Wer seine Technik aktiv trainiert – Linework-Übungen, Shading-Studien, regelmäßige Fehleranalyse – entwickelt sich weiter. Wer auf sein Talent vertraut, stagniert auf dem Niveau, auf dem er aufgehört hat zu üben.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="u">
+        <div class="abc-letter">U</div>
+        <div class="abc-term"><span>U wie</span>Unterarm vs. Rippen</div>
+        <p class="abc-text">Nicht jede Körperstelle ist gleich. Der Unterarm ist flach, gut gespannt, heilungsfreundlich – ideal für detaillierte Arbeiten. Die Rippen dagegen: wenig Polster, bewegliche Haut, intensiver Schmerz für den Kunden. Knie, Ellenbogen, Hände und Füße sind für den Artist technisch anspruchsvoller und heilen schlechter. Platzierung ist Teil des handwerklichen Wissens.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="v">
+        <div class="abc-letter">V</div>
+        <div class="abc-term"><span>V wie</span>Vernarbung vermeiden</div>
+        <p class="abc-text">Vernarbung entsteht durch zu tiefen Einstich, zu langsame Geschwindigkeit oder zu viele Wiederholungen an derselben Stelle. Eine vernarbe Haut nimmt keine Farbe mehr gleichmäßig auf und sieht unruhig aus. Schäden an der Haut sind dauerhaft. Richtige Technik schützt den Kunden – und deine Reputation. Wer zu aggressiv arbeitet, merkt es erst Wochen nach der Heilung.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="w">
+        <div class="abc-letter">W</div>
+        <div class="abc-term"><span>W wie</span>Wundheilung</div>
+        <p class="abc-text">Ein Tattoo ist eine kontrollierte Wunde. Die Heilungsphase entscheidet über das finale Ergebnis. Dein Job endet nicht mit dem letzten Stich – du musst deinen Kunden korrekt über die Nachsorge informieren. Falsche Pflege kann ein perfektes Tattoo ruinieren: zu viel Feuchtigkeit, Sonneneinstrahlung, schlechte Produkte. Aftercare ist Teil deiner Leistung.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-1" id="x">
+        <div class="abc-letter">X</div>
+        <div class="abc-term"><span>X wie</span>X-Faktor</div>
+        <p class="abc-text">Was macht dich unverwechselbar? Nicht das Können allein – viele können gut tätowieren. Der X-Faktor ist die Kombination aus Stil, Persönlichkeit, Kundenumgang und Konsistenz, die dich von allen anderen unterscheidet. Er lässt sich nicht kopieren, weil er einzigartig ist. Ihn zu finden und zu kultivieren ist die wichtigste Karriereentscheidung, die du treffen kannst.</p>
+      </div>
+
+      <div class="abc-card fade-in delay-2" id="y">
+        <div class="abc-letter">Y</div>
+        <div class="abc-term"><span>Y wie</span>YouTube hat Grenzen</div>
+        <p class="abc-text">YouTube und Social Media zeigen Ergebnisse – nicht den Weg dorthin. Kein Tutorial ersetzt direktes Feedback auf deine Arbeit. Du siehst, was der Artist macht. Du siehst nicht, warum er es macht, welche Fehler er früher gemacht hat und wie er sie korrigiert hat. Selbststudium über Videos ist ein Anfang. Wer schnell besser werden will, braucht einen Mentor, der auf seine konkreten Schwächen eingeht.</p>
+      </div>
+
+      <div class="abc-card fade-in" id="z">
+        <div class="abc-letter">Z</div>
+        <div class="abc-term"><span>Z wie</span>Zeit investieren</div>
+        <p class="abc-text">Wie lange bis zum Profi? Ohne Anleitung: 5 bis 10 Jahre. Mit strukturierter Ausbildung und aktivem Feedback: deutlich weniger. Der Unterschied liegt nicht im Talent, sondern darin, wie du lernst. Zielgerichtetes Üben mit klarem Feedback komprimiert Lernkurven dramatisch. Wer Zeit investiert, um richtig zu lernen, spart am Ende Jahre.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-block">
+  <div class="container">
+    <span class="eyebrow">Wissen ist der Anfang</span>
+    <h2>Jetzt das Handwerk<br><em>professionell entwickeln.</em></h2>
+    <p>Die 7er Ink Academy bringt dich vom ABC zur Meisterschaft – strukturiert, praxisnah, mit direktem Feedback.</p>
+    <div class="cta-actions">
+      <a href="index.html#kontakt" class="btn btn-gold">Beratung anfragen</a>
+      <a href="index.html" class="btn btn-outline">Alle Programme ansehen</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="container"><div class="footer-grid"><div class="footer-brand"><div class="footer-brand-name">7er Ink <span class="accent">Academy</span></div><p>Professionelle Tattoo Aus- und Weiterbildung für Artists, die mehr wollen.</p></div><div class="footer-col"><h5>Programme</h5><ul><li><a href="online-grundkurs.html">Online-Grundkurs</a></li><li><a href="realismus-kurs.html">Realismus-Kurs</a></li><li><a href="business-kurs.html">Business-Kurs</a></li><li><a href="coaching.html">Live Calls</a></li></ul></div><div class="footer-col"><h5>Academy</h5><ul><li><a href="tom.html">Über Tom</a></li><li><a href="tattoo-abc.html">Tattoo ABC</a></li><li><a href="standorte.html">Städte</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#kontakt">Kontakt</a></li><li><a href="https://7erink.com" target="_blank">7er Ink Studio</a></li></ul></div><div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="https://7erink.com/agb.html">AGB</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 7er Ink Tattoo Academy · Bad Wörishofen</p><div class="footer-links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://7erink.com/agb.html">AGB</a></div></div></div></footer>
+</body></html>

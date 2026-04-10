@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vorher & Nachher – Echte Ergebnisse unserer Kursteilnehmer | 7er Ink Academy</title>
+  <meta name="description" content="Sieh selbst: Echte Vorher/Nachher-Ergebnisse von Kursteilnehmern der 7er Ink Tattoo Academy. Keine Ausnahmen – reale Fortschritte von echten Anfängern und Fortgeschrittenen.">
+  <link rel="canonical" href="https://academy.7erink.com/vorher-nachher.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/7erink-logo.png">
+  <link rel="stylesheet" href="academy.css?v=2">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"7er Ink Academy","item":"https://academy.7erink.com/"},
+    {"@type":"ListItem","position":2,"name":"Vorher & Nachher","item":"https://academy.7erink.com/vorher-nachher.html"}
+  ]}
+  </script>
+  <style>
+    .vn-hero {
+      background: var(--bg);
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .vn-hero-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .vn-hero-eyebrow {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .vn-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 1.2rem;
+    }
+    .vn-hero h1 em { color: var(--gold); font-style: normal; }
+    .vn-hero p {
+      font-size: 1rem;
+      color: var(--lighter);
+      line-height: 1.8;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE BODY ── */
+    .vn-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+    .vn-block {
+      margin-bottom: 5rem;
+    }
+    .vn-block-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .vn-block-title em { color: var(--gold); font-style: normal; }
+    .vn-block-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .vn-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      opacity: 0.4;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── VORHER GRID ── */
+    .vn-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+    }
+    .vn-photo-grid img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: var(--radius);
+      display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: grayscale(15%);
+    }
+    .vn-photo-grid img:hover {
+      transform: scale(1.02);
+      filter: grayscale(0%);
+      z-index: 2;
+      position: relative;
+    }
+
+    /* ── NACHHER GRID (mehr Bilder, etwas kleiner) ── */
+    .vn-nachher-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.75rem;
+    }
+    .vn-nachher-grid img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: var(--radius);
+      display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .vn-nachher-grid img:hover {
+      transform: scale(1.02);
+      z-index: 2;
+      position: relative;
+    }
+
+    /* ── SEPARATOR ── */
+    .vn-separator {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 4rem 0;
+    }
+    .vn-separator-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .vn-separator-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── CTA ── */
+    .vn-cta {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: var(--radius);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    .vn-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .vn-cta h2 em { color: var(--gold); font-style: normal; }
+    .vn-cta p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .vn-cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── SLIDER ── */
+    .vn-compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .vn-pair { display: flex; flex-direction: column; gap: 0.5rem; }
+    .vn-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      aspect-ratio: 3/4;
+      cursor: col-resize;
+      user-select: none;
+      touch-action: none;
+    }
+    .vn-after, .vn-before {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .vn-after img, .vn-before img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; pointer-events: none;
+    }
+    .vn-before { width: 50%; border-right: 2px solid var(--gold); }
+    .vn-handle {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 36px; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: col-resize; z-index: 10;
+    }
+    .vn-handle::before {
+      content: '◀▶';
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; color: #080808; font-weight: 900;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      letter-spacing: -1px;
+    }
+    .vn-labels { display: flex; justify-content: space-between; }
+    .vn-label-before { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .vn-label-after  { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); }
+
+    @media (max-width: 1100px) {
+      .vn-photo-grid { grid-template-columns: repeat(4, 1fr); }
+      .vn-nachher-grid { grid-template-columns: repeat(5, 1fr); }
+      .vn-compare-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 750px) {
+      .vn-photo-grid { grid-template-columns: repeat(3, 1fr); }
+      .vn-nachher-grid { grid-template-columns: repeat(3, 1fr); }
+      .vn-compare-grid { grid-template-columns: repeat(2, 1fr); }
+      .vn-body { padding: 3rem 1.25rem 4rem; }
+    }
+    @media (max-width: 480px) {
+      .vn-photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .vn-nachher-grid { grid-template-columns: repeat(2, 1fr); }
+      .vn-compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/vorher-nachher.html">
+  <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/vorher-nachher.html">
+  <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/vorher-nachher.html">
+  <link rel="alternate" hreflang="de" href="https://academy.7erink.com/vorher-nachher.html">
+  <link rel="alternate" hreflang="x-default" href="https://academy.7erink.com/vorher-nachher.html">
+<script src="nav.js" defer></script>
+  <style>
+  /* Critical mobile menu — inline to bypass cache */
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
+  @media(max-width:900px){.mobile-menu{display:flex}}
+  .mobile-menu.open{transform:translateX(0)}
+  .mobile-menu-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:rgba(255,255,255,.75);font-size:1rem;cursor:pointer;width:2.3rem;height:2.3rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:border-color .2s,color .2s}
+  .mobile-menu-close:hover{border-color:#c9a84c;color:#c9a84c}
+  .mobile-nav-inner{flex:1;overflow-y:auto;padding:4.2rem 1.8rem 2rem;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+  .nav-group{margin-bottom:1.6rem}
+  .nav-group-label{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:.35rem;display:block}
+  .mobile-nav-inner a.nav-item{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;transition:color .15s}
+  .mobile-nav-inner .nav-group:last-of-type a.nav-item:last-of-type{border-bottom:none}
+  .mobile-nav-inner a.nav-item:hover,.mobile-nav-inner a.nav-item:active{color:#c9a84c}
+  .mobile-nav-inner a.nav-item span{font-size:.82rem;opacity:.4}
+  .mobile-nav-cta{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}
+  .mobile-nav-cta .btn{width:100% !important;text-align:center !important;justify-content:center !important}
+  .mobile-freebie-link{display:block;text-align:center;color:rgba(255,255,255,.6) !important;font-size:.8rem;font-weight:500 !important;padding:.2rem 0 !important;font-family:inherit !important}
+  .mobile-freebie-link:hover{color:#c9a84c !important}
+  </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="images/7erink-logo.png" alt="7er Ink Academy" class="nav-logo-img">
+      <span>7er Ink <span class="accent">Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-dropdown">
+        <a>Kurse</a>
+        <div class="dropdown-menu">
+          <a href="paket.html">Tattoo Ausbildung</a>
+          <a href="quiz.html">🎯 Passt das zu mir?</a>
+          <a href="online-grundkurs.html">Grundkurs</a>
+          <a href="realismus-kurs.html">Realismus-Kurs</a>
+          <a href="business-kurs.html">Business-Kurs</a>
+          <a href="coaching.html">Live Calls</a>
+        </div>
+      </li>      <li class="nav-dropdown">
+        <a>Wissen</a>
+        <div class="dropdown-menu">
+          <a href="taetowieren-lernen.html">Tätowieren lernen</a>
+          <a href="tattoo-stile.html">Tattoo Stile</a>
+          <a href="tattoo-abc.html">Tattoo ABC</a>
+          <a href="standorte.html">Städte</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a>Ratgeber</a>
+        <div class="dropdown-menu">
+          <a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a>
+          <a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a>
+          <a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a>
+          <a href="tattoo-preise-berechnen.html">Preise berechnen</a>
+          <a href="tattoo-business-starten.html">Business starten</a>
+          <a href="tattoo-ausbildung-kosten.html">Ausbildung Kosten</a>
+        </div>
+      </li>
+        <li><a href="tom.html">Über Tom</a></li>
+        <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="index.html#freebie" class="nav-freebie-link">🎁 Freebie</a></li>
+    </ul>
+    <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
+    <button class="burger" id="burger" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose" aria-label="Menü schließen">✕</button>
+  <div class="mobile-nav-inner">
+    <div class="nav-group">
+      <span class="nav-group-label">Kurse</span>
+      <a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a>
+      <a href="quiz.html" class="nav-item">🎯 Passt das zu mir? <span>→</span></a>
+      <a href="online-grundkurs.html" class="nav-item">Grundkurs <span>→</span></a>
+      <a href="realismus-kurs.html" class="nav-item">Realismus-Kurs <span>→</span></a>
+      <a href="business-kurs.html" class="nav-item">Business-Kurs <span>→</span></a>
+      <a href="coaching.html" class="nav-item">Live Calls <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Wissen</span>
+      <a href="taetowieren-lernen.html" class="nav-item">Tätowieren lernen <span>→</span></a>
+      <a href="tattoo-stile.html" class="nav-item">Tattoo Stile <span>→</span></a>
+      <a href="tattoo-abc.html" class="nav-item">Tattoo ABC <span>→</span></a>
+      <a href="standorte.html" class="nav-item">Städte <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Ratgeber</span>
+      <a href="wie-viel-verdient-ein-taetowierer.html" class="nav-item">Tätowierer Verdienst <span>→</span></a>
+      <a href="tattoo-maschine-anfaenger.html" class="nav-item">Maschinen für Anfänger <span>→</span></a>
+      <a href="tattoo-apprenticeship-vs-online.html" class="nav-item">Apprenticeship vs. Online <span>→</span></a>
+      <a href="tattoo-preise-berechnen.html" class="nav-item">Preise berechnen <span>→</span></a>
+      <a href="tattoo-business-starten.html" class="nav-item">Business starten <span>→</span></a>
+      <a href="tattoo-ausbildung-kosten.html" class="nav-item">Ausbildung Kosten <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Academy</span>
+      <a href="tom.html" class="nav-item">Über Tom <span>→</span></a>
+      <a href="vorher-nachher.html" class="nav-item">Vorher &amp; Nachher <span>→</span></a>
+    </div>
+    <div class="mobile-nav-cta">
+      <a href="index.html#freebie" class="mobile-freebie-link">🎁 Gratis PDF holen</a>
+      <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a>
+    </div>
+  </div>
+</div>
+<!-- ===== HERO ===== -->
+<section class="vn-hero">
+  <div class="vn-hero-inner">
+    <div class="vn-hero-eyebrow">Echte Ergebnisse</div>
+    <h1>Vorher &amp;<br><em>Nachher</em></h1>
+    <p>Keine Ausnahmen. Keine Hochglanz-Auswahl. Das sind echte Arbeiten von Teilnehmern – bevor sie unser System durchlaufen haben, und danach.</p>
+  </div>
+</section>
+
+<!-- ===== BODY ===== -->
+<div class="vn-body">
+
+  <!-- VORHER -->
+  <div class="vn-block fade-in">
+    <div class="vn-block-title">So sah es <em>vorher</em> aus</div>
+    <div class="vn-divider"></div>
+    <p class="vn-block-sub">Echte Ausgangssituationen. Keine gestellten Anfänger-Fotos.</p>
+    <div class="vn-photo-grid">
+      <img src="images/vorher-0.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-1.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-2.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-4.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-5.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-6.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-7.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-8.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-9.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-10.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-11.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-12.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-13.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-14.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-15.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-16.jpg" alt="Vorher" loading="lazy">
+      <img src="images/vorher-17.jpg" alt="Vorher" loading="lazy">
+    </div>
+  </div>
+
+  <div class="vn-separator">
+    <div class="vn-separator-line"></div>
+    <div class="vn-separator-label">Direkter Vergleich – zieh den Regler</div>
+    <div class="vn-separator-line"></div>
+  </div>
+
+  <!-- DIREKTVERGLEICH SLIDER -->
+  <div class="vn-block fade-in">
+    <div class="vn-block-title"><em>Direktvergleich</em> – links Vorher, rechts Nachher</div>
+    <div class="vn-divider"></div>
+    <p class="vn-block-sub">Zieh den goldenen Regler um zwischen Vorher und Nachher zu wechseln.</p>
+    <div class="vn-compare-grid">
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-24.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-4.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-25.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-5.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-26.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-6.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-27.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-7.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-28.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-8.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+      <div class="vn-pair">
+        <div class="vn-slider">
+          <div class="vn-after"><img src="images/nachher-29.jpg" alt="Nachher" loading="lazy"></div>
+          <div class="vn-before"><img src="images/vorher-9.jpg" alt="Vorher" loading="lazy"></div>
+          <div class="vn-handle"></div>
+        </div>
+        <div class="vn-labels"><span class="vn-label-before">Vorher</span><span class="vn-label-after">Nachher</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="vn-separator">
+    <div class="vn-separator-line"></div>
+    <div class="vn-separator-label">Und so sieht es danach aus</div>
+    <div class="vn-separator-line"></div>
+  </div>
+
+  <!-- NACHHER -->
+  <div class="vn-block fade-in">
+    <div class="vn-block-title">So sieht es <em>nachher</em> aus</div>
+    <div class="vn-divider"></div>
+    <p class="vn-block-sub">Arbeiten von Teilnehmern nach dem Kurs. Verschiedene Levels, verschiedene Stile – echter Fortschritt.</p>
+    <div class="vn-nachher-grid">
+      <img src="images/nachher-1.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-2.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-3.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-4.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-5.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-6.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-7.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-8.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-9.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-10.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-11.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-12.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-13.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-14.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-15.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-16.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-17.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-18.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-19.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-20.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-21.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-22.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-23.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-24.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-25.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-26.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-27.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-28.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-29.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-30.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-31.jpg" alt="Nachher" loading="lazy">
+      <img src="images/nachher-32.jpg" alt="Nachher" loading="lazy">
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="vn-cta fade-in">
+    <h2>Du willst auch so<br><em>Ergebnisse</em>?</h2>
+    <p>Das System dahinter ist das Gleiche für jeden. Was du mitbringst: Disziplin und den Willen, es richtig zu machen.</p>
+    <div class="vn-cta-btns">
+      <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Jetzt Beratung anfragen</a>
+      <a href="paket.html" class="btn btn-outline">Zur Tattoo Ausbildung</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-name">7er Ink <span class="accent">Academy</span></div>
+        <p>Professionelle Tattoo Aus- und Weiterbildung von Tom Irschina – für Artists die es ernst meinen.</p>
+      </div>
+      <div class="footer-col"><h5>Programme</h5><ul>
+        <li><a href="programm.html">Gesamtprogramm</a></li>
+        <li><a href="paket.html">Zur Tattoo Ausbildung</a></li>
+        <li><a href="coaching.html">Live Calls</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Ratgeber</h5><ul>
+        <li><a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a></li>
+        <li><a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a></li>
+        <li><a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a></li>
+        <li><a href="tattoo-preise-berechnen.html">Preise berechnen</a></li>
+        <li><a href="tattoo-business-starten.html">Business starten</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Academy</h5><ul>
+        <li><a href="tom.html">Über Tom</a></li>
+        <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+        <li><a href="standorte.html">Städte</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 7er Ink Tattoo Academy · Tom Irschina · Bad Wörishofen</p>
+      <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="https://7erink.com/agb.html">AGB</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Vorher/Nachher Slider
+  document.querySelectorAll('.vn-slider').forEach(slider => {
+    const before = slider.querySelector('.vn-before');
+    const handle = slider.querySelector('.vn-handle');
+    let active = false;
+    function setPos(x) {
+      const r = slider.getBoundingClientRect();
+      const pct = Math.min(Math.max((x - r.left) / r.width * 100, 0), 100);
+      before.style.width = pct + '%';
+      handle.style.left = pct + '%';
+    }
+    handle.addEventListener('mousedown', e => { active = true; e.preventDefault(); });
+    slider.addEventListener('mousedown', e => { active = true; setPos(e.clientX); });
+    window.addEventListener('mouseup', () => { active = false; });
+    window.addEventListener('mousemove', e => { if (active) setPos(e.clientX); });
+    handle.addEventListener('touchstart', e => { active = true; e.preventDefault(); }, { passive: false });
+    slider.addEventListener('touchstart', e => { active = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend', () => { active = false; });
+    window.addEventListener('touchmove', e => { if (active) setPos(e.touches[0].clientX); }, { passive: true });
+  });
+</script>
+<script>
+mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mm.classList.remove('open'); burger.classList.remove('open'); }));
+</script>
+
+<!-- LIGHTBOX -->
+<div id="lb" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:center;justify-content:center;padding:1rem;">
+  <button id="lbClose" style="position:absolute;top:1.25rem;right:1.5rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;opacity:0.7;">✕</button>
+  <button id="lbPrev" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;width:48px;height:48px;color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+  <img id="lbImg" src="" alt="" style="max-height:90vh;max-width:90vw;object-fit:contain;border-radius:4px;display:block;user-select:none;">
+  <button id="lbNext" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;width:48px;height:48px;color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+  <div id="lbCaption" style="position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);white-space:nowrap;"></div>
+</div>
+<script>
+(function(){
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+  let imgs = [], cur = 0;
+
+  // Collect all clickable images (not slider handles)
+  function buildIndex() {
+    imgs = Array.from(document.querySelectorAll('.vn-photo-grid img, .vn-nachher-grid img, .vn-after img, .vn-before img'));
+  }
+
+  function open(idx) {
+    buildIndex();
+    cur = idx;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    show();
+  }
+
+  function show() {
+    const img = imgs[cur];
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    const isVor = img.src.includes('vorher');
+    const isNach = img.src.includes('nachher');
+    lbCaption.textContent = isVor ? 'Vorher' : isNach ? 'Nachher' : '';
+    lbCaption.style.color = isNach ? 'rgba(201,168,76,0.8)' : 'rgba(255,255,255,0.35)';
+  }
+
+  function close() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', () => { buildIndex(); cur = (cur - 1 + imgs.length) % imgs.length; show(); });
+  document.getElementById('lbNext').addEventListener('click', () => { buildIndex(); cur = (cur + 1) % imgs.length; show(); });
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') { buildIndex(); cur = (cur - 1 + imgs.length) % imgs.length; show(); }
+    if (e.key === 'ArrowRight') { buildIndex(); cur = (cur + 1) % imgs.length; show(); }
+  });
+
+  // Attach click to all images on page
+  document.addEventListener('click', e => {
+    const img = e.target.closest('.vn-photo-grid img, .vn-nachher-grid img, .vn-after img, .vn-before img');
+    if (!img) return;
+    // Don't open if user is dragging slider
+    buildIndex();
+    const idx = imgs.indexOf(img);
+    if (idx !== -1) open(idx);
+  });
+
+  // Cursor pointer on all gallery images
+  document.querySelectorAll('.vn-photo-grid img, .vn-nachher-grid img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+  });
+  document.querySelectorAll('.vn-after img, .vn-before img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+  });
+})();
+</script>
+</body>
+</html>
