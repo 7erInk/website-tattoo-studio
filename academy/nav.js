@@ -19,9 +19,9 @@
       var label = dd.querySelector('a');
       if (label && label.textContent.trim() === 'Wissen') {
         var menu = dd.querySelector('.dropdown-menu');
-        if (menu && !menu.querySelector('a[href="journal.html"]')) {
+        if (menu && !menu.querySelector('a[href="news.html"]')) {
           var link = document.createElement('a');
-          link.href = 'journal.html';
+          link.href = 'news.html';
           link.textContent = 'Journal & News';
           menu.appendChild(link);
         }
