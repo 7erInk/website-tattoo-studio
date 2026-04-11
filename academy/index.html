@@ -206,13 +206,13 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=2">
+  <link rel="stylesheet" href="academy.css?v=203">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="x-default" href="https://academy.7erink.com/">
-<script src="nav.js" defer></script>
+<script src="nav.js?v=200" defer></script>
   <style>
   /* Critical mobile menu — inline to bypass cache */
   .mobile-menu{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
@@ -270,11 +270,12 @@
   .for-whom-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
   .for-whom-box h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:1rem}
   .for-whom-box.yes h4{color:var(--gold)}
-  .for-whom-box.no h4{color:var(--muted)}
+  .for-whom-box.no{background:rgba(220,53,69,.07)!important;border-color:rgba(220,53,69,.35)!important}
+  .for-whom-box.no h4{color:#dc3545!important}
   .for-whom-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem}
   .for-whom-list li{font-size:.875rem;color:var(--lighter);padding-left:1.3rem;position:relative;line-height:1.5}
   .for-whom-box.yes .for-whom-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
-  .for-whom-box.no .for-whom-list li::before{content:'✗';position:absolute;left:0;color:var(--muted)}
+  .for-whom-box.no .for-whom-list li::before{content:'✗';position:absolute;left:0;color:#dc3545;font-weight:700}
 
   .includes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
   .include-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;text-align:center}
@@ -330,13 +331,16 @@
     .lp-hero-stats{flex-wrap:wrap;gap:1.2rem}
   }
   </style>
+  <!-- Swiper 3D Carousel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body>
 
 <nav id="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a>
+    <a href="index.html" class="nav-logo"><img src="images/7erink-logo.png" alt="7er Ink Academy" class="nav-logo-img" loading="lazy">7er Ink <span class="accent">Academy</span></a>
     <ul class="nav-links">
+      <li style="margin-left:1.5rem"><a href="news.html" style="color:#c9a84c;font-weight:700">News</a></li>
       <li class="nav-dropdown">
         <a>Kurse</a>
         <div class="dropdown-menu">
@@ -371,9 +375,10 @@
       <li><a href="tom.html">Über Tom</a></li>
       <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
-      <li><a href="#freebie" class="nav-freebie-link">🎁 Freebie</a></li>
+      <li><a href="freebie.html" class="nav-freebie-link">🎁 Freebie</a></li>
     </ul>
     <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
+    <a href="freebie.html" class="nav-mobile-freebie-btn">🎁 Freebie</a>
     <button class="burger" id="burger"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -381,6 +386,9 @@
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" id="mobileClose" aria-label="Menü schließen">✕</button>
   <div class="mobile-nav-inner">
+    <div class="nav-group">
+      <a href="news.html" class="nav-item" style="color:#c9a84c;font-weight:700">News &amp; Journal <span>→</span></a>
+    </div>
     <div class="nav-group">
       <span class="nav-group-label">Kurse</span>
       <a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a>
@@ -412,7 +420,7 @@
       <a href="vorher-nachher.html" class="nav-item">Vorher &amp; Nachher <span>→</span></a>
     </div>
     <div class="mobile-nav-cta">
-      <a href="#freebie" class="mobile-freebie-link">🎁 Gratis PDF holen</a>
+      <a href="freebie.html" class="mobile-freebie-link">🎁 Gratis PDF holen</a>
       <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a>
     </div>
   </div>
@@ -699,22 +707,152 @@
         <span style="font-size:.78rem;color:var(--lighter);">200+ Google-Bewertungen</span>
       </div>
     </div>
-    <div class="testimonial-grid fade-in">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
-        <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
+    <div class="swiper testimonial-swiper fade-in">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Tom erklärt nicht nur wie es geht, sondern auch warum. Ich habe in 3 Monaten mehr gelernt als in einem Jahr Selbststudium. Absolute Empfehlung für jeden der es ernst meint."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Laura K.</div><div class="testimonial-role">Online Grundkurs · Bayern</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Ich hab schon 2 Jahre selbst versucht mir alles beizubringen. Nach dem Realismus-Kurs war alles klar. Die Technik, die Nadeln, das Drucksystem – endlich verstand ich was ich falsch gemacht hatte."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Marco B.</div><div class="testimonial-role">Realismus Kurs · Nordrhein-Westfalen</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Die Live Calls mit Tom sind Gold wert. Direkt Feedback auf meine Arbeiten, sofort Verbesserungen sehen. Das kriegst du in keinem YouTube-Tutorial."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Sandra M.</div><div class="testimonial-role">Vollpaket · Österreich</div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Als Quereinsteiger hatte ich Bedenken ob das überhaupt klappt. Tom hat mir gezeigt dass es kein Vorwissen braucht – nur die richtige Methode und Disziplin. Mein erstes Tattoo nach 6 Wochen."</p>
+            <div class="testimonial-author"><div class="testimonial-name">Florian D.</div><div class="testimonial-role">Online Grundkurs · Baden-Württemberg</div></div>
+          </div>
+        </div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
-        <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- REFERENZ BILDER -->
+<section style="padding:6rem 0;background:#080808;border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header center fade-in">
+      <span class="eyebrow">Schülerarbeiten</span>
+      <h2>Das schaffen<br><em>unsere Teilnehmer.</em></h2>
+      <div class="divider"></div>
+      <p style="max-width:520px;margin:0 auto;color:var(--lighter);">Echte Ergebnisse. Keine professionellen Artists – sondern Einsteiger nach 90 Tagen Ausbildung.</p>
+    </div>
+    <div class="swiper referenz-swiper fade-in">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-1.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-2.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-3.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-4.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-5.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-6.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-7.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-8.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-9.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-10.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-11.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-12.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-13.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-14.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-15.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-16.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-17.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-18.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-19.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
-        <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<!-- VORHER NACHHER PREVIEW -->
+<section style="padding:6rem 0;background:#0a0a0a;border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header center fade-in">
+      <span class="eyebrow">Transformation</span>
+      <h2>Vorher vs. Nachher –<br><em>Der Unterschied ist sichtbar.</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="vn-preview-grid fade-in">
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-1.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-1.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
       </div>
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-2.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-2.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
+      </div>
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-5.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-5.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
+      </div>
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-7.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-7.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
+      </div>
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-9.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-9.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
+      </div>
+      <div class="vn-pair">
+        <div class="vn-pair-wrap">
+          <div class="vn-half"><img src="images/vorher-12.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
+          <div class="vn-half"><img src="images/nachher-12.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;" class="fade-in">
+      <a href="vorher-nachher.html" class="btn btn-outline">Alle Transformationen ansehen →</a>
     </div>
   </div>
 </section>
@@ -843,7 +981,7 @@
         <ul>
           <li><a href="impressum.html">Impressum</a></li>
           <li><a href="datenschutz.html">Datenschutz</a></li>
-          <li><a href="https://7erink.com/agb.html">AGB</a></li>
+          <li><a href="agb.html">AGB</a></li>
         </ul>
       </div>
     </div>
@@ -852,7 +990,7 @@
       <div class="footer-links">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
-        <a href="https://7erink.com/agb.html">AGB</a>
+        <a href="agb.html">AGB</a>
       </div>
     </div>
   </div>
@@ -867,6 +1005,62 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     if (!isOpen) item.classList.add('open');
   });
 });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  // Testimonial Swiper (3D Coverflow)
+  new Swiper('.testimonial-swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    coverflowEffect: {
+      rotate: 30,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: false,
+    },
+    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
+    navigation: {
+      nextEl: '.testimonial-swiper .swiper-button-next',
+      prevEl: '.testimonial-swiper .swiper-button-prev',
+    },
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    loop: true,
+    breakpoints: {
+      0:   { slidesPerView: 1 },
+      640: { slidesPerView: 1.5 },
+      900: { slidesPerView: 2.5 },
+    }
+  });
+
+  // Referenz Swiper (3D Coverflow)
+  new Swiper('.referenz-swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    coverflowEffect: {
+      rotate: 40,
+      stretch: 0,
+      depth: 120,
+      modifier: 1,
+      slideShadows: true,
+    },
+    pagination: { el: '.referenz-swiper .swiper-pagination', clickable: true },
+    navigation: {
+      nextEl: '.referenz-swiper .swiper-button-next',
+      prevEl: '.referenz-swiper .swiper-button-prev',
+    },
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    loop: true,
+    breakpoints: {
+      0:   { slidesPerView: 1 },
+      500: { slidesPerView: 1.5 },
+      900: { slidesPerView: 2.5 },
+    }
+  });
 </script>
 </body>
 </html>
