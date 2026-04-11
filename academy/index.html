@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=210">
+  <link rel="stylesheet" href="academy.css?v=212">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -274,13 +274,12 @@
   .for-whom-box.no h4{color:#dc3545!important}
   /* Referenz video grid */
   .ref-videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;margin:0 auto}
-  .ref-video-wrap{border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(201,168,76,.2);box-shadow:0 8px 32px rgba(0,0,0,.5)}
-  .ref-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:520px}
+  .ref-video-wrap{border-radius:16px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(201,168,76,.3);box-shadow:0 12px 48px rgba(0,0,0,.7),0 0 0 1px rgba(201,168,76,.08)}
+  .ref-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:560px}
   @media(max-width:640px){.ref-videos-grid{grid-template-columns:1fr}}
-  /* 3D Coverflow slides */
-  .ref-cf-slide{width:260px!important;border-radius:12px;overflow:hidden;border:1px solid rgba(201,168,76,.15);box-shadow:0 4px 20px rgba(0,0,0,.6)}
-  .ref-cf-slide img{width:100%;height:340px;object-fit:cover;display:block}
-  .referenz-swiper{padding:2rem 0 3rem;overflow:visible}
+  /* Testimonial 3D coverflow */
+  .t-cf-slide{width:340px!important}
+  .testimonial-swiper{padding:2rem 0 3.5rem;overflow:visible}
   .for-whom-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem}
   .for-whom-list li{font-size:.875rem;color:var(--lighter);padding-left:1.3rem;position:relative;line-height:1.5}
   .for-whom-box.yes .for-whom-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
@@ -779,113 +778,74 @@
         <span style="font-size:.78rem;color:var(--lighter);">200+ Google-Bewertungen</span>
       </div>
     </div>
-    <div class="swiper testimonial-swiper fade-in">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Tom erklärt nicht nur wie es geht, sondern auch warum. Ich habe in 3 Monaten mehr gelernt als in einem Jahr Selbststudium. Absolute Empfehlung für jeden der es ernst meint."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Laura K.</div><div class="testimonial-role">Online Grundkurs · Bayern</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Ich hab schon 2 Jahre selbst versucht mir alles beizubringen. Nach dem Realismus-Kurs war alles klar. Die Technik, die Nadeln, das Drucksystem – endlich verstand ich was ich falsch gemacht hatte."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Marco B.</div><div class="testimonial-role">Realismus Kurs · Nordrhein-Westfalen</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Die Live Calls mit Tom sind Gold wert. Direkt Feedback auf meine Arbeiten, sofort Verbesserungen sehen. Das kriegst du in keinem YouTube-Tutorial."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Sandra M.</div><div class="testimonial-role">Vollpaket · Österreich</div></div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Als Quereinsteiger hatte ich Bedenken ob das überhaupt klappt. Tom hat mir gezeigt dass es kein Vorwissen braucht – nur die richtige Methode und Disziplin. Mein erstes Tattoo nach 6 Wochen."</p>
-            <div class="testimonial-author"><div class="testimonial-name">Florian D.</div><div class="testimonial-role">Online Grundkurs · Baden-Württemberg</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
 
-    <!-- REFERENZ VIDEOS -->
-    <div style="margin-top:4rem;" class="fade-in">
-      <div class="section-header center" style="margin-bottom:2rem;">
-        <span class="eyebrow">Referenz-Videos</span>
-        <h3 style="font-size:1.4rem;color:var(--white);">Unsere Teilnehmer <em>berichten</em></h3>
-        <div class="divider"></div>
+    <!-- VIDEOS -->
+    <div class="ref-videos-grid fade-in" style="margin-top:3rem;">
+      <div class="ref-video-wrap">
+        <video controls preload="none" poster="videos/rezension-1-poster.jpg" playsinline>
+          <source src="videos/rezension-1.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="ref-videos-grid">
-        <div class="ref-video-wrap">
-          <video controls preload="none" poster="videos/rezension-1-poster.jpg" playsinline>
-            <source src="videos/rezension-1.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="ref-video-wrap">
-          <video controls preload="none" poster="videos/rezension-2-poster.jpg" playsinline>
-            <source src="videos/rezension-2.mp4" type="video/mp4">
-          </video>
-        </div>
+      <div class="ref-video-wrap">
+        <video controls preload="none" poster="videos/rezension-2-poster.jpg" playsinline>
+          <source src="videos/rezension-2.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
 
-    <!-- REFERENZ 3D COVERFLOW -->
-    <div style="margin-top:4rem;padding-bottom:2rem;" class="fade-in">
-      <div class="section-header center" style="margin-bottom:2rem;">
-        <span class="eyebrow">Schülerarbeiten</span>
-        <h3 style="font-size:1.4rem;color:var(--white);">Das schaffen <em>unsere Teilnehmer</em></h3>
-        <div class="divider"></div>
-        <p style="max-width:480px;margin:.5rem auto 0;color:var(--lighter);font-size:.88rem;">Echte Ergebnisse von Einsteigern nach 90 Tagen Ausbildung.</p>
-      </div>
-      <div class="swiper referenz-swiper">
+    <!-- BEWERTUNGEN 3D COVERFLOW -->
+    <div style="margin-top:4rem;padding-bottom:1rem;" class="fade-in">
+      <div class="swiper testimonial-swiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-1.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-2.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-3.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-4.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-5.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-6.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-7.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-8.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-9.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-10.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-11.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-12.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-13.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-14.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-15.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-16.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-17.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-18.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
-          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-19.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Tom erklärt nicht nur wie es geht, sondern auch warum. Ich habe in 3 Monaten mehr gelernt als in einem Jahr Selbststudium. Absolute Empfehlung für jeden der es ernst meint."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Laura K.</div><div class="testimonial-role">Online Grundkurs · Bayern</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Ich hab schon 2 Jahre selbst versucht mir alles beizubringen. Nach dem Realismus-Kurs war alles klar. Die Technik, die Nadeln, das Drucksystem – endlich verstand ich was ich falsch gemacht hatte."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Marco B.</div><div class="testimonial-role">Realismus Kurs · Nordrhein-Westfalen</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Die Live Calls mit Tom sind Gold wert. Direkt Feedback auf meine Arbeiten, sofort Verbesserungen sehen. Das kriegst du in keinem YouTube-Tutorial."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Sandra M.</div><div class="testimonial-role">Vollpaket · Österreich</div></div>
+            </div>
+          </div>
+          <div class="swiper-slide t-cf-slide">
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Als Quereinsteiger hatte ich Bedenken ob das überhaupt klappt. Tom hat mir gezeigt dass es kein Vorwissen braucht – nur die richtige Methode und Disziplin. Mein erstes Tattoo nach 6 Wochen."</p>
+              <div class="testimonial-author"><div class="testimonial-name">Florian D.</div><div class="testimonial-role">Online Grundkurs · Baden-Württemberg</div></div>
+            </div>
+          </div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -1053,43 +1013,18 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     centeredSlides: true,
     slidesPerView: 'auto',
     coverflowEffect: {
-      rotate: 30,
+      rotate: 45,
       stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: false,
-    },
-    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
-    navigation: {
-      nextEl: '.testimonial-swiper .swiper-button-next',
-      prevEl: '.testimonial-swiper .swiper-button-prev',
-    },
-    autoplay: { delay: 5000, disableOnInteraction: false },
-    loop: true,
-    breakpoints: {
-      0:   { slidesPerView: 1 },
-      640: { slidesPerView: 1.5 },
-      900: { slidesPerView: 2.5 },
-    }
-  });
-
-  // Referenz Swiper (3D Coverflow)
-  new Swiper('.referenz-swiper', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 'auto',
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 220,
-      modifier: 1.4,
+      depth: 200,
+      modifier: 1.3,
       slideShadows: true,
     },
-    pagination: { el: '.referenz-swiper .swiper-pagination', clickable: true },
-    autoplay: { delay: 3000, disableOnInteraction: false },
+    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
+    autoplay: { delay: 4000, disableOnInteraction: false },
     loop: true,
   });
+
+
 </script>
 <script>
   document.querySelectorAll('.vn-slider-lp').forEach(slider => {
