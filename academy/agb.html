@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGB – Allgemeine Geschäftsbedingungen | 7er Ink Tattoo Academy</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://academy.7erink.com/agb.html">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/7erink-logo.png">
+  <link rel="stylesheet" href="academy.css?v=2">
+  <script src="nav.js" defer></script>
+  <style>
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
+  @media(max-width:900px){.mobile-menu{display:flex}}
+  .mobile-menu.open{transform:translateX(0)}
+  .mobile-menu-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:rgba(255,255,255,.75);font-size:1rem;cursor:pointer;width:2.3rem;height:2.3rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:border-color .2s,color .2s}
+  .mobile-menu-close:hover{border-color:#c9a84c;color:#c9a84c}
+  .mobile-nav-inner{flex:1;overflow-y:auto;padding:4.2rem 1.8rem 2rem;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+  .nav-group{margin-bottom:1.6rem}
+  .nav-group-label{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:.35rem;display:block}
+  .mobile-nav-inner a.nav-item{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;transition:color .15s}
+  .mobile-nav-inner .nav-group:last-of-type a.nav-item:last-of-type{border-bottom:none}
+  .mobile-nav-inner a.nav-item:hover,.mobile-nav-inner a.nav-item:active{color:#c9a84c}
+  .mobile-nav-inner a.nav-item span{font-size:.82rem;opacity:.4}
+  .mobile-nav-cta{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}
+  .mobile-nav-cta .btn{width:100% !important;text-align:center !important;justify-content:center !important}
+  .mobile-freebie-link{display:block;text-align:center;color:rgba(255,255,255,.6) !important;font-size:.8rem;font-weight:500 !important;padding:.2rem 0 !important;font-family:inherit !important}
+  .mobile-freebie-link:hover{color:#c9a84c !important}
+
+  /* AGB Styles */
+  .agb-wrap{max-width:760px;margin:0 auto;padding:4rem 2rem 6rem;}
+  .agb-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);margin-bottom:.5rem;}
+  .agb-stand{font-size:.8rem;color:var(--muted);margin-bottom:3rem;letter-spacing:.05em;}
+  .agb-toc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.8rem 2rem;margin-bottom:3rem;}
+  .agb-toc h3{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .agb-toc ol{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:.3rem;}
+  .agb-toc li a{color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .15s;}
+  .agb-toc li a:hover{color:var(--gold);}
+  .agb-section{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);}
+  .agb-section:last-child{border-bottom:none;}
+  .agb-section h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid rgba(201,168,76,.2);}
+  .agb-section h2 span{font-size:.85rem;font-family:inherit;color:var(--gold);margin-right:.5rem;}
+  .agb-para{margin-bottom:1.2rem;color:var(--lighter);line-height:1.8;font-size:.9rem;}
+  .agb-para strong{color:var(--white);}
+  .agb-list{margin:.5rem 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+  .agb-list li{color:var(--lighter);line-height:1.7;font-size:.9rem;}
+  .agb-highlight{background:rgba(201,168,76,.06);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0;}
+  .agb-highlight p{color:var(--lighter);font-size:.88rem;line-height:1.75;margin:0;}
+  .agb-form-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.8rem 2rem;margin-top:1.5rem;}
+  .agb-form-box h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;}
+  .agb-form-box p{color:var(--muted);font-size:.85rem;line-height:1.75;margin-bottom:.75rem;}
+  .agb-form-row{border-bottom:1px solid rgba(255,255,255,.06);padding:.6rem 0;color:var(--lighter);font-size:.85rem;}
+  .agb-back{display:inline-flex;align-items:center;gap:.5rem;color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;margin-bottom:3rem;}
+  .agb-back:hover{opacity:.75;}
+  </style>
+</head>
+<body>
+
+<nav id="nav" class="solid">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a>
+    <ul class="nav-links">
+      <li class="nav-dropdown">
+        <a>Kurse</a>
+        <div class="dropdown-menu">
+          <a href="paket.html">Tattoo Ausbildung</a>
+          <a href="quiz.html">🎯 Passt das zu mir?</a>
+          <a href="online-grundkurs.html">Grundkurs</a>
+          <a href="realismus-kurs.html">Realismus-Kurs</a>
+          <a href="business-kurs.html">Business-Kurs</a>
+          <a href="coaching.html">Live Calls</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a>Wissen</a>
+        <div class="dropdown-menu">
+          <a href="taetowieren-lernen.html">Tätowieren lernen</a>
+          <a href="tattoo-stile.html">Tattoo Stile</a>
+          <a href="tattoo-abc.html">Tattoo ABC</a>
+          <a href="standorte.html">Städte</a>
+          <a href="news.html">Journal &amp; News</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a>Ratgeber</a>
+        <div class="dropdown-menu">
+          <a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a>
+          <a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a>
+          <a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a>
+          <a href="tattoo-preise-berechnen.html">Preise berechnen</a>
+          <a href="tattoo-business-starten.html">Business starten</a>
+          <a href="tattoo-ausbildung-kosten.html">Ausbildung Kosten</a>
+        </div>
+      </li>
+      <li><a href="tom.html">Über Tom</a></li>
+      <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="index.html#freebie" class="nav-freebie-link">🎁 Freebie</a></li>
+    </ul>
+    <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
+    <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose" aria-label="Menü schließen">✕</button>
+  <div class="mobile-nav-inner">
+    <div class="nav-group">
+      <span class="nav-group-label">Kurse</span>
+      <a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a>
+      <a href="quiz.html" class="nav-item">🎯 Passt das zu mir? <span>→</span></a>
+      <a href="online-grundkurs.html" class="nav-item">Grundkurs <span>→</span></a>
+      <a href="realismus-kurs.html" class="nav-item">Realismus-Kurs <span>→</span></a>
+      <a href="business-kurs.html" class="nav-item">Business-Kurs <span>→</span></a>
+      <a href="coaching.html" class="nav-item">Live Calls <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Wissen</span>
+      <a href="taetowieren-lernen.html" class="nav-item">Tätowieren lernen <span>→</span></a>
+      <a href="tattoo-stile.html" class="nav-item">Tattoo Stile <span>→</span></a>
+      <a href="tattoo-abc.html" class="nav-item">Tattoo ABC <span>→</span></a>
+      <a href="standorte.html" class="nav-item">Städte <span>→</span></a>
+      <a href="news.html" class="nav-item">Journal &amp; News <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Ratgeber</span>
+      <a href="wie-viel-verdient-ein-taetowierer.html" class="nav-item">Tätowierer Verdienst <span>→</span></a>
+      <a href="tattoo-maschine-anfaenger.html" class="nav-item">Maschinen für Anfänger <span>→</span></a>
+      <a href="tattoo-apprenticeship-vs-online.html" class="nav-item">Apprenticeship vs. Online <span>→</span></a>
+      <a href="tattoo-preise-berechnen.html" class="nav-item">Preise berechnen <span>→</span></a>
+      <a href="tattoo-business-starten.html" class="nav-item">Business starten <span>→</span></a>
+      <a href="tattoo-ausbildung-kosten.html" class="nav-item">Ausbildung Kosten <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Academy</span>
+      <a href="tom.html" class="nav-item">Über Tom <span>→</span></a>
+      <a href="vorher-nachher.html" class="nav-item">Vorher &amp; Nachher <span>→</span></a>
+    </div>
+    <div class="mobile-nav-cta">
+      <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a>
+      <a href="index.html#freebie" class="mobile-freebie-link">🎁 Kostenloses Freebie sichern</a>
+    </div>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="inner-hero" style="padding:7rem 0 4rem;">
+  <div class="container">
+    <nav class="breadcrumb"><a href="index.html">Academy</a><span>›</span><span>AGB</span></nav>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);">Allgemeine Geschäftsbedingungen</h1>
+    <p style="color:var(--muted);margin-top:.75rem;font-size:.9rem;">Irschina Akademie · Stand: 10.04.2026</p>
+  </div>
+</div>
+
+<section style="padding:0 0 6rem;">
+  <div class="agb-wrap">
+
+    <a href="index.html" class="agb-back">← Zurück zur Academy</a>
+
+    <!-- Inhaltsverzeichnis -->
+    <div class="agb-toc">
+      <h3>Inhaltsverzeichnis</h3>
+      <ol>
+        <li><a href="#s1">Geltungsbereich und Begriffsbestimmungen</a></li>
+        <li><a href="#s2">Registrierung und Kundenkonto</a></li>
+        <li><a href="#s3">Vertragsschluss</a></li>
+        <li><a href="#s4">Leistungen</a></li>
+        <li><a href="#s5">Vergütung</a></li>
+        <li><a href="#s6">Verzug</a></li>
+        <li><a href="#s7">Pflichten der Parteien</a></li>
+        <li><a href="#s8">Sperrung des Kundenkontos</a></li>
+        <li><a href="#s9">Vertragslaufzeit und Kündigung</a></li>
+        <li><a href="#s10">Haftung auf Schadensersatz</a></li>
+        <li><a href="#s11">Urheberrecht und geistiges Eigentum</a></li>
+        <li><a href="#s12">Datenschutz und Geheimhaltung</a></li>
+        <li><a href="#s13">Widerrufsrecht</a></li>
+        <li><a href="#s14">Referenznennung</a></li>
+        <li><a href="#s15">Schlussbestimmungen</a></li>
+      </ol>
+    </div>
+
+    <!-- § 1 -->
+    <div class="agb-section" id="s1">
+      <h2><span>§ 1</span>Geltungsbereich und Begriffsbestimmungen</h2>
+      <p class="agb-para">1.1. Für die Geschäftsbeziehung zwischen Tom Irschina / Irschina Akademie, Fidel-Kreuzer-Strasse 4, 86825 Bad Wörishofen (im Folgenden kurz „ANBIETER" genannt) und dem Empfänger der Leistungen (im Folgenden kurz „Kunde" genannt), insbesondere im Hinblick auf Verträge über Leistungen wie Coachings, Beratungen und Online-Kurse im Rahmen der „Tattoo Artist Academy" (nachfolgend kurz „Leistungen" genannt) gelten ausschließlich diese Allgemeinen Geschäftsbedingungen.</p>
+      <p class="agb-para">1.2. Das Angebot des ANBIETERS richtet sich sowohl an Unternehmer (§ 14 BGB) als auch an Verbraucher (§ 13 BGB). Soweit der Kunde Verbraucher ist, gelten ergänzend die gesetzlichen Verbraucherschutzvorschriften, insbesondere die Regelungen zum Widerrufsrecht (§ 13 dieser AGB).</p>
+      <p class="agb-para">1.3. Widersprechende, abweichende oder ergänzende Allgemeine Geschäftsbedingungen des Kunden werden nicht Vertragsbestandteil, es sei denn der ANBIETER stimmt deren Geltung ausdrücklich zu. Diese Allgemeinen Geschäftsbedingungen gelten auch dann, wenn der ANBIETER in Kenntnis entgegenstehender oder von diesen Allgemeinen Geschäftsbedingungen abweichenden Bedingungen des Kunden Leistungen vorbehaltlos ausführt.</p>
+      <p class="agb-para">1.4. Die vertragliche Grundlage ergibt sich aus der individuellen Absprache zwischen dem ANBIETER und dem Kunden (z.B. in Form eines Angebots bzw. Beratungsgesprächs) sowie den vorliegenden Bedingungen.</p>
+      <p class="agb-para">1.5. Maßgeblich ist die jeweils vor Inanspruchnahme der Leistungen gültige Fassung der Allgemeinen Geschäftsbedingungen des ANBIETERS.</p>
+      <p class="agb-para">1.6. Diese AGB gelten auch für alle zukünftigen Leistungsbeziehungen zwischen dem ANBIETER und dem Kunden (in Zusammenhang mit dem angebotenen Leistungsgegenstand), ohne dass es einer ausdrücklichen Einbeziehung bedarf.</p>
+      <p class="agb-para">1.7. Sofern in den nachfolgenden Bestimmungen das generische Maskulinum verwendet wird, gilt dies einzig und allein aus Gründen der Einfachheit, ohne dass damit eine Wertung verbunden ist.</p>
+    </div>
+
+    <!-- § 2 -->
+    <div class="agb-section" id="s2">
+      <h2><span>§ 2</span>Registrierung und Kundenkonto</h2>
+      <p class="agb-para">2.1. Die Nutzung des Videokurses und der dazugehörigen Dienste ist registrierten Kunden vorbehalten. Die Registrierung erfolgt auf der Plattform Ablefy. Es besteht kein Anspruch auf Registrierung. Der ANBIETER behält sich das Recht vor, die Registrierung ohne Angabe von Gründen abzulehnen.</p>
+      <p class="agb-para">2.2. Im Rahmen der Registrierung hat der Kunde sämtliche geforderten Informationen vollständig und wahrheitsgemäß anzugeben und bei Änderung unverzüglich zu aktualisieren. Nach abgeschlossener Registrierung und Zahlungseingang erhält der Kunde seine persönlichen Zugangsdaten per E-Mail.</p>
+      <p class="agb-para">2.3. Jede Registrierung bzw. jedes Kundenkonto gilt ausschließlich für einen bestimmten Kunden. Die gemeinsame Nutzung eines einzigen Kundenkontos durch mehrere Personen sowie die Übertragung eines Kundenkontos an Dritte, sei es entgeltlich oder unentgeltlich, ist nicht gestattet.</p>
+      <p class="agb-para">2.4. Der Kunde verpflichtet sich, seine Zugangsdaten geheim zu halten und vor dem Zugriff unbefugter Dritter zu schützen. Für die Geheimhaltung und den Schutz der Zugangsdaten ist allein der Kunde verantwortlich. Bei Verlust der Zugangsdaten oder bei Verdacht, dass unbefugte Dritte von den Zugangsdaten Kenntnis erlangt haben, ist der Kunde verpflichtet, den ANBIETER unverzüglich per E-Mail an <a href="mailto:info@7erink.com" style="color:var(--gold);">info@7erink.com</a> zu benachrichtigen, damit eine Sperre des Kundenkontos veranlasst werden kann.</p>
+    </div>
+
+    <!-- § 3 -->
+    <div class="agb-section" id="s3">
+      <h2><span>§ 3</span>Vertragsschluss</h2>
+      <p class="agb-para">3.1. Die Präsentation der Leistungen auf der Webseite oder in Werbeanzeigen stellt kein verbindliches Angebot des ANBIETERS auf Abschluss eines Vertrags dar. Der Kunde wird hierdurch lediglich aufgefordert, ein Angebot abzugeben.</p>
+      <p class="agb-para">3.2. Der Vertrag kommt zustande, wenn der Kunde nach einem Beratungsgespräch (Closing-Call) den vom ANBIETER bereitgestellten Zahlungslink nutzt und die Zahlung erfolgreich durchführt. Der Vertragsschluss kann fernmündlich (insbesondere per Video bzw. Videochat und/oder Telefon), in Textform (insbesondere per E-Mail) oder schriftlich erfolgen.</p>
+      <p class="agb-para">3.3. Die Annahme des Angebots und somit der Vertragsabschluss erfolgt durch die Versendung einer Bestellbestätigung an den Kunden per E-Mail an die vom Kunden angegebene E-Mail-Adresse.</p>
+      <p class="agb-para">3.4. Im Fall von fernmündlich abgeschlossenen Verträgen willigt der Kunde ein, dass der ANBIETER das Telefonat und/oder die Video-Konferenz zu Beweis- und Dokumentationszwecken aufzeichnen darf.</p>
+      <p class="agb-para">3.5. Der Kunde erklärt sich ausdrücklich damit einverstanden, keine Login-Benutzernamen, Passwörter, Kursmaterialien und Links, auf die der Kunde im Rahmen dieses Vertrags Zugriff erhält, an Dritte weiterzugeben.</p>
+    </div>
+
+    <!-- § 4 -->
+    <div class="agb-section" id="s4">
+      <h2><span>§ 4</span>Leistungen</h2>
+      <p class="agb-para">4.1. Der ANBIETER bietet unter der Bezeichnung „Tattoo Artist Academy" ein Coaching-Programm an, das insbesondere folgende Bestandteile umfassen kann:</p>
+      <ul class="agb-list">
+        <li>a) Zeitlich unbegrenzter Zugang zu einem Online-Videokurs auf der Plattform Ablefy</li>
+        <li>b) Zeitlich unbegrenzte Teilnahme an regelmäßigen Gruppen-Coaching-Calls via Zoom</li>
+        <li>c) Zeitlich unbegrenzter Zugang zu einer Community-Gruppe via WhatsApp</li>
+      </ul>
+      <p class="agb-para">Der konkrete Leistungsumfang ergibt sich aus der individuellen Absprache zwischen ANBIETER und Kunde sowie der zum Zeitpunkt der Buchung gültigen Leistungsbeschreibung.</p>
+      <p class="agb-para">4.2. Mit Erwerb des Coaching-Programms erhält der Kunde eine zeitlich unbegrenzte, persönliche, nicht exklusive, nicht übertragbare, nicht unterlizenzierbare und widerrufliche Lizenz zur Nutzung der Kursinhalte und zur Teilnahme an den Gruppen-Coaching-Calls. Diese Lizenz berechtigt ausschließlich den Kunden persönlich und darf nicht an Dritte weitergegeben werden.</p>
+      <p class="agb-para">4.3. Über das Anbieten der Leistungen hinaus wird dem Kunden ausdrücklich kein bestimmter Erfolg geschuldet. Der Erfolg hängt maßgeblich vom Einsatz und der Umsetzung des Kunden ab.</p>
+      <p class="agb-para">4.4. Die Gruppen-Coaching-Calls finden zu den vom ANBIETER bekannt gegebenen Terminen statt. Es steht dem ANBIETER frei, diese Termine bei Bedarf zu verschieben. Eine Übertragung des Leistungsanspruchs auf einen späteren Zeitpunkt ist ausgeschlossen. Ein Anspruch auf Nachholung versäumter Calls besteht nicht.</p>
+      <p class="agb-para">4.5. Der ANBIETER ist berechtigt, sich bei der Leistungserbringung der Hilfe Dritter, insbesondere Subunternehmer, zu bedienen.</p>
+      <p class="agb-para">4.6. In Bezug auf die Inhalte des Coaching-Programms steht dem ANBIETER ein Leistungsbestimmungsrecht nach § 315 BGB zu. Der ANBIETER behält sich das Recht vor, den Inhalt des Programms jederzeit weiterzuentwickeln, zu aktualisieren oder zu ergänzen. Der ANBIETER behält sich ferner das Recht vor, Funktionen, Eigenschaften und Inhalte hinzuzufügen oder zu entfernen.</p>
+      <p class="agb-para">4.7. Sofern die Leistungen des ANBIETERS über sog. Reseller angeboten und/oder vertrieben werden (z.B. Ablefy, Copecart, Digistore24, o. dgl.), gelten vorrangig die vorliegenden Bedingungen.</p>
+      <p class="agb-para">4.8. Für die Teilnahme am Coaching-Programm werden weder akademische Punkte (Credits) noch akademische Titel, Diplome oder akademisch anerkannte Zertifikate verliehen oder ausgestellt.</p>
+    </div>
+
+    <!-- § 5 -->
+    <div class="agb-section" id="s5">
+      <h2><span>§ 5</span>Vergütung</h2>
+      <p class="agb-para">5.1. Für die Leistungen gilt die jeweilige zum Zeitpunkt des Vertragsschlusses gemäß Leistungsbeschreibung geltende Vergütung.</p>
+      <p class="agb-para">5.2. Dem Kunden stehen folgende Zahlungsoptionen zur Verfügung:</p>
+      <ul class="agb-list">
+        <li>a) Einmalzahlung</li>
+        <li>b) Ratenzahlung</li>
+      </ul>
+      <p class="agb-para">5.3. Die Zahlungsabwicklung erfolgt über die Plattform Ablefy. Ablefy tritt hierbei als Reseller gegenüber dem Kunden auf und übernimmt die Rechnungsstellung und Umsatzsteuerabführung.</p>
+      <p class="agb-para">5.4. Der Kunde ist, soweit nicht anders vereinbart, zur Vorleistung verpflichtet. Die vereinbarte Vergütung ist unmittelbar mit Vertragsschluss fällig. Die bestellten Leistungen werden nach erfolgter Zahlung bzw. nach Eingang der ersten Rate zur Nutzung freigeschaltet.</p>
+      <p class="agb-para">5.5. Bei Ratenzahlung ist der Kunde verpflichtet, alle vereinbarten Raten vollständig zu entrichten – unabhängig davon, ob er die Leistungen des Programms in Anspruch nimmt.</p>
+      <p class="agb-para">5.6. Der Kunde kann nur mit rechtskräftig festgestellten oder unbestrittenen Forderungen sein Aufrechnungsrecht oder ein Zurückbehaltungsrecht ausüben bzw. geltend machen.</p>
+    </div>
+
+    <!-- § 6 -->
+    <div class="agb-section" id="s6">
+      <h2><span>§ 6</span>Verzug</h2>
+      <p class="agb-para">6.1. Etwaige Fristen zur Leistungserbringung durch den ANBIETER beginnen in jedem Fall nicht, bevor die vereinbarte Vergütung vollständig durch den Kunden beglichen wurde und sämtliche notwendigen Mitwirkungshandlungen des Kunden umfassend erbracht wurden.</p>
+      <p class="agb-para">6.2. Ist der Kunde mit fälligen Zahlungen im Verzug, behält sich der ANBIETER das Recht vor, den Zugang zum Videokurs, zur Community-Gruppe und zu den Gruppen-Coaching-Calls bis zum Ausgleich der fälligen Zahlungen zu sperren.</p>
+      <p class="agb-para">6.3. Der ANBIETER ist berechtigt, den Vertrag bei Vorliegen eines wichtigen Grundes gem. § 626 Abs. 1 BGB zu kündigen und sämtliche Leistungen einzustellen. Ein wichtiger Grund liegt insbesondere vor, wenn der Kunde mit einer vereinbarten Ratenzahlung mit einer fälligen Rate gegenüber dem ANBIETER in Verzug gerät. Bei Verzug von mehr als 14 Tagen ist der ANBIETER berechtigt, die gesamte noch ausstehende Restvergütung sofort fällig zu stellen. Der ANBIETER muss sich in diesem Fall dasjenige anrechnen lassen, was er an Aufwendungen erspart oder zu erwerben unterlässt.</p>
+      <p class="agb-para">6.4. Im Falle einer fehlgeschlagenen Zahlung (z.B. mangels Kontodeckung, Kreditkartenablehnung oder bei ungültiger Bankverbindung) hat der Kunde die hierdurch entstehenden Gebühren und Rückbuchungskosten zu tragen.</p>
+    </div>
+
+    <!-- § 7 -->
+    <div class="agb-section" id="s7">
+      <h2><span>§ 7</span>Pflichten der Parteien</h2>
+      <p class="agb-para">7.1. Alle vertraglich zugesagten Leistungen erbringt der ANBIETER grundsätzlich erst ab dem Zeitpunkt des Vertragsschlusses und nach Eingang der (ersten) Zahlung.</p>
+      <p class="agb-para">7.2. Der Kunde stellt sicher, dass der ANBIETER zu jedem Zeitpunkt über alle erforderlichen Informationen verfügt, die zum Erreichen eines bestmöglichen Beratungsergebnisses erforderlich sind.</p>
+      <p class="agb-para">7.3. Der Kunde hat zu gewährleisten, dass die für die Leistungen erforderlichen technischen Voraussetzungen stets vorliegen. Dies umfasst insbesondere:</p>
+      <ul class="agb-list">
+        <li>a) Eine hinreichend leistungsfähige Internetverbindung</li>
+        <li>b) Einen Computer, ein Tablet oder ein Smartphone mit aktuellem Betriebssystem (Windows, macOS, iOS oder Android)</li>
+        <li>c) Einen Zoom-Zugang für die Gruppen-Coaching-Calls</li>
+        <li>d) WhatsApp-Nutzung für die Community-Gruppe</li>
+      </ul>
+      <p class="agb-para">Der ANBIETER ist für etwaige Nichtverfügbarkeiten der Drittplattformen (Ablefy, Zoom, WhatsApp) nicht verantwortlich.</p>
+      <p class="agb-para">7.4. Der Kunde verpflichtet sich, in der Community-Gruppe und in den Gruppen-Coaching-Calls einen respektvollen Umgang zu pflegen. Der ANBIETER behält sich vor, Kunden bei wiederholtem Fehlverhalten von der Community und/oder den Calls auszuschließen. Ein Anspruch auf Rückerstattung besteht in diesem Fall nicht.</p>
+      <p class="agb-para">7.5. Der ANBIETER ist jederzeit berechtigt, Termine digital (z.B. via Zoom oder vergleichbare Plattformen) durchzuführen.</p>
+      <p class="agb-para">7.6. Der Kunde ist selbstständig dafür verantwortlich, die technischen Voraussetzungen bereitzuhalten, um das Angebot vollständig nutzen zu können. Bei Vorliegen von technischen Problemen ist der Kunde zudem verpflichtet, an der Problemlösung bestmöglich mitzuwirken.</p>
+    </div>
+
+    <!-- § 8 -->
+    <div class="agb-section" id="s8">
+      <h2><span>§ 8</span>Sperrung des Kundenkontos</h2>
+      <p class="agb-para">8.1. Der ANBIETER ist zur sofortigen Sperrung des Kundenkontos berechtigt, wenn ein Verdacht besteht, dass das Kundenkonto missbrauchlich, in Verletzung der gegenständlichen AGB bzw. der Vertragsbedingungen oder in gesetzwidriger Weise verwendet wird. Dies gilt insbesondere, wenn:</p>
+      <ul class="agb-list">
+        <li>a) das Kundenkonto durch Dritte benutzt wird (Account-Sharing)</li>
+        <li>b) Kursinhalte kopiert, aufgezeichnet oder weitergegeben werden</li>
+        <li>c) der Kunde mit fälligen Zahlungen im Verzug ist</li>
+        <li>d) der Kunde wiederholt gegen die Verhaltensregeln in der Community oder den Calls verstößt</li>
+      </ul>
+      <p class="agb-para">8.2. Im Falle einer berechtigten Sperrung besteht kein Anspruch auf Rückerstattung bereits geleisteter Zahlungen. Die Zahlungspflicht für ausstehende Raten bleibt bestehen.</p>
+    </div>
+
+    <!-- § 9 -->
+    <div class="agb-section" id="s9">
+      <h2><span>§ 9</span>Vertragslaufzeit und Kündigung</h2>
+      <p class="agb-para">9.1. Der Zugang zum Online-Videokurs ist zeitlich unbegrenzt. Der Kunde erhält nach vollständiger Zahlung (bzw. bei Ratenzahlung: nach Eingang der ersten Rate) dauerhaften Zugang zu den zum Zeitpunkt des Kaufs enthaltenen Kursinhalten.</p>
+      <p class="agb-para">9.2. Die Teilnahme an den Gruppen-Coaching-Calls ist zeitlich unbegrenzt, solange der ANBIETER diese anbietet. Der ANBIETER behält sich das Recht vor, Format, Häufigkeit und Zeitpunkt der Calls nach eigenem Ermessen anzupassen oder die Calls nach angemessener Vorankündigung einzustellen.</p>
+      <p class="agb-para">9.3. Die Teilnahme an der Community-Gruppe (WhatsApp) ist zeitlich unbegrenzt.</p>
+      <p class="agb-para">9.4. Eine vorzeitige ordentliche Kündigung durch den Kunden ist ausgeschlossen. Bei Kündigung durch den Kunden besteht kein Anspruch auf Rückerstattung bereits geleisteter Zahlungen. Bei Ratenzahlung bleiben die ausstehenden Raten fällig.</p>
+      <p class="agb-para">9.5. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt für beide Parteien unberührt.</p>
+    </div>
+
+    <!-- § 10 -->
+    <div class="agb-section" id="s10">
+      <h2><span>§ 10</span>Haftung auf Schadensersatz</h2>
+      <p class="agb-para">10.1. Der ANBIETER haftet, gleich aus welchem Rechtsgrund, im Rahmen der gesetzlichen Bestimmungen nur nach Maßgabe der folgenden Regelungen:</p>
+      <p class="agb-para">10.2. Der ANBIETER haftet unbeschränkt für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit, die auf Vorsatz oder Fahrlässigkeit des ANBIETERS oder eines seiner gesetzlichen Vertreter oder Erfüllungsgehilfen beruhen. Daneben haftet der ANBIETER für Schäden, die auf Vorsatz oder grober Fahrlässigkeit beruhen sowie für Schäden wegen der Nichteinhaltung einer vom ANBIETER gegebenen Garantie oder zugesicherten Eigenschaft.</p>
+      <p class="agb-para">10.3. Der ANBIETER haftet unter Begrenzung auf Ersatz des vertragstypischen vorhersehbaren Schadens für solche Schäden, die auf einer leicht fahrlässigen Verletzung wesentlicher Vertragspflichten durch ihn oder einen seiner gesetzlichen Vertreter oder Erfüllungsgehilfen beruhen. Vertragswesentliche Pflichten sind Pflichten, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags überhaupt erst ermöglichen und auf deren Einhaltung der Vertragspartner regelmäßig vertrauen darf.</p>
+      <p class="agb-para">10.4. Die Haftung für die Verfügbarkeit und Funktionsfähigkeit der Drittplattformen (Ablefy, Zoom, WhatsApp) wird ausgeschlossen, soweit der ANBIETER die Störung nicht zu vertreten hat.</p>
+      <p class="agb-para">10.5. Der ANBIETER schuldet bei der Leistungserbringung keinen bestimmten Lernerfolg und haftet nicht für die inhaltliche Richtigkeit, Vollständigkeit und/oder Aktualität der Kursinhalte. Der ANBIETER übernimmt insbesondere keine Haftung für Handlungen oder Unterlassungen, die sich direkt oder indirekt aus der Verwendung der Kursinhalte ergeben.</p>
+    </div>
+
+    <!-- § 11 -->
+    <div class="agb-section" id="s11">
+      <h2><span>§ 11</span>Urheberrecht und geistiges Eigentum</h2>
+      <p class="agb-para">11.1. Sämtliche im Rahmen des Coaching-Programms zur Verfügung gestellten Inhalte (Videos, Materialien, Templates, Workbooks, Software etc.) sind urheberrechtlich geschützt. Alle Rechte, insbesondere sämtliche Immaterialgüterrechte, Verwertungsrechte, Bearbeitungsrechte und Urheberrechte stehen ausschließlich dem ANBIETER zu.</p>
+      <p class="agb-para">11.2. Der Kunde erhält ausschließlich die in diesen AGB definierte Nutzungslizenz. Sämtliche sonstigen Rechte am geistigen Eigentum verbleiben beim ANBIETER.</p>
+      <p class="agb-para">11.3. Ohne ausdrückliche schriftliche Zustimmung des ANBIETERS dürfen Kursinhalte nicht vervielfältigt, kopiert, gespeichert, verteilt, veräußert, überlassen, geteilt, verliehen, geändert, bearbeitet, davon abgeleitete Werke erstellt, in Sublizenz vergeben oder anderweitig übertragen oder genutzt werden.</p>
+      <p class="agb-para">11.4. Der Kunde ist insbesondere nicht berechtigt, ohne ausdrückliche Erlaubnis des ANBIETERS Bild-, Film- oder Tonaufnahmen von den Kursmaterialien und/oder Gruppen-Coaching-Calls zu machen. Jeder Verstoß wird verfolgt und führt zu Schadensersatzansprüchen.</p>
+      <p class="agb-para">11.5. Der Kunde stimmt zu, dass Ton- und Bildaufzeichnungen unter Teilnahme des Kunden, insbesondere von Gruppen-Coaching-Calls, durch den ANBIETER angefertigt und zeitlich, örtlich und inhaltlich unbegrenzt ausgewertet werden dürfen.</p>
+    </div>
+
+    <!-- § 12 -->
+    <div class="agb-section" id="s12">
+      <h2><span>§ 12</span>Datenschutz und Geheimhaltung</h2>
+      <p class="agb-para">12.1. Der ANBIETER verarbeitet personenbezogene Daten des Kunden gemäß der Datenschutz-Grundverordnung (DSGVO). Details entnehmen Sie der Datenschutzerklärung unter <a href="datenschutz.html" style="color:var(--gold);">academy.7erink.com/datenschutz.html</a></p>
+      <p class="agb-para">12.2. Zur Durchführung des Vertrags werden Daten an folgende Drittanbieter übermittelt:</p>
+      <ul class="agb-list">
+        <li>a) Ablefy (Zahlungsabwicklung und Kursbereitstellung)</li>
+        <li>b) Brevo (E-Mail-Kommunikation)</li>
+        <li>c) Zoom (Gruppen-Coaching-Calls)</li>
+        <li>d) WhatsApp / Meta (Community-Gruppe)</li>
+        <li>e) Close CRM (Kundenverwaltung)</li>
+      </ul>
+      <p class="agb-para">12.3. Die Vertragsparteien verpflichten sich, die ihnen im Rahmen der Vertragsdurchführung bekannt gewordenen Informationen aus dem Bereich der anderen Partei vertraulich zu behandeln.</p>
+    </div>
+
+    <!-- § 13 -->
+    <div class="agb-section" id="s13">
+      <h2><span>§ 13</span>Widerrufsrecht</h2>
+
+      <div class="agb-highlight">
+        <p><strong style="color:var(--white);">Für Verbraucher (§ 13 BGB):</strong></p>
+      </div>
+
+      <p class="agb-para">13.1. Sofern der Kunde Verbraucher ist und der Vertrag im Wege der Fernkommunikation (per Telefon, Video-Call, E-Mail oder online) abgeschlossen wurde, hat er das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen – dies jedoch nur, sofern keine Ausnahme vom Widerrufsrecht gemäß nachstehendem Punkt 13.6. vorliegt.</p>
+      <p class="agb-para">13.2. Die Widerrufsfrist beträgt vierzehn Tage ab Vertragsschluss. Der Tag des Vertragsschlusses selbst wird nicht mitgezählt.</p>
+      <p class="agb-para">13.3. Um das Widerrufsrecht auszuüben, muss der Kunde den Widerruf des Vertrages mittels einer eindeutigen Erklärung (z.B. mittels eines per Post versandten Briefes oder E-Mail) gegenüber dem ANBIETER per E-Mail an <a href="mailto:info@7erink.com" style="color:var(--gold);">info@7erink.com</a> oder an <em>Fidel-Kreuzer-Strasse 4, 86825 Bad Wörishofen</em> bekanntgeben. Der Kunde kann dafür das untenstehende Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+      <p class="agb-para">13.4. Zur Wahrung der Widerrufsfrist genügt es, dass der Kunde die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absendet.</p>
+      <p class="agb-para">13.5. Wenn der Kunde den Vertrag widerruft, hat der ANBIETER dem Kunden alle Zahlungen, die er vom Kunden erhalten hat, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über den Widerruf des Vertrages beim ANBIETER eingegangen ist. Für diese Rückzahlung wird dasselbe Zahlungsmittel verwendet, das der Kunde bei der ursprünglichen Transaktion eingesetzt hat, es sei denn, es wurde ausdrücklich etwas Anderes vereinbart. Dem Kunden werden wegen dieser Rückzahlung keine Entgelte berechnet.</p>
+
+      <p class="agb-para"><strong>13.6. Ausnahmen zum Widerrufsrecht:</strong></p>
+      <p class="agb-para">Das Widerrufsrecht erlischt vorzeitig bei Verträgen zur Lieferung von nicht auf einem körperlichen Datenträger befindlichen digitalen Inhalten (z.B. Online-Videokurs), wenn der ANBIETER mit der Ausführung des Vertrags begonnen hat, nachdem der Kunde:</p>
+      <ul class="agb-list">
+        <li>a) ausdrücklich zugestimmt hat, dass der ANBIETER mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist beginnt, und</li>
+        <li>b) seine Kenntnis davon bestätigt hat, dass er durch seine Zustimmung mit Beginn der Ausführung des Vertrags sein Widerrufsrecht verliert.</li>
+      </ul>
+      <p class="agb-para">Diese Zustimmung wird im Rahmen des Checkout-Prozesses auf Ablefy durch eine entsprechende Checkbox eingeholt.</p>
+
+      <!-- Muster-Widerrufsformular -->
+      <div class="agb-form-box">
+        <h4>Muster-Widerrufsformular</h4>
+        <p>(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück)</p>
+        <p><strong style="color:var(--white);">An:</strong> Tom Irschina / Irschina Akademie, Fidel-Kreuzer-Strasse 4, 86825 Bad Wörishofen, <a href="mailto:info@7erink.com" style="color:var(--gold);">info@7erink.com</a></p>
+        <p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung:</p>
+        <p><strong style="color:var(--white);">Tattoo Artist Academy – Coaching-Programm</strong></p>
+        <div class="agb-form-row">Bestellt am: ___________________</div>
+        <div class="agb-form-row">Name des/der Verbraucher(s): ___________________</div>
+        <div class="agb-form-row">Anschrift des/der Verbraucher(s): ___________________</div>
+        <div class="agb-form-row">Unterschrift (nur bei Mitteilung auf Papier): ___________________</div>
+        <div class="agb-form-row">Datum: ___________________</div>
+        <p style="margin-top:1rem;font-size:.78rem;color:var(--muted);">(*) Unzutreffendes streichen</p>
+      </div>
+
+      <p class="agb-para" style="margin-top:1.5rem;"><strong>Für Unternehmer (§ 14 BGB):</strong></p>
+      <p class="agb-para">13.7. Kunden, die als Unternehmer im Sinne von § 14 BGB handeln, steht kein gesetzliches Widerrufsrecht zu.</p>
+    </div>
+
+    <!-- § 14 -->
+    <div class="agb-section" id="s14">
+      <h2><span>§ 14</span>Referenznennung</h2>
+      <p class="agb-para">14.1. Der ANBIETER darf den Kunden in jedem Medium als Referenz nennen, sofern der Kunde dem nicht ausdrücklich widerspricht. Dies umfasst auch die Nennung und Benutzung etwaiger geschützter Marken, Bezeichnungen oder Logos. Der ANBIETER ist zur Nennung nicht verpflichtet.</p>
+    </div>
+
+    <!-- § 15 -->
+    <div class="agb-section" id="s15">
+      <h2><span>§ 15</span>Schlussbestimmungen</h2>
+      <p class="agb-para">15.1. Auf alle Streitigkeiten in Verbindung mit diesem Vertrag findet ausschließlich das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts Anwendung. Ist der Kunde Verbraucher, so führt diese Rechtswahl nicht dazu, dass dem Kunden der durch die zwingenden Bestimmungen des Rechts des Staates, in dem er seinen gewöhnlichen Aufenthalt hat, gewährte Schutz entzogen wird.</p>
+      <p class="agb-para">15.2. Gerichtsstand für Streitigkeiten mit Unternehmern ist, soweit gesetzlich zulässig, in Deutschland. Für Verbraucher gelten die gesetzlichen Gerichtsstände.</p>
+      <p class="agb-para">15.3. Durch eine etwaige Unwirksamkeit einer oder mehrerer Bestimmungen dieser Allgemeinen Geschäftsbedingungen wird die Wirksamkeit der übrigen Bestimmungen nicht berührt. Anstelle der unwirksamen Klauseln gilt dasjenige vereinbart, was dem wirtschaftlich Gewollten in rechtlich zulässiger Weise am nächsten steht.</p>
+      <p class="agb-para">15.4. Änderungen, Ergänzungen und Nebenabreden zu diesen AGB bedürfen zu ihrer Wirksamkeit der Schriftform. Dies gilt auch für die Vereinbarung, von diesem Formerfordernis abzugehen.</p>
+      <p class="agb-para">15.5. Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener" style="color:var(--gold);">https://ec.europa.eu/consumers/odr/</a>. Der ANBIETER ist weder bereit noch verpflichtet, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <p style="margin-top:3rem;"><a href="index.html" style="color:var(--gold);font-size:.85rem;">← Zurück zur Academy</a></p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-name">7er Ink <span class="accent">Academy</span></div>
+        <p>Professionelle Tattoo Aus- und Weiterbildung für Artists, die mehr wollen.</p>
+      </div>
+      <div class="footer-col"><h5>Programme</h5><ul>
+        <li><a href="online-grundkurs.html">Online-Grundkurs</a></li>
+        <li><a href="realismus-kurs.html">Realismus-Kurs</a></li>
+        <li><a href="business-kurs.html">Business-Kurs</a></li>
+        <li><a href="coaching.html">Live Calls</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Academy</h5><ul>
+        <li><a href="tom.html">Über Tom</a></li>
+        <li><a href="tattoo-abc.html">Tattoo ABC</a></li>
+        <li><a href="news.html">Journal &amp; News</a></li>
+        <li><a href="index.html#kontakt">Kontakt</a></li>
+        <li><a href="https://7erink.com" target="_blank">7er Ink Studio</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Rechtliches</h5><ul>
+        <li><a href="agb.html">AGB</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 7er Ink Tattoo Academy · Bad Wörishofen</p>
+      <div class="footer-links">
+        <a href="agb.html">AGB</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
