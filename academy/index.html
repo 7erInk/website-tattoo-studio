@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=203">
+  <link rel="stylesheet" href="academy.css?v=209">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -243,9 +243,9 @@
   .lp-hero-cta{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start}
   .lp-hero-hint{font-size:.75rem;color:var(--muted)}
   .lp-hero-inner>div:first-child{position:relative;z-index:2}
-  .lp-hero-image{position:relative;overflow:hidden;border-radius:var(--radius)}
-  .lp-hero-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center top;min-height:420px}
-  .lp-hero-image::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:25%;z-index:1;background:linear-gradient(to top,#080808 0%,transparent 100%);pointer-events:none}
+  .lp-hero-image{position:relative;overflow:hidden;margin-left:-3rem}
+  .lp-hero-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center top;min-height:520px}
+  .lp-hero-image::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,#080808 0%,rgba(8,8,8,.35) 28%,transparent 58%),linear-gradient(to top,#080808 0%,transparent 38%);pointer-events:none;z-index:1}
   .lp-hero-stats{display:flex;gap:2rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
   .lp-stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
   .lp-stat-label{font-size:.72rem;color:var(--muted);margin-top:.2rem}
@@ -288,6 +288,21 @@
   .result-check{width:1.6rem;height:1.6rem;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.8rem;flex-shrink:0;margin-top:.1rem}
   .result-text h5{font-size:.875rem;font-weight:600;color:var(--white);margin-bottom:.2rem}
   .result-text p{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+  /* --- Vorher/Nachher Slider (same as subpage) --- */
+  .compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+  .vn-pair-lp{display:flex;flex-direction:column;gap:.5rem}
+  .vn-slider-lp{position:relative;overflow:hidden;border-radius:var(--radius);aspect-ratio:3/4;cursor:col-resize;user-select:none;touch-action:none}
+  .vn-after-lp,.vn-before-lp{position:absolute;inset:0;overflow:hidden}
+  .vn-after-lp img,.vn-before-lp img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  .vn-before-lp{width:50%;border-right:2px solid var(--gold)}
+  .vn-handle-lp{position:absolute;top:0;left:50%;transform:translateX(-50%);width:36px;height:100%;display:flex;align-items:center;justify-content:center;cursor:col-resize;z-index:10}
+  .vn-handle-lp::before{content:'◀▶';width:36px;height:36px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#080808;font-weight:900;box-shadow:0 2px 10px rgba(0,0,0,.5);letter-spacing:-1px}
+  .vn-labels-lp{display:flex;justify-content:space-between}
+  .vn-label-before-lp{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .vn-label-after-lp{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold)}
+  @media(max-width:900px){.compare-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:500px){.compare-grid{grid-template-columns:1fr}}
 
   .tom-lp{display:grid;grid-template-columns:1fr 2fr;gap:3.5rem;align-items:start}
   .tom-img{border-radius:var(--radius);overflow:hidden}
@@ -451,6 +466,41 @@
   </div>
 </section>
 
+<!-- GOLD TICKER BANNER -->
+<div style="overflow:hidden;background:linear-gradient(90deg,#a07828 0%,#c9a84c 20%,#e8d48a 40%,#c9a84c 60%,#a07828 80%,#c9a84c 100%);border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(0,0,0,.3);padding:.55rem 0;position:relative;">
+  <div style="display:flex;width:max-content;animation:ticker 28s linear infinite;gap:0;">
+    <div style="display:flex;align-items:center;gap:2.8rem;padding:0 2rem;white-space:nowrap;">
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">★ 5,0 · 200+ Google-Bewertungen</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">750+ ausgebildete Tätowierer</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">50+ Convention Awards</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">90 Tage bis zum ersten Kunden</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">Online · Bundesweit · Lebenslanger Zugang</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">Wöchentliche Live Calls mit Tom</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:2.8rem;padding:0 2rem;white-space:nowrap;" aria-hidden="true">
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">★ 5,0 · 200+ Google-Bewertungen</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">750+ ausgebildete Tätowierer</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">50+ Convention Awards</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">90 Tage bis zum ersten Kunden</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">Online · Bundesweit · Lebenslanger Zugang</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1000;">Wöchentliche Live Calls mit Tom</span>
+      <span style="color:rgba(0,0,0,.35);font-size:.6rem;">◆</span>
+    </div>
+  </div>
+</div>
+<style>@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
+
 <!-- PROBLEM -->
 <section style="padding:6rem 0;background:#0a0a0a;border-top:1px solid var(--border);">
   <div class="container">
@@ -521,18 +571,18 @@
   </div>
 </section>
 
-<!-- 3 MONATE -->
+<!-- MODULE -->
 <section style="padding:6rem 0;background:#0a0a0a;border-top:1px solid var(--border);" id="ausbildung">
   <div class="container">
     <div class="section-header center fade-in">
       <span class="eyebrow">Die Ausbildung</span>
-      <h2>3 Monate.<br><em>Ein klarer Weg.</em></h2>
+      <h2>3 Module.<br><em>Ein klarer Weg.</em></h2>
       <div class="divider"></div>
-      <p style="max-width:520px;margin:0 auto;">Jeder Monat hat ein konkretes Ziel. Du weißt, wo du anfängst – und wo du ankommst.</p>
+      <p style="max-width:520px;margin:0 auto;">Jedes Modul hat ein konkretes Ziel. Du weißt, wo du anfängst – und wo du ankommst.</p>
     </div>
     <div class="month-grid fade-in">
-      <div class="month-card">
-        <div class="month-label">Monat 1</div>
+      <a href="online-grundkurs.html" class="month-card" style="text-decoration:none;display:block;cursor:pointer;transition:transform .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='var(--gold)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div class="month-label">Modul 1</div>
         <div class="month-title">Grundlagen</div>
         <div class="month-goal">Du lernst das Handwerk von Grund auf – richtig.</div>
         <ul class="month-list">
@@ -543,9 +593,10 @@
           <li>Equipment-Liste: was du brauchst</li>
         </ul>
         <div class="month-result">→ Erste saubere Motive auf Kunsthaut</div>
-      </div>
-      <div class="month-card">
-        <div class="month-label">Monat 2</div>
+        <div style="margin-top:1.2rem;font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.05em;">Modul ansehen →</div>
+      </a>
+      <a href="realismus-kurs.html" class="month-card" style="text-decoration:none;display:block;cursor:pointer;transition:transform .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='var(--gold)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div class="month-label">Modul 2</div>
         <div class="month-title">Realismus</div>
         <div class="month-goal">Du entwickelst Tiefe, Stil und ein eigenes Auge.</div>
         <ul class="month-list">
@@ -556,9 +607,10 @@
           <li>Feedback von Tom auf deine Arbeiten</li>
         </ul>
         <div class="month-result">→ Erste realistische Motive auf Haut</div>
-      </div>
-      <div class="month-card">
-        <div class="month-label">Monat 3</div>
+        <div style="margin-top:1.2rem;font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.05em;">Modul ansehen →</div>
+      </a>
+      <a href="business-kurs.html" class="month-card" style="text-decoration:none;display:block;cursor:pointer;transition:transform .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='var(--gold)'" onmouseout="this.style.transform='';this.style.borderColor=''">
+        <div class="month-label">Modul 3</div>
         <div class="month-title">Kunden &amp; Business</div>
         <div class="month-goal">Du baust die Grundlage für deine Selbstständigkeit.</div>
         <ul class="month-list">
@@ -569,7 +621,8 @@
           <li>Selbstständigkeit vorbereiten</li>
         </ul>
         <div class="month-result">→ Erste zahlende Kunden gewinnen</div>
-      </div>
+        <div style="margin-top:1.2rem;font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.05em;">Modul ansehen →</div>
+      </a>
     </div>
     <div style="text-align:center;margin-top:3rem;" class="fade-in">
       <a href="paket.html" class="btn btn-gold" style="font-size:1rem;padding:1rem 2.5rem;">Alle Modulinhalte ansehen →</a>
@@ -634,7 +687,7 @@
         <div class="result-check">✓</div>
         <div class="result-text">
           <h5>Erste Tattoos auf echter Haut möglich</h5>
-          <p>Mit dem Fundament aus Monat 1 kannst du unter Aufsicht erste echte Tattoos setzen.</p>
+          <p>Mit dem Fundament aus Modul 1 kannst du unter Aufsicht erste echte Tattoos setzen.</p>
         </div>
       </div>
       <div class="result-item">
@@ -648,7 +701,7 @@
         <div class="result-check">✓</div>
         <div class="result-text">
           <h5>Erste Kunden gewonnen</h5>
-          <p>Viele Teilnehmer gewinnen bereits in Monat 3 erste zahlende Kunden.</p>
+          <p>Viele Teilnehmer gewinnen bereits in Modul 3 erste zahlende Kunden.</p>
         </div>
       </div>
       <div class="result-item">
@@ -659,8 +712,18 @@
         </div>
       </div>
     </div>
+
+    <!-- Vorher/Nachher Comparison Slider -->
+    <div class="compare-grid fade-in" style="margin-top:3rem;">
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-24.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-4.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-25.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-5.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-26.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-6.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-27.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-7.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-28.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-8.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+      <div class="vn-pair-lp"><div class="vn-slider-lp"><div class="vn-after-lp"><img src="images/nachher-29.jpg" alt="Nachher" loading="lazy"></div><div class="vn-before-lp"><img src="images/vorher-9.jpg" alt="Vorher" loading="lazy"></div><div class="vn-handle-lp"></div></div><div class="vn-labels-lp"><span class="vn-label-before-lp">Vorher</span><span class="vn-label-after-lp">Nachher</span></div></div>
+    </div>
     <div style="margin-top:2.5rem;text-align:center;" class="fade-in">
-      <a href="vorher-nachher.html" class="btn btn-outline">Vorher &amp; Nachher ansehen</a>
+      <a href="vorher-nachher.html" class="btn btn-outline">Alle Transformationen ansehen →</a>
     </div>
   </div>
 </section>
@@ -805,57 +868,6 @@
   </div>
 </section>
 
-<!-- VORHER NACHHER PREVIEW -->
-<section style="padding:6rem 0;background:#0a0a0a;border-top:1px solid var(--border);">
-  <div class="container">
-    <div class="section-header center fade-in">
-      <span class="eyebrow">Transformation</span>
-      <h2>Vorher vs. Nachher –<br><em>Der Unterschied ist sichtbar.</em></h2>
-      <div class="divider"></div>
-    </div>
-    <div class="vn-preview-grid fade-in">
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-1.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-1.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-2.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-2.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-5.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-5.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-7.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-7.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-9.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-9.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-      <div class="vn-pair">
-        <div class="vn-pair-wrap">
-          <div class="vn-half"><img src="images/vorher-12.webp" alt="Vorher Tattoo" loading="lazy"><div class="vn-badge before">VORHER</div></div>
-          <div class="vn-half"><img src="images/nachher-12.webp" alt="Nachher Tattoo" loading="lazy"><div class="vn-badge after">NACHHER</div></div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem;" class="fade-in">
-      <a href="vorher-nachher.html" class="btn btn-outline">Alle Transformationen ansehen →</a>
-    </div>
-  </div>
-</section>
 
 <!-- FAQ -->
 <section style="padding:6rem 0;background:#080808;border-top:1px solid var(--border);" id="faq">
@@ -1060,6 +1072,26 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
       500: { slidesPerView: 1.5 },
       900: { slidesPerView: 2.5 },
     }
+  });
+</script>
+<script>
+  document.querySelectorAll('.vn-slider-lp').forEach(slider => {
+    const before = slider.querySelector('.vn-before-lp');
+    const handle = slider.querySelector('.vn-handle-lp');
+    let active = false;
+    function setPos(clientX) {
+      const r = slider.getBoundingClientRect();
+      let pct = Math.min(Math.max((clientX - r.left) / r.width * 100, 0), 100);
+      before.style.width = pct + '%';
+      handle.style.left = pct + '%';
+    }
+    handle.addEventListener('mousedown', e => { active = true; e.preventDefault(); });
+    slider.addEventListener('mousedown', e => { active = true; setPos(e.clientX); });
+    window.addEventListener('mouseup', () => { active = false; });
+    window.addEventListener('mousemove', e => { if (active) setPos(e.clientX); });
+    slider.addEventListener('touchstart', e => { active = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend', () => { active = false; });
+    window.addEventListener('touchmove', e => { if (active) setPos(e.touches[0].clientX); }, { passive: true });
   });
 </script>
 </body>
