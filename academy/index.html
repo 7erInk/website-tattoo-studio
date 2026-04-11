@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=209">
+  <link rel="stylesheet" href="academy.css?v=210">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -272,6 +272,15 @@
   .for-whom-box.yes h4{color:var(--gold)}
   .for-whom-box.no{background:rgba(220,53,69,.07)!important;border-color:rgba(220,53,69,.35)!important}
   .for-whom-box.no h4{color:#dc3545!important}
+  /* Referenz video grid */
+  .ref-videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;margin:0 auto}
+  .ref-video-wrap{border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(201,168,76,.2);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+  .ref-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:520px}
+  @media(max-width:640px){.ref-videos-grid{grid-template-columns:1fr}}
+  /* 3D Coverflow slides */
+  .ref-cf-slide{width:260px!important;border-radius:12px;overflow:hidden;border:1px solid rgba(201,168,76,.15);box-shadow:0 4px 20px rgba(0,0,0,.6)}
+  .ref-cf-slide img{width:100%;height:340px;object-fit:cover;display:block}
+  .referenz-swiper{padding:2rem 0 3rem;overflow:visible}
   .for-whom-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem}
   .for-whom-list li{font-size:.875rem;color:var(--lighter);padding-left:1.3rem;position:relative;line-height:1.5}
   .for-whom-box.yes .for-whom-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
@@ -826,44 +835,60 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
     </div>
-  </div>
-</section>
 
-
-<!-- REFERENZ BILDER -->
-<section style="padding:6rem 0;background:#080808;border-top:1px solid var(--border);">
-  <div class="container">
-    <div class="section-header center fade-in">
-      <span class="eyebrow">Schülerarbeiten</span>
-      <h2>Das schaffen<br><em>unsere Teilnehmer.</em></h2>
-      <div class="divider"></div>
-      <p style="max-width:520px;margin:0 auto;color:var(--lighter);">Echte Ergebnisse. Keine professionellen Artists – sondern Einsteiger nach 90 Tagen Ausbildung.</p>
-    </div>
-    <div class="swiper referenz-swiper fade-in">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-1.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-2.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-3.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-4.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-5.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-6.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-7.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-8.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-9.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-10.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-11.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-12.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-13.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-14.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-15.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-16.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-17.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-18.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
-        <div class="swiper-slide"><div class="ref-slide"><img src="images/referenz-19.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div></div>
+    <!-- REFERENZ VIDEOS -->
+    <div style="margin-top:4rem;" class="fade-in">
+      <div class="section-header center" style="margin-bottom:2rem;">
+        <span class="eyebrow">Referenz-Videos</span>
+        <h3 style="font-size:1.4rem;color:var(--white);">Unsere Teilnehmer <em>berichten</em></h3>
+        <div class="divider"></div>
       </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div class="ref-videos-grid">
+        <div class="ref-video-wrap">
+          <video controls preload="none" poster="videos/rezension-1-poster.jpg" playsinline>
+            <source src="videos/rezension-1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="ref-video-wrap">
+          <video controls preload="none" poster="videos/rezension-2-poster.jpg" playsinline>
+            <source src="videos/rezension-2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFERENZ 3D COVERFLOW -->
+    <div style="margin-top:4rem;padding-bottom:2rem;" class="fade-in">
+      <div class="section-header center" style="margin-bottom:2rem;">
+        <span class="eyebrow">Schülerarbeiten</span>
+        <h3 style="font-size:1.4rem;color:var(--white);">Das schaffen <em>unsere Teilnehmer</em></h3>
+        <div class="divider"></div>
+        <p style="max-width:480px;margin:.5rem auto 0;color:var(--lighter);font-size:.88rem;">Echte Ergebnisse von Einsteigern nach 90 Tagen Ausbildung.</p>
+      </div>
+      <div class="swiper referenz-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-1.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-2.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-3.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-4.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-5.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-6.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-7.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-8.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-9.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-10.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-11.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-12.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-13.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-14.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-15.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-16.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-17.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-18.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+          <div class="swiper-slide ref-cf-slide"><img src="images/referenz-19.jpg" alt="Schülerarbeit Tattoo Academy" loading="lazy"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1053,25 +1078,17 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
+    slidesPerView: 'auto',
     coverflowEffect: {
-      rotate: 40,
+      rotate: 50,
       stretch: 0,
-      depth: 120,
-      modifier: 1,
+      depth: 220,
+      modifier: 1.4,
       slideShadows: true,
     },
     pagination: { el: '.referenz-swiper .swiper-pagination', clickable: true },
-    navigation: {
-      nextEl: '.referenz-swiper .swiper-button-next',
-      prevEl: '.referenz-swiper .swiper-button-prev',
-    },
-    autoplay: { delay: 3500, disableOnInteraction: false },
+    autoplay: { delay: 3000, disableOnInteraction: false },
     loop: true,
-    breakpoints: {
-      0:   { slidesPerView: 1 },
-      500: { slidesPerView: 1.5 },
-      900: { slidesPerView: 2.5 },
-    }
   });
 </script>
 <script>
