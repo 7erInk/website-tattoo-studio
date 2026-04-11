@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=213">
+  <link rel="stylesheet" href="academy.css?v=214">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -281,6 +281,8 @@
   /* Testimonial 3D coverflow */
   .t-cf-slide{width:320px!important}
   .testimonial-swiper{padding:2rem 0 3.5rem;overflow:visible}
+  .t-nav-btn{color:var(--gold)!important;--swiper-navigation-color:var(--gold)}
+  .t-nav-btn::after{font-size:1.4rem!important;font-weight:700}
   .for-whom-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem}
   .for-whom-list li{font-size:.875rem;color:var(--lighter);padding-left:1.3rem;position:relative;line-height:1.5}
   .for-whom-box.yes .for-whom-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
@@ -853,6 +855,8 @@
           </div>
         </div>
         <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev t-nav-btn"></div>
+        <div class="swiper-button-next t-nav-btn"></div>
       </div>
     </div>
   </div>
@@ -1017,12 +1021,17 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: 'auto',
+    spaceBetween: 40,
     coverflowEffect: {
-      rotate: 50,
+      rotate: -45,
       stretch: 0,
-      depth: 80,
+      depth: 260,
       modifier: 1,
       slideShadows: true,
+    },
+    navigation: {
+      nextEl: '.testimonial-swiper .swiper-button-next',
+      prevEl: '.testimonial-swiper .swiper-button-prev',
     },
     pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
     autoplay: { delay: 4000, disableOnInteraction: false },
