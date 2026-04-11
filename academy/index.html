@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=214">
+  <link rel="stylesheet" href="academy.css?v=215">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -279,7 +279,7 @@
   .ref-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:440px}
   @media(max-width:640px){.ref-videos-grid{grid-template-columns:1fr}}
   /* Testimonial 3D coverflow */
-  .t-cf-slide{width:320px!important}
+  .t-cf-slide{}
   .testimonial-swiper{padding:2rem 0 3.5rem;overflow:visible}
   .t-nav-btn{color:var(--gold)!important;--swiper-navigation-color:var(--gold)}
   .t-nav-btn::after{font-size:1.4rem!important;font-weight:700}
@@ -1020,12 +1020,12 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 'auto',
-    spaceBetween: 40,
+    slidesPerView: 3,
+    spaceBetween: 24,
     coverflowEffect: {
-      rotate: -45,
+      rotate: 45,
       stretch: 0,
-      depth: 260,
+      depth: 160,
       modifier: 1,
       slideShadows: true,
     },
@@ -1036,6 +1036,10 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
     pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
     autoplay: { delay: 4000, disableOnInteraction: false },
     loop: true,
+    breakpoints: {
+      0:   { slidesPerView: 1 },
+      600: { slidesPerView: 3 },
+    }
   });
 
 
