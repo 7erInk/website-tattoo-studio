@@ -209,11 +209,12 @@
     #cb-attach-remove:hover { color: #e53e3e; }
     @media (max-width: 480px) {
       #cb-window {
-        left: 12px; right: 12px; bottom: 80px;
-        width: auto; max-height: 65vh;
+        left: 8px !important; right: 8px !important;
+        width: auto !important; max-width: none !important;
+        bottom: 80px; max-height: 420px;
       }
-      #cb-btn    { right: 12px; bottom: 12px; }
-      #cb-messages { min-height: 120px; max-height: 200px; }
+      #cb-btn { right: 12px; bottom: 12px; }
+      #cb-messages { min-height: 100px; max-height: 180px; }
     }
   `;
 
