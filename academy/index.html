@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=217">
+  <link rel="stylesheet" href="academy.css?v=218">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -280,10 +280,20 @@
   .ref-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:440px}
   @media(max-width:640px){.ref-videos-grid{grid-template-columns:1fr}}
   /* Testimonial 3D coverflow */
-  .t-cf-slide{}
-  .testimonial-swiper{padding:2rem 0 3.5rem;overflow:hidden}
-  .t-nav-btn{color:var(--gold)!important;--swiper-navigation-color:var(--gold)}
-  .t-nav-btn::after{font-size:1.4rem!important;font-weight:700}
+  /* 3D Circle Carousel */
+  .rc-wrap{position:relative;width:100%;padding:2rem 0 4rem;user-select:none}
+  .rc-scene{perspective:1000px;width:100%;height:320px;position:relative;overflow:visible}
+  .rc-stage{width:100%;height:100%;position:absolute;left:0;top:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+  .rc-card{position:absolute;width:300px;left:50%;top:0;margin-left:-150px;transform-style:preserve-3d;backface-visibility:hidden;transition:opacity .4s}
+  .rc-card .testimonial-card{height:100%;box-sizing:border-box;transition:box-shadow .3s}
+  .rc-card.rc-active .testimonial-card{box-shadow:0 8px 40px rgba(201,168,76,.3),0 0 0 1px rgba(201,168,76,.25)}
+  .rc-nav{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-top:2.5rem}
+  .rc-btn{background:var(--card);border:1px solid rgba(201,168,76,.35);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+  .rc-btn:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+  .rc-dots{display:flex;gap:.5rem}
+  .rc-dot{width:7px;height:7px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s}
+  .rc-dot.active{background:var(--gold)}
+  @media(max-width:600px){.rc-card{width:240px;margin-left:-120px}.rc-scene{height:360px}}
   .for-whom-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem}
   .for-whom-list li{font-size:.875rem;color:var(--lighter);padding-left:1.3rem;position:relative;line-height:1.5}
   .for-whom-box.yes .for-whom-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
@@ -801,63 +811,67 @@
       </div>
     </div>
 
-    <!-- BEWERTUNGEN 3D COVERFLOW -->
-    <div style="margin-top:4rem;padding-bottom:1rem;" class="fade-in">
-      <div class="swiper testimonial-swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
+    <!-- BEWERTUNGEN 3D KREIS -->
+    <div style="margin-top:4rem;" class="fade-in">
+      <div class="rc-wrap">
+        <div class="rc-scene">
+          <div class="rc-stage" id="rcStage">
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Ich kann wirklich jedem angehenden Tätowierer die Seminare von Tom ans Herz legen. Hier bekommt ihr echtes Wissen welches ihr sofort umsetzen könnt. Verdiente 5 Sterne."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Stephanie Theißen</div><div class="testimonial-role">Stechbar Tattoo · Realismus Seminar</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Habe den Kurs gestern absolviert und auch noch das Zertifikat erhalten. Der Kurs ist absolute Spitze und alles wichtige zum Tattoowieren lernen wurde sehr gut erklärt."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Bullyduke</div><div class="testimonial-role">Google Bewertung</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Kann ich nur weiter empfehlen – alles super schritt für schritt erklärt. Das tättoowieren fällt mir jetzt einfacher und ich bin viel sicherer."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Mateusz Kolata</div><div class="testimonial-role">Google Bewertung</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Tom erklärt nicht nur wie es geht, sondern auch warum. Ich habe in 3 Monaten mehr gelernt als in einem Jahr Selbststudium. Absolute Empfehlung für jeden der es ernst meint."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Laura K.</div><div class="testimonial-role">Online Grundkurs · Bayern</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Tom erklärt nicht nur wie es geht, sondern auch warum. Ich habe in 3 Monaten mehr gelernt als in einem Jahr Selbststudium. Absolute Empfehlung für jeden der es ernst meint."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Laura K.</div><div class="testimonial-role">Online Grundkurs · Bayern</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Ich hab schon 2 Jahre selbst versucht mir alles beizubringen. Nach dem Realismus-Kurs war alles klar. Die Technik, die Nadeln, das Drucksystem – endlich verstand ich was ich falsch gemacht hatte."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Marco B.</div><div class="testimonial-role">Realismus Kurs · Nordrhein-Westfalen</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Ich hab schon 2 Jahre selbst versucht mir alles beizubringen. Nach dem Realismus-Kurs war alles klar. Die Technik, die Nadeln, das Drucksystem – endlich verstand ich was ich falsch gemacht hatte."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Marco B.</div><div class="testimonial-role">Realismus Kurs · Nordrhein-Westfalen</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Die Live Calls mit Tom sind Gold wert. Direkt Feedback auf meine Arbeiten, sofort Verbesserungen sehen. Das kriegst du in keinem YouTube-Tutorial."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Sandra M.</div><div class="testimonial-role">Vollpaket · Österreich</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Die Live Calls mit Tom sind Gold wert. Direkt Feedback auf meine Arbeiten, sofort Verbesserungen sehen. Das kriegst du in keinem YouTube-Tutorial."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Sandra M.</div><div class="testimonial-role">Vollpaket · Österreich</div></div>
+              </div>
             </div>
-          </div>
-          <div class="swiper-slide t-cf-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Als Quereinsteiger hatte ich Bedenken ob das überhaupt klappt. Tom hat mir gezeigt dass es kein Vorwissen braucht – nur die richtige Methode und Disziplin. Mein erstes Tattoo nach 6 Wochen."</p>
-              <div class="testimonial-author"><div class="testimonial-name">Florian D.</div><div class="testimonial-role">Online Grundkurs · Baden-Württemberg</div></div>
+            <div class="rc-card">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Als Quereinsteiger hatte ich Bedenken ob das überhaupt klappt. Tom hat mir gezeigt dass es kein Vorwissen braucht – nur die richtige Methode und Disziplin. Mein erstes Tattoo nach 6 Wochen."</p>
+                <div class="testimonial-author"><div class="testimonial-name">Florian D.</div><div class="testimonial-role">Online Grundkurs · Baden-Württemberg</div></div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev t-nav-btn"></div>
-        <div class="swiper-button-next t-nav-btn"></div>
+        <div class="rc-nav">
+          <button class="rc-btn" id="rcPrev">&#8592;</button>
+          <div class="rc-dots" id="rcDots"></div>
+          <button class="rc-btn" id="rcNext">&#8594;</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1017,31 +1031,72 @@ document.querySelectorAll('.faq-lp-q').forEach(btn => {
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   // Testimonial Swiper (3D Coverflow)
-  new Swiper('.testimonial-swiper', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 3,
-    spaceBetween: 20,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 300,
-      modifier: 1,
-      slideShadows: true,
-    },
-    navigation: {
-      nextEl: '.testimonial-swiper .swiper-button-next',
-      prevEl: '.testimonial-swiper .swiper-button-prev',
-    },
-    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true },
-    autoplay: { delay: 4000, disableOnInteraction: false },
-    loop: true,
-    breakpoints: {
-      0:   { slidesPerView: 1 },
-      600: { slidesPerView: 3 },
+  // 3D Circle Carousel
+  (function() {
+    const stage = document.getElementById('rcStage');
+    if (!stage) return;
+    const cards = stage.querySelectorAll('.rc-card');
+    const dotsEl = document.getElementById('rcDots');
+    const n = cards.length;
+    const radius = window.innerWidth < 600 ? 260 : 380;
+    let current = 0;
+    let autoTimer;
+
+    // Position each card on the circle
+    cards.forEach((card, i) => {
+      const angle = (360 / n) * i;
+      card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+    });
+
+    // Build dots
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('span');
+      d.className = 'rc-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
     }
-  });
+
+    function update() {
+      const angle = -(360 / n) * current;
+      stage.style.transform = `rotateY(${angle}deg)`;
+      cards.forEach((c, i) => {
+        const diff = ((i - current) % n + n) % n;
+        const isActive = diff === 0;
+        const isSide = diff === 1 || diff === n - 1;
+        const isBack = !isActive && !isSide;
+        c.classList.toggle('rc-active', isActive);
+        c.style.opacity = isBack ? '0' : '1';
+        c.style.pointerEvents = isActive ? 'auto' : 'none';
+      });
+      dotsEl.querySelectorAll('.rc-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function goTo(idx) {
+      current = ((idx % n) + n) % n;
+      update();
+    }
+
+    document.getElementById('rcNext').addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+    document.getElementById('rcPrev').addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+
+    // Touch/swipe
+    let touchX = 0;
+    stage.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
+    stage.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
+    }, {passive:true});
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    update();
+    resetAuto();
+  })();
 
 
 </script>
