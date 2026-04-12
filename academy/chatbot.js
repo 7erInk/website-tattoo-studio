@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var CALENDLY_URL = 'https://calendly.com/besprechungst';
+  var CALENDLY_URL = 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04';
   var API_URL      = 'https://academy.7erink.com/chat-academy.php';
   var MAIL_URL     = 'https://7erink.com/send-mail.php';
 
