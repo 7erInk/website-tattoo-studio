@@ -206,7 +206,7 @@
   </script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
-  <link rel="stylesheet" href="academy.css?v=221">
+  <link rel="stylesheet" href="academy.css?v=222">
   <link rel="alternate" hreflang="de-DE" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-AT" href="https://academy.7erink.com/">
   <link rel="alternate" hreflang="de-CH" href="https://academy.7erink.com/">
@@ -349,10 +349,11 @@
   .not-for ul li::before{content:'—';position:absolute;left:0}
 
   @media(max-width:900px){
+    .lp-hero{min-height:90vh}
     .lp-hero-inner{padding-top:6rem;grid-template-columns:1fr;position:relative}
     .lp-hero-image{display:block;position:absolute;inset:0;margin-left:0;z-index:0}
     .lp-hero-image img{width:100%;height:100%;object-fit:contain;object-position:right center;min-height:unset}
-    .lp-hero-image::after{background:linear-gradient(to right,#080808 25%,rgba(8,8,8,.5) 55%,transparent 80%),linear-gradient(to top,#080808 0%,transparent 35%)}
+    .lp-hero-image::after{background:linear-gradient(to right,#080808 25%,rgba(8,8,8,.5) 55%,transparent 80%),linear-gradient(to top,#080808 0%,transparent 40%),linear-gradient(to bottom,#080808 0%,transparent 20%)}
     .lp-hero-inner>div:first-child{position:relative;z-index:2}
     .lp-hero h1{font-size:clamp(2.2rem,9vw,3rem)}
     .month-grid,.for-whom-grid{grid-template-columns:1fr}
