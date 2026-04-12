@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gratis Freebies – 7er Ink Academy</title>
+  <meta name="description" content="Zwei kostenlose PDFs der 7er Ink Academy. Für angehende Tätowierer und für Artists, die mehr verdienen wollen. Sofort per WhatsApp.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"></noscript>
+  <link rel="stylesheet" href="academy.css?v=201">
+  <script src="nav.js?v=200" defer></script>
+  <style>
+    .mobile-menu{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
+    @media(max-width:900px){.mobile-menu{display:flex}}
+    .mobile-menu.open{transform:translateX(0)}
+    .mobile-menu-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:rgba(255,255,255,.75);font-size:1rem;cursor:pointer;width:2.3rem;height:2.3rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:border-color .2s,color .2s}
+    .mobile-menu-close:hover{border-color:#c9a84c;color:#c9a84c}
+    .mobile-nav-inner{flex:1;overflow-y:auto;padding:4.2rem 1.8rem 2rem;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+    .nav-group{margin-bottom:1.6rem}
+    .nav-group-label{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:.35rem;display:block}
+    .mobile-nav-inner a.nav-item{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;transition:color .15s}
+    .mobile-nav-inner a.nav-item:hover,.mobile-nav-inner a.nav-item:active{color:#c9a84c}
+    .mobile-nav-cta{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}
+    .mobile-nav-cta .btn{width:100% !important;text-align:center !important;justify-content:center !important}
+    .mobile-news-top{display:flex;align-items:center;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#c9a84c;text-decoration:none;padding:.85rem 1rem;margin:0 0 1.2rem;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:10px;transition:background .2s}
+  .mobile-news-top:hover{background:rgba(201,168,76,.15)}
+  .mobile-freebie-link{display:block;text-align:center;color:rgba(255,255,255,.6) !important;font-size:.8rem;font-weight:500 !important;padding:.2rem 0 !important;font-family:inherit !important}
+
+    /* Page */
+    .freebie-page{min-height:100vh;background:#080808;padding:8rem 2rem 6rem}
+    .freebie-page-inner{max-width:1080px;margin:0 auto;width:100%}
+
+    /* Header */
+    .freebie-header{text-align:center;margin-bottom:4rem}
+    .freebie-header-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.35);border-radius:100px;padding:.4rem 1.1rem;margin-bottom:1.2rem}
+    .freebie-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:.9rem}
+    .freebie-header h1 em{font-style:italic;color:var(--gold)}
+    .freebie-header p{font-size:.95rem;color:var(--lighter);line-height:1.7;max-width:540px;margin:0 auto}
+
+    /* Divider */
+    .freebie-divider{display:flex;align-items:center;gap:1.2rem;margin-bottom:4rem}
+    .freebie-divider::before,.freebie-divider::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2)}
+    .freebie-divider span{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,168,76,.5);white-space:nowrap}
+
+    /* Cards — 4-Zellen Grid: Top1 | Top2 / Bottom1 | Bottom2 */
+    .freebie-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:2rem;row-gap:0;margin-bottom:5rem}
+    @media(max-width:760px){
+      .freebie-grid{grid-template-columns:1fr;row-gap:0}
+      .freebie-card-top:nth-of-type(1){order:1}
+      .freebie-card-bottom:nth-of-type(1){order:2}
+      .freebie-card-top:nth-of-type(2){order:3;margin-top:2.5rem}
+      .freebie-card-bottom:nth-of-type(2){order:4}
+    }
+
+    .freebie-card-top{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.2);border-bottom:none;border-radius:16px 16px 0 0;padding:2.4rem 2rem 1.6rem;position:relative;overflow:hidden}
+    .freebie-card-top::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent)}
+    .freebie-card-bottom{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.2);border-top:none;border-radius:0 0 16px 16px;padding:0 2rem 2rem}
+    .freebie-card-img{width:100%;max-width:200px;margin:0 auto 1.6rem;display:block}
+    .freebie-card-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:.3rem .9rem;margin-bottom:1.4rem;width:fit-content}
+    .freebie-card-tag{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem;display:block}
+    .freebie-card-top h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:.9rem}
+    .freebie-card-top h2 em{font-style:italic;color:var(--gold)}
+    .freebie-card-sub{font-size:.88rem;color:var(--lighter);line-height:1.7;margin-bottom:1.6rem}
+    .freebie-card-contents{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:1.1rem 1.2rem}
+    .freebie-card-contents-label{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:block}
+    .freebie-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem}
+    .freebie-list li{font-size:.83rem;color:var(--lighter);padding-left:1.4rem;position:relative;line-height:1.55}
+    .freebie-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700;font-size:.8rem}
+    .freebie-btn{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;background:#25D366;color:#fff;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.95rem 1.8rem;border-radius:8px;text-decoration:none;transition:background .2s,transform .2s;box-shadow:0 4px 20px rgba(37,211,102,.25);width:100%}
+    .freebie-btn:hover{background:#1ebe5d;transform:translateY(-2px)}
+    .freebie-btn svg{width:1.1rem;height:1.1rem;flex-shrink:0}
+    .freebie-hint{margin-top:.75rem;font-size:.72rem;color:var(--muted);text-align:center}
+    .freebie-hint strong{color:var(--gold)}
+
+    /* Bottom CTA */
+    .freebie-cta{text-align:center;padding:3rem 2rem;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:16px}
+    .freebie-cta p{font-size:.9rem;color:var(--lighter);line-height:1.7;margin-bottom:1.4rem;max-width:500px;margin-left:auto;margin-right:auto}
+    .freebie-cta .btn{display:inline-flex}
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/7erink-logo.png" alt="7er Ink Academy" class="nav-logo-img" loading="lazy">7er Ink <span class="accent">Academy</span></a>
+    <ul class="nav-links">
+      <li style="margin-left:1.5rem"><a href="news.html" style="color:#c9a84c;font-weight:700">News</a></li>
+      <li class="nav-dropdown">
+        <a href="paket.html">Kurse</a>
+        <div class="dropdown-menu">
+          <a href="paket.html">Tattoo Ausbildung</a>
+          <a href="online-grundkurs.html">Online-Grundkurs</a>
+          <a href="realismus-kurs.html">Realismus-Kurs</a>
+          <a href="business-kurs.html">Business-Kurs</a>
+          <a href="coaching.html">Live Coaching</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="taetowieren-lernen.html">Wissen</a>
+        <div class="dropdown-menu">
+          <a href="taetowieren-lernen.html">Tätowieren lernen</a>
+          <a href="taetowierer-werden.html">Tätowierer werden</a>
+          <a href="tattoo-stile.html">Tattoo Stile</a>
+          <a href="tattoo-seminar.html">Tattoo Seminar</a>
+          <a href="tattoo-kurs.html">Tattoo Kurs</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="tattoo-ausbildung-kosten.html">Ratgeber</a>
+        <div class="dropdown-menu">
+          <a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a>
+          <a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a>
+          <a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a>
+          <a href="tattoo-preise-berechnen.html">Preise berechnen</a>
+          <a href="tattoo-business-starten.html">Business starten</a>
+          <a href="tattoo-ausbildung-kosten.html">Ausbildung Kosten</a>
+          <a href="tattoo-ausbildung-vergleich.html">Ausbildung Vergleich</a>
+        </div>
+      </li>
+      <li><a href="tom.html">Über Tom</a></li>
+      <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+      <li><a href="freebie.html" class="nav-freebie-link">🎁 Freebie</a></li>
+    </ul>
+    <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
+    <a href="freebie.html" class="nav-mobile-freebie-btn">🎁 Freebie</a>
+    <button class="burger" id="burger" aria-label="Navigation öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose">✕</button>
+  <div class="mobile-nav-inner">
+    <a href="news.html" class="mobile-news-top">News &amp; Journal <span>→</span></a>
+    <div class="nav-group">
+      <a href="news.html" class="nav-item" style="color:#c9a84c;font-weight:700">News &amp; Journal <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Kurse</span>
+      <a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a>
+      <a href="online-grundkurs.html" class="nav-item">Online-Grundkurs <span>→</span></a>
+      <a href="realismus-kurs.html" class="nav-item">Realismus-Kurs <span>→</span></a>
+      <a href="business-kurs.html" class="nav-item">Business-Kurs <span>→</span></a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Mehr</span>
+      <a href="tom.html" class="nav-item">Über Tom <span>→</span></a>
+      <a href="vorher-nachher.html" class="nav-item">Vorher &amp; Nachher <span>→</span></a>
+      <a href="index.html#kontakt" class="nav-item">Kontakt <span>→</span></a>
+    </div>
+    <div class="mobile-nav-cta">
+      <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a>
+      <a href="freebie.html" class="mobile-freebie-link">🎁 Gratis PDFs holen</a>
+    </div>
+  </div>
+</div>
+
+<main class="freebie-page">
+  <div class="freebie-page-inner">
+
+    <!-- Header -->
+    <div class="freebie-header">
+      <div class="freebie-header-badge">🎁 Kostenlos · Sofort per WhatsApp</div>
+      <h1>Zwei Freebies.<br><em>Komplett kostenlos.</em></h1>
+      <p>Egal ob du gerade erst mit dem Tätowieren anfängst oder bereits arbeitest und mehr verdienen willst – hier ist für jeden das Richtige dabei.</p>
+    </div>
+
+    <!-- Two Freebie Cards: Top1 | Top2 in Row1, Bottom1 | Bottom2 in Row2 -->
+    <div class="freebie-grid">
+
+      <!-- Row 1: Top Left -->
+      <div class="freebie-card-top">
+        <picture>
+          <source srcset="images/freebie-checkliste.webp" type="image/webp">
+          <img src="images/freebie-checkliste.png" alt="Starter-Checkliste für Tätowierer" class="freebie-card-img" loading="lazy">
+        </picture>
+        <div class="freebie-card-badge">Für Einsteiger</div>
+        <span class="freebie-card-tag">Freebie #1</span>
+        <h2>Die komplette<br><em>Starter-Checkliste</em><br>für Tätowierer</h2>
+        <p class="freebie-card-sub">Du willst Tätowierer werden und weißt nicht, wo du anfangen sollst? Diese Checkliste zeigt dir genau, was du brauchst – von der ersten Ausrüstung bis zum ersten Kunden.</p>
+        <div class="freebie-card-contents">
+          <span class="freebie-card-contents-label">Das bekommst du:</span>
+          <ul class="freebie-list">
+            <li>Checkliste: Tätowierer/in werden – mit Selbsttest &amp; Punktestand</li>
+            <li>Erstanschaffungen: Was du wirklich brauchst (und was nicht)</li>
+            <li>Tattoo Supplier – wo du günstig &amp; zuverlässig einkaufst</li>
+            <li>Equipment-Übersicht: Maschinen, Farben, Zubehör erklärt</li>
+            <li>Nadelsortiment – welche Nadel wofür verwendet wird</li>
+            <li>Vorteile eines Online-Seminars vs. Selbststudium</li>
+            <li>Notizen &amp; Ziele: Deine persönliche Roadmap</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 1: Top Right -->
+      <div class="freebie-card-top">
+        <picture>
+          <source srcset="images/freebie-tattoo-business.webp" type="image/webp">
+          <img src="images/freebie-tattoo-business.png" alt="Die 7 Denkfehler für Tätowierer" class="freebie-card-img" loading="lazy">
+        </picture>
+        <div class="freebie-card-badge">Für aktive Artists</div>
+        <span class="freebie-card-tag">Freebie #2</span>
+        <h2>Die 7 Denkfehler,<br>die Tätowierer 2026<br>unter <em>6.000 € / Monat</em> halten</h2>
+        <p class="freebie-card-sub">Du arbeitest technisch solide, bekommst aber keine konstanten Premium-Anfragen? Dieses PDF zeigt dir, was dich wirklich bremst – und wie du es änderst.</p>
+        <div class="freebie-card-contents">
+          <span class="freebie-card-contents-label">Das bekommst du:</span>
+          <ul class="freebie-list">
+            <li>Warum der Markt nicht tot ist – sondern selektiv</li>
+            <li>Warum gute Arbeit trotzdem unter Wert verkauft wird</li>
+            <li>Warum Instagram allein kein System ist</li>
+            <li>Warum vierstellige Tagessätze planbar sind</li>
+            <li>Die 7 konkreten Denkfehler, die dich zurückhalten</li>
+            <li>Was erfolgreiche Artists anders machen</li>
+            <li>Wie du sofort anfängst, mehr zu verdienen</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 2: Bottom Left -->
+      <div class="freebie-card-bottom">
+        <a href="https://api.whatsapp.com/send/?phone=4915568673202&text=checkliste&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="freebie-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.118 1.524 5.847L.057 23.882l6.198-1.448A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.366l-.36-.213-3.68.859.929-3.581-.234-.369A9.818 9.818 0 1112 21.818z"/></svg>
+          Checkliste per WhatsApp erhalten
+        </a>
+        <p class="freebie-hint">Kostenlos. Automatisch. Code <strong>checkliste</strong> ist bereits eingetragen – einfach absenden.</p>
+      </div>
+
+      <!-- Row 2: Bottom Right -->
+      <div class="freebie-card-bottom">
+        <a href="https://api.whatsapp.com/send/?phone=4915568673202&text=FREEBIE&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="freebie-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.118 1.524 5.847L.057 23.882l6.198-1.448A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.366l-.36-.213-3.68.859.929-3.581-.234-.369A9.818 9.818 0 1112 21.818z"/></svg>
+          PDF jetzt per WhatsApp erhalten
+        </a>
+        <p class="freebie-hint">Kostenlos. Automatisch. Code <strong>FREEBIE</strong> ist bereits eingetragen – einfach absenden.</p>
+      </div>
+
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="freebie-cta">
+      <p>Bereit für den nächsten Schritt? Schau dir das komplette Ausbildungsprogramm der 7er Ink Academy an – von den Grundlagen bis zum eigenen Business.</p>
+      <a href="paket.html" class="btn btn-gold">Zum Ausbildungspaket →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer><div class="container"><div class="footer-grid"><div class="footer-brand"><div class="footer-brand-name">7er Ink <span class="accent">Academy</span></div><p>Professionelle Tattoo Aus- und Weiterbildung für Artists, die mehr wollen.</p></div><div class="footer-col"><h5>Programme</h5><ul><li><a href="programm.html">Gesamtprogramm</a></li><li><a href="coaching.html">Live Calls</a></li></ul></div><div class="footer-col"><h5>Academy</h5><ul><li><a href="tom.html">Über Tom</a></li><li><a href="tattoo-abc.html">Tattoo ABC</a></li><li><a href="standorte.html">Städte</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#kontakt">Kontakt</a></li><li><a href="https://7erink.com" target="_blank">7er Ink Studio</a></li></ul></div><div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="agb.html">AGB</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 7er Ink Tattoo Academy · Bad Wörishofen</p><div class="footer-links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div></div></div></footer>
+
+<script src="chatbot.js?v=7" defer></script>
+</body>
+</html>
