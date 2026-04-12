@@ -255,6 +255,8 @@ section { padding: 8rem 0; }
 .nav-links > li > a:hover::after,
 .nav-links > li > a.active::after { width: 100%; }
 .nav-cta { margin-left: 1.5rem; }
+.nav-mobile-freebie-btn { display: none; }
+@media(max-width:900px) { .nav-mobile-freebie-btn { display: inline-flex; align-items:center; gap:.3rem; font-size:.75rem; font-weight:700; color:var(--gold); border:1px solid rgba(201,168,76,.3); border-radius:2rem; padding:.3rem .8rem; text-decoration:none; } }
 .nav-freebie-link {
   display: inline-flex !important;
   align-items: center;
