@@ -241,7 +241,10 @@
   .lp-hero h1 em{font-style:italic;color:var(--gold)}
   .lp-hero-sub{font-size:1.05rem;color:var(--lighter);line-height:1.75;margin-bottom:2rem;max-width:480px}
   .lp-hero-cta{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start}
-  @media(max-width:600px){.lp-hero-cta .btn-gold{white-space:normal;text-align:center;width:100%;display:block}}
+  @media(max-width:600px){
+    .lp-hero-cta{align-items:stretch}
+    .lp-hero-cta .btn-gold,.lp-hero-cta .btn-outline{white-space:normal;text-align:center;width:100%;display:flex;justify-content:center;align-items:center}
+  }
   .lp-hero-hint{font-size:.75rem;color:var(--muted)}
   .lp-hero-inner>div:first-child{position:relative;z-index:2}
   .lp-hero-image{position:relative;overflow:hidden;margin-left:-3rem}
@@ -282,6 +285,7 @@
   /* Testimonial 3D coverflow */
   /* Testimonial Swiper */
   .t-cf-slide{width:340px!important}
+  @media(max-width:640px){.t-cf-slide{width:calc(100vw - 3rem)!important}}
   .testimonial-swiper{padding:2rem 0 3.5rem;overflow:hidden}
   .t-nav-btn{color:var(--gold)!important;--swiper-navigation-color:var(--gold)}
   .t-nav-btn::after{font-size:1.4rem!important;font-weight:700}
@@ -642,7 +646,7 @@
         <div style="margin-top:1.2rem;font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.05em;">Modul ansehen →</div>
       </a>
     </div>
-    <div style="text-align:center;margin-top:3rem;" class="fade-in">
+    <div style="text-align:center;margin-top:3rem;display:flex;flex-direction:column;align-items:center;" class="fade-in">
       <a href="paket.html" class="btn btn-gold" style="font-size:1rem;padding:1rem 2.5rem;">Alle Modulinhalte ansehen →</a>
       <p style="color:var(--muted);font-size:.78rem;margin-top:.8rem;">Detaillierte Lektionsübersicht, Stundenzahl und Inhalte jedes Moduls</p>
     </div>
