@@ -50,10 +50,10 @@
     .freebie-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:2rem;row-gap:0;margin-bottom:5rem}
     @media(max-width:760px){
       .freebie-grid{grid-template-columns:1fr;row-gap:0}
-      .freebie-card-top:nth-of-type(1){order:1}
-      .freebie-card-bottom:nth-of-type(1){order:2}
-      .freebie-card-top:nth-of-type(2){order:3;margin-top:2.5rem}
-      .freebie-card-bottom:nth-of-type(2){order:4}
+      .freebie-grid > div:nth-child(1){order:1}
+      .freebie-grid > div:nth-child(3){order:2}
+      .freebie-grid > div:nth-child(2){order:3;margin-top:2.5rem}
+      .freebie-grid > div:nth-child(4){order:4}
     }
 
     .freebie-card-top{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.2);border-bottom:none;border-radius:16px 16px 0 0;padding:2.4rem 2rem 1.6rem;position:relative;overflow:hidden}
@@ -124,7 +124,6 @@
       <li><a href="tom.html">Über Tom</a></li>
       <li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
       <li><a href="index.html#kontakt">Kontakt</a></li>
-      <li><a href="freebie.html" class="nav-freebie-link">🎁 Freebie</a></li>
     </ul>
     <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
     <a href="freebie.html" class="nav-mobile-freebie-btn">🎁 Freebie</a>
