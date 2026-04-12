@@ -226,7 +226,7 @@
       <div id="cb-header">
         <div id="cb-avatar">💬</div>
         <div id="cb-header-info">
-          <div id="cb-header-name">Maya · 7er Ink Studio</div>
+          <div id="cb-header-name">Lisa · 7er Ink Academy</div>
           <div id="cb-header-status">● Online – antwortet sofort</div>
         </div>
         <button id="cb-close" aria-label="Chat schließen">✕</button>
@@ -575,7 +575,7 @@
 
       // Chat-Verlauf zusammenbauen
       var chatSummary = messages.map(function (m) {
-        return (m.role === 'user' ? 'Kunde: ' : 'Maya: ') + m.content;
+        return (m.role === 'user' ? 'Kunde: ' : 'Lisa:') + m.content;
       }).join('\n');
 
       function doSend() {
@@ -590,7 +590,7 @@
           stildetails: stildetails,
           datum:       datum,
           chatlog:     messages.map(function(m) {
-            return (m.role === 'user' ? 'Kunde: ' : 'Maya: ') + m.content;
+            return (m.role === 'user' ? 'Kunde: ' : 'Lisa:') + m.content;
           }).join('\n').substring(0, 5000)
         };
 
