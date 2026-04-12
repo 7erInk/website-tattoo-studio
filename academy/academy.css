@@ -161,7 +161,7 @@ section { padding: 8rem 0; }
 .btn-outline {
   background: transparent;
   color: var(--white);
-  border: 1px solid var(--border-mid);
+  border: 1px solid rgba(255,255,255,0.4);
 }
 .btn-outline:hover {
   border-color: var(--gold);
