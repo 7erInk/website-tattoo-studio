@@ -208,8 +208,12 @@
     #cb-attach-remove { background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer; font-size: 0.85rem; padding: 2px 4px; }
     #cb-attach-remove:hover { color: #e53e3e; }
     @media (max-width: 480px) {
-      #cb-window { right: 12px; bottom: 88px; width: calc(100vw - 24px); }
+      #cb-window {
+        left: 12px; right: 12px; bottom: 80px;
+        width: auto; max-height: 65vh;
+      }
       #cb-btn    { right: 12px; bottom: 12px; }
+      #cb-messages { min-height: 120px; max-height: 200px; }
     }
   `;
 
@@ -724,6 +728,18 @@
   input.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+  });
+
+  // Mobile: Tastatur öffnet sich → Chat-Fenster nach oben scrollen
+  input.addEventListener('focus', function () {
+    if (window.innerWidth <= 480) {
+      setTimeout(function () {
+        var win = document.getElementById('cb-window');
+        if (win) win.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        var msgs = document.getElementById('cb-messages');
+        if (msgs) msgs.scrollTop = msgs.scrollHeight;
+      }, 350);
+    }
   });
 
 })();
