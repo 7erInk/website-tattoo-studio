@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/7erink-logo.png">
   <link rel="stylesheet" href="academy.css?v=2">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -394,8 +395,8 @@
       margin-top: 3rem;
     }
     .tom-approach-not {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
+      background: rgba(248,113,113,0.04);
+      border: 1px solid rgba(248,113,113,0.3);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-bottom: 1.5rem;
@@ -404,7 +405,7 @@
       font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--muted);
+      color: #f87171;
       margin-bottom: 0.75rem;
     }
     .tom-approach-not-list {
@@ -417,13 +418,13 @@
     }
     .tom-approach-not-list li {
       font-size: 0.85rem;
-      color: var(--lighter);
+      color: #f87171;
       display: flex;
       gap: 0.6rem;
-      text-decoration: line-through;
-      opacity: 0.5;
+      text-decoration: none;
+      opacity: 1;
     }
-    .tom-approach-not-list li::before { content: '✕'; text-decoration: none; }
+    .tom-approach-not-list li::before { content: '✕'; text-decoration: none; color: #f87171; }
     .tom-approach-yes {
       background: rgba(201,168,76,0.05);
       border: 1px solid rgba(201,168,76,0.25);
@@ -454,6 +455,17 @@
       line-height: 1.5;
     }
     .tom-approach-yes-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    /* Swiper Sliders for Convention + Seminar */
+    .tom-slider-wrap { position: relative; margin-top: 0; }
+    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; }
+    .tom-slider-wrap .swiper-slide img { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; }
+    .tom-slider-wrap .swiper-button-prev,
+    .tom-slider-wrap .swiper-button-next { color: var(--gold); --swiper-navigation-color: var(--gold); }
+    .tom-slider-wrap .swiper-button-prev::after,
+    .tom-slider-wrap .swiper-button-next::after { font-size: 1.2rem; font-weight: 700; }
+    .tom-slider-wrap .swiper-pagination-bullet-active { background: var(--gold); }
+    @media(max-width:600px) { .tom-slider-wrap .swiper-slide img { height: 240px; } }
+
     .tom-approach-seminar-imgs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -684,7 +696,18 @@
       .tom-gallery { grid-template-columns: 1fr; }
       .tom-gallery img.span2 { height: 200px; }
       .tom-gallery img { height: 200px; }
-      .tom-approach-seminar-imgs { grid-template-columns: 1fr; }
+      /* Swiper Sliders for Convention + Seminar */
+    .tom-slider-wrap { position: relative; margin-top: 0; }
+    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; }
+    .tom-slider-wrap .swiper-slide img { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; }
+    .tom-slider-wrap .swiper-button-prev,
+    .tom-slider-wrap .swiper-button-next { color: var(--gold); --swiper-navigation-color: var(--gold); }
+    .tom-slider-wrap .swiper-button-prev::after,
+    .tom-slider-wrap .swiper-button-next::after { font-size: 1.2rem; font-weight: 700; }
+    .tom-slider-wrap .swiper-pagination-bullet-active { background: var(--gold); }
+    @media(max-width:600px) { .tom-slider-wrap .swiper-slide img { height: 240px; } }
+
+    .tom-approach-seminar-imgs { grid-template-columns: 1fr; }
       .tom-approach-seminar-imgs img:last-child { grid-column: auto; }
       .tom-stat-big-grid { grid-template-columns: 1fr 1fr; }
       .tom-final-cta-buttons { flex-direction: column; align-items: center; }
@@ -932,14 +955,21 @@
 <section class="tom-section" style="padding-top: 0; border-bottom: 1px solid var(--border);">
   <div class="tom-container">
     <div class="tom-section-label">Convention-Momente</div>
-    <div class="tom-gallery" style="grid-template-columns: repeat(4, 1fr);">
-      <img src="images/conv-urkunde-benni.jpg" alt="Tom Irschina mit Convention-Urkunde" loading="lazy" style="height:320px; object-fit:cover; object-position:center top;">
-      <img src="images/conv-urkunde-patrick.jpg" alt="Tom und Patrick mit Urkunden" loading="lazy" style="height:320px; object-fit:cover; object-position:center top;">
-      <img src="images/conv-urkunde-melli.jpg" alt="Tom und Melli mit Urkunden" loading="lazy" style="height:320px; object-fit:cover; object-position:center top;">
-      <img src="images/conv-urkunde-kunde.jpg" alt="Tom bei der Siegerehrung" loading="lazy" style="height:320px; object-fit:cover; object-position:center top;">
-      <img src="images/conv-pokale.jpg" alt="Convention-Pokale" loading="lazy" style="height:240px; object-fit:cover;" class="span2">
-      <img src="images/conv-tom.jpg" alt="Tom Irschina auf Convention" loading="lazy" style="height:240px; object-fit:cover;">
-      <img src="images/conv-tom-jury.jpg" alt="Tom als Jurymitglied" loading="lazy" style="height:240px; object-fit:cover;">
+    <div class="tom-slider-wrap">
+      <div class="swiper conv-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/conv-urkunde-benni.jpg" alt="Tom Irschina mit Convention-Urkunde" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-urkunde-patrick.jpg" alt="Tom und Patrick mit Urkunden" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-urkunde-melli.jpg" alt="Tom und Melli mit Urkunden" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-urkunde-kunde.jpg" alt="Tom bei der Siegerehrung" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-pokale.jpg" alt="Convention-Pokale" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-tom.jpg" alt="Tom Irschina auf Convention" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/conv-tom-jury.jpg" alt="Tom als Jurymitglied" loading="lazy"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1025,15 +1055,22 @@
 <section class="tom-section" style="padding-top: 0;">
   <div class="tom-container">
     <div class="tom-section-label">Im Seminar</div>
-    <div class="tom-gallery">
-      <img src="images/sem-gruppe7.jpg" alt="Seminarteilnehmer Gruppe" loading="lazy" class="span2">
-      <img src="images/sem-tom2.jpg" alt="Tom Irschina im Seminar" loading="lazy">
-      <img src="images/sem-erklaert.jpg" alt="Tom erklärt Technik" loading="lazy">
-      <img src="images/zert-uebergabe.jpg" alt="Zertifikatsübergabe" loading="lazy">
-      <img src="images/zert-tom-teilnehmerin.jpg" alt="Tom und Teilnehmerin Zertifikat" loading="lazy">
-      <img src="images/zert-teilnehmer.jpg" alt="Zertifikatsübergabe an Teilnehmer" loading="lazy" class="span2">
-      <img src="images/tom-nlp-zertifikat.jpg" alt="Tom NLP Zertifizierung" loading="lazy">
-      <img src="images/sem-live.jpg" alt="Live Seminar" loading="lazy">
+    <div class="tom-slider-wrap">
+      <div class="swiper sem-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/sem-gruppe7.jpg" alt="Seminarteilnehmer Gruppe" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/sem-tom2.jpg" alt="Tom Irschina im Seminar" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/sem-erklaert.jpg" alt="Tom erklärt Technik" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/zert-uebergabe.jpg" alt="Zertifikatsübergabe" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/zert-tom-teilnehmerin.jpg" alt="Tom und Teilnehmerin Zertifikat" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/zert-teilnehmer.jpg" alt="Zertifikatsübergabe an Teilnehmer" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/tom-nlp-zertifikat.jpg" alt="Tom NLP Zertifizierung" loading="lazy"></div>
+          <div class="swiper-slide"><img src="images/sem-live.jpg" alt="Live Seminar" loading="lazy"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1203,6 +1240,23 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.conv-swiper', {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.conv-swiper .swiper-pagination', clickable: true },
+    navigation: { nextEl: '.conv-swiper .swiper-button-next', prevEl: '.conv-swiper .swiper-button-prev' },
+    grabCursor: true,
+  });
+  new Swiper('.sem-swiper', {
+    loop: true,
+    autoplay: { delay: 4000, disableOnInteraction: false },
+    pagination: { el: '.sem-swiper .swiper-pagination', clickable: true },
+    navigation: { nextEl: '.sem-swiper .swiper-button-next', prevEl: '.sem-swiper .swiper-button-prev' },
+    grabCursor: true,
+  });
+</script>
 <script>
 mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mm.classList.remove('open'); burger.classList.remove('open'); }));
 </script>
