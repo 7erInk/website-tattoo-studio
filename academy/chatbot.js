@@ -731,15 +731,29 @@
     this.style.height = Math.min(this.scrollHeight, 80) + 'px';
   });
 
-  // Mobile: Tastatur öffnet sich → Chat-Fenster nach oben scrollen
+  // Mobile: Tastatur öffnet sich → Chat-Fenster fixieren
+  if ('visualViewport' in window) {
+    window.visualViewport.addEventListener('resize', function () {
+      var cbWin = document.getElementById('cb-window');
+      if (!cbWin || !cbWin.classList.contains('open')) return;
+      if (window.innerWidth <= 480) {
+        var vvh = window.visualViewport.height;
+        cbWin.style.bottom = '80px';
+        cbWin.style.maxHeight = (vvh - 100) + 'px';
+        var msgs = document.getElementById('cb-messages');
+        if (msgs) {
+          msgs.style.maxHeight = Math.max(80, vvh - 280) + 'px';
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+      }
+    });
+  }
   input.addEventListener('focus', function () {
     if (window.innerWidth <= 480) {
       setTimeout(function () {
-        var win = document.getElementById('cb-window');
-        if (win) win.scrollIntoView({ behavior: 'smooth', block: 'end' });
         var msgs = document.getElementById('cb-messages');
         if (msgs) msgs.scrollTop = msgs.scrollHeight;
-      }, 350);
+      }, 400);
     }
   });
 
