@@ -456,15 +456,14 @@
     }
     .tom-approach-yes-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
     /* Swiper Sliders for Convention + Seminar */
-    .tom-slider-wrap { position: relative; margin-top: 0; }
-    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; }
-    .tom-slider-wrap .swiper-slide img { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; }
+    .tom-slider-wrap { position: relative; margin-top: 0; display: flex; justify-content: center; }
+    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; width: 100%; max-width: 360px; }
+    .tom-slider-wrap .swiper-slide img { width: 100%; aspect-ratio: 9/16; object-fit: cover; object-position: center top; display: block; }
     .tom-slider-wrap .swiper-button-prev,
     .tom-slider-wrap .swiper-button-next { color: var(--gold); --swiper-navigation-color: var(--gold); }
     .tom-slider-wrap .swiper-button-prev::after,
     .tom-slider-wrap .swiper-button-next::after { font-size: 1.2rem; font-weight: 700; }
     .tom-slider-wrap .swiper-pagination-bullet-active { background: var(--gold); }
-    @media(max-width:600px) { .tom-slider-wrap .swiper-slide img { height: 240px; } }
 
     .tom-approach-seminar-imgs {
       display: grid;
@@ -697,15 +696,14 @@
       .tom-gallery img.span2 { height: 200px; }
       .tom-gallery img { height: 200px; }
       /* Swiper Sliders for Convention + Seminar */
-    .tom-slider-wrap { position: relative; margin-top: 0; }
-    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; }
-    .tom-slider-wrap .swiper-slide img { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; }
+    .tom-slider-wrap { position: relative; margin-top: 0; display: flex; justify-content: center; }
+    .tom-slider-wrap .swiper { border-radius: var(--radius); overflow: hidden; width: 100%; max-width: 360px; }
+    .tom-slider-wrap .swiper-slide img { width: 100%; aspect-ratio: 9/16; object-fit: cover; object-position: center top; display: block; }
     .tom-slider-wrap .swiper-button-prev,
     .tom-slider-wrap .swiper-button-next { color: var(--gold); --swiper-navigation-color: var(--gold); }
     .tom-slider-wrap .swiper-button-prev::after,
     .tom-slider-wrap .swiper-button-next::after { font-size: 1.2rem; font-weight: 700; }
     .tom-slider-wrap .swiper-pagination-bullet-active { background: var(--gold); }
-    @media(max-width:600px) { .tom-slider-wrap .swiper-slide img { height: 240px; } }
 
     .tom-approach-seminar-imgs { grid-template-columns: 1fr; }
       .tom-approach-seminar-imgs img:last-child { grid-column: auto; }
