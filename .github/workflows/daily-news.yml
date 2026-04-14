@@ -1,0 +1,349 @@
+name: Daily Journal Article
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 8:00 Uhr Berlin (UTC+2)
+  workflow_dispatch:      # Manuell auslösbar
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate & Deploy Article
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          python3 << 'PYEOF'
+          import ftplib, io, re, json, sys
+          from datetime import date
+          import os
+
+          FTP_HOST = '82.198.229.223'
+          FTP_USER = 'u688179148'
+          FTP_PASS = os.environ['FTP_PASSWORD']
+          FTP_PATHS = [
+              '/domains/7erink.com/public_html/academy',
+              '/domains/academy.7erink.com/public_html',
+              '/public_html/academy'
+          ]
+
+          today = date.today()
+          wd = today.weekday()
+          months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']
+          today_str = f'{today.day}. {months[today.month-1]} {today.year}'
+
+          # Themen-Rotation nach Wochentag
+          THEMEN = [
+              # Montag
+              {
+                  'slug': f'tattoo-maschinen-einsteiger-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Tattoo Maschinen für Einsteiger 2026: Was du wirklich brauchst',
+                  'cat': 'technik', 'cat_label': 'Technik',
+                  'badge': '⚙️ Technik', 'emoji': '⚙️',
+                  'lead': 'Welche Maschine ist die richtige für den Einstieg? Tom Irschina erklärt, worauf es wirklich ankommt – und was du nicht brauchst.',
+                  'sections': [
+                      ('Rotary oder Coil – was ist besser für Anfänger?', 'Die meisten Einsteiger greifen zur Rotary-Maschine – und das zu Recht. Rotary-Maschinen sind leiser, wartungsärmer und gleichmäßiger in der Bewegung. Das gibt dir als Anfänger mehr Kontrolle und weniger Ablenkung durch das Gerät selbst.\n\nCoil-Maschinen hingegen haben ihren eigenen Rhythmus und Charakter. Viele erfahrene Artists schwören auf sie für bestimmte Stile – aber für den Einstieg ist die Lernkurve steiler. Mein klare Empfehlung: Start mit einer guten Rotary, lern die Basics, und entscheide später ob du Coil ausprobieren willst.'),
+                      ('Welche Marken sind empfehlenswert?', 'Im Einstiegssegment hat sich Dragonhawk etabliert – gutes Preis-Leistungs-Verhältnis, zuverlässig, weit verbreitet. Cheyenne Hawk ist die nächste Stufe: professionell, langlebig, von vielen Convention-Artists benutzt. Bishop Wand ist für fortgeschrittene Artists gedacht.\n\nWichtig: Kauf keine 20-Euro-Maschinen von Amazon. Die Qualität ist unberechenbar, die Ergebnisse frustrierend. Investiere einmal vernünftig – eine gute Maschine hält Jahre.'),
+                      ('Was kostet ein vernünftiges Starter-Set?', 'Für einen soliden Einstieg rechne mit 150–300 Euro für Maschine, Netzgerät und Grundzubehör. Das klingt viel – ist es aber nicht wenn du bedenkt dass du damit monatelang übst. Verteilt auf die Lernzeit sind das Centbeträge pro Sitzung.\n\nWas du NICHT sparen solltest: Nadeln und Hygieneartikel. Einwegnadeln, Handschuhe, Folien – das ist nicht verhandelbar.'),
+                  ],
+                  'tipp': 'Kauf dir zusätzlich zur Maschine mindestens 50 Blatt Kunsthaut. Das ist dein Übungsfeld – nicht echte Haut. Kein Artist der Welt fängt direkt am Kunden an.',
+                  'cta_text': 'Du willst tätowieren lernen – mit der richtigen Ausrüstung von Anfang an?',
+                  'cta_btn': 'Zur Tattoo Ausbildung',
+                  'cta_href': 'paket.html',
+              },
+              # Dienstag
+              {
+                  'slug': f'tattoo-pflege-tipps-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Tattoo Pflege 2026: So bleibt dein Tattoo jahrelang schön',
+                  'cat': 'trends', 'cat_label': 'Pflege',
+                  'badge': '💧 Pflege', 'emoji': '💧',
+                  'lead': 'Ein frisches Tattoo ist eine offene Wunde. Was du in den ersten Wochen tust – oder nicht tust – entscheidet wie dein Tattoo in zehn Jahren aussieht.',
+                  'sections': [
+                      ('Die ersten 48 Stunden: das Wichtigste', 'Nach der Sitzung klebt dein Artist eine Folie oder einen Verband auf das frische Tattoo. Diese Abdeckung bleibt je nach Material 2–24 Stunden. Danach: vorsichtig mit lauwarmem Wasser und milder Seife abwaschen, sanft abtupfen – nie reiben.\n\nIn den ersten Tagen sondert das Tattoo Lymphflüssigkeit und überschüssige Farbe ab. Das ist normal. Dein Körper reagiert auf die Verletzung. Halte die Stelle sauber und feucht – aber nicht nass.'),
+                      ('Was du unbedingt vermeiden musst', 'Sonne ist der größte Feind eines frischen Tattoos. UV-Strahlen zersetzen die Farbpigmente – ein frisches Tattoo darf die ersten 4 Wochen nicht in direkte Sonne. Danach: immer Sonnencreme mit hohem Lichtschutzfaktor.\n\nKein Schwimmbad, keine Sauna, kein Baden in den ersten 2–3 Wochen. Chlorwasser und stehende Gewässer sind Infektionsrisiken. Duschen ist okay – Baden nicht.\n\nNicht kratzen, nicht scheuern. Wenn es juckt – und das wird es – sanft draufklopfen.'),
+                      ('Welche Pflegeprodukte sind gut?', 'Die Branche schwört auf verschiedene Produkte – Bepanthen ist der Klassiker, Hustle Butter der Profi-Favorit. Wichtig ist: keine parfümierten Lotionen, keine Produkte mit Alkohol. Dünn auftragen, mehrmals täglich.\n\nEin gut gepflegtes Tattoo heilt in 2–4 Wochen oberflächlich. Die tiefen Hautschichten brauchen bis zu 6 Monate zur vollständigen Heilung.'),
+                  ],
+                  'tipp': 'Gönn dir nach der Sitzung 24 Stunden Ruhe. Kein Sport, kein Alkohol, viel Wasser trinken. Dein Körper heilt besser wenn er nicht gleichzeitig mit anderen Stressoren kämpft.',
+                  'cta_text': 'Du willst wissen wie ein Profi-Tattoo von innen heraus entsteht?',
+                  'cta_btn': 'Kostenloses Beratungsgespräch',
+                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
+              },
+              # Mittwoch
+              {
+                  'slug': f'tattoo-business-aufbauen-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Als Tätowierer selbstständig machen 2026: Was du wirklich wissen musst',
+                  'cat': 'business', 'cat_label': 'Business',
+                  'badge': '💼 Business', 'emoji': '💼',
+                  'lead': 'Tätowierer werden ist eine Sache. Davon leben eine andere. Tom Irschina erklärt, was es wirklich bedeutet sich als Tätowierer selbstständig zu machen.',
+                  'sections': [
+                      ('Gewerbeanmeldung und rechtliche Grundlagen', 'Wer als Tätowierer arbeitet, braucht ein Gewerbe. Die Anmeldung beim Gewerbeamt kostet je nach Stadt 15–60 Euro und ist in einer Stunde erledigt. Du bist dann Kleinunternehmer oder regelbesteuerter Unternehmer – je nach erwartetem Umsatz.\n\nWichtig: Tätowierer unterliegen der Infektionsschutzbelehrung nach §43 Infektionsschutzgesetz. Diese Belehrung musst du beim Gesundheitsamt durchführen – einmalig, kostenlos, Pflicht.'),
+                      ('Studio oder Mobile: was ist besser zum Start?', 'Ein eigenes Studio klingt toll – ist aber teuer. Miete, Umbau, Ausstattung, Genehmigungen. Für den Einstieg empfehle ich entweder als Gastartist in etablierten Studios zu arbeiten oder in einem Shared-Studio Plätze zu mieten.\n\nMobile Tätowierer gibt es – aber die Anforderungen an Hygiene und Ausstattung sind dieselben wie im Studio. Kein Küchenumbau, keine Wohnzimmersessions. Das Gesundheitsamt nimmt das sehr ernst.'),
+                      ('Preise richtig kalkulieren', 'Der häufigste Fehler beim Start: zu billig anbieten. Du musst kalkulieren: Materialkosten, Studiomiete, Steuer, Krankenversicherung, Rentenversicherung, Ausfall durch Stornierungen. Ein Stundensatz unter 80 Euro ist für die meisten Selbstständigen nicht tragbar.\n\nFang nicht mit Dumpingpreisen an – du wirst nicht die richtigen Kunden anziehen und untergräbst gleichzeitig deinen eigenen Ruf.'),
+                  ],
+                  'tipp': 'Bau dir von Anfang an eine Warteliste auf – auch wenn sie am Anfang leer ist. Ein Buchungssystem (Fresha, Calendly) signalisiert Professionalität und reduziert No-Shows drastisch.',
+                  'cta_text': 'Willst du nicht nur tätowieren können, sondern auch davon leben?',
+                  'cta_btn': 'Zur Tattoo Ausbildung mit Business-Modul',
+                  'cta_href': 'paket.html',
+              },
+              # Donnerstag
+              {
+                  'slug': f'tattoo-stile-uebersicht-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Tattoo Stile 2026: Welcher Stil passt zu dir?',
+                  'cat': 'trends', 'cat_label': 'Trends',
+                  'badge': '🎨 Stile', 'emoji': '🎨',
+                  'lead': 'Black & Grey, Fine Line, Neo-Traditional, Realismus – die Tattoo-Welt hat viele Gesichter. Tom Irschina erklärt die wichtigsten Stile und was sie auszeichnet.',
+                  'sections': [
+                      ('Black & Grey Realismus: der zeitlose Klassiker', 'Black & Grey ist der Stil bei dem Tom Irschina zu Hause ist – und einer der anspruchsvollsten überhaupt. Hier zählt nicht die Farbe, sondern die Beherrschung von Licht und Schatten. Porträts, Tiere, Landschaften – alles was dreidimensionale Tiefe braucht.\n\nDer Vorteil: Black & Grey altert besser als Farbtattoos. Keine ausgeblichenen Pigmente nach Jahren in der Sonne. Ein gut gestochenes Black & Grey Tattoo sieht auch mit 50 noch stark aus.'),
+                      ('Fine Line: der Boom-Stil der letzten Jahre', 'Fine Line explodiert seit 2022 – dünne, präzise Linien, oft ohne Shading, minimalistisch oder hochdetailliert. Der Reiz: zart und elegant, besonders beliebt bei Frauen. Der Nachteil: Fine Line verzeiht keine Fehler. Jede Linie muss sitzen.\n\nAußerdem heilt Fine Line kritischer als andere Stile. Zu tief gestochen verlaufen die Linien. Die Technik erfordert echte Präzision – und einen Artist der sie beherrscht.'),
+                      ('Neo-Traditional und Watercolor: Farbe mit Aussage', 'Neo-Traditional verbindet klassische Tattoo-Formen mit moderner Farbgebung und Detailreichtum. Kräftige Outlines, lebendige Farben, oft mit floralen oder tierischen Motiven.\n\nWatercolor-Tattoos simulieren Aquarellmalerei auf der Haut – ohne harte Konturen, mit fließenden Farbübergängen. Spektakulär frisch – aber ehrlich gesagt schwieriger zu erhalten. Ohne solide Outlines verblasst Watercolor schneller.'),
+                  ],
+                  'tipp': 'Such dir einen Artist der auf DEINEN gewünschten Stil spezialisiert ist – nicht einfach den günstigsten. Ein Realismus-Artist macht nicht automatisch gute Fine-Line-Tattoos. Spezialisierung ist alles.',
+                  'cta_text': 'Du willst selbst einen Stil meistern und damit Kunden begeistern?',
+                  'cta_btn': 'Kostenloses Beratungsgespräch',
+                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
+              },
+              # Freitag
+              {
+                  'slug': f'reach-verordnung-tattoo-{today.strftime("%Y-%m-%d")}',
+                  'title': 'REACH-Verordnung 2026: Was Tätowierer jetzt wissen müssen',
+                  'cat': 'news', 'cat_label': 'News',
+                  'badge': '⚖️ Gesetze', 'emoji': '⚖️',
+                  'lead': 'Die REACH-Verordnung hat die Tattoo-Branche verändert. Tom Irschina erklärt welche Farben verboten sind, was erlaubt ist – und wie du als Artist rechtssicher arbeitest.',
+                  'sections': [
+                      ('Was ist die REACH-Verordnung?', 'REACH steht für Registration, Evaluation, Authorisation and Restriction of Chemicals – eine EU-Chemikalienverordnung die seit Januar 2022 auch Tattoofarben regelt. Konkret: Bestimmte Farbstoffe die bisher in Tattoofarben verwendet wurden sind seitdem verboten.\n\nBetroffen sind vor allem bestimmte Blau- und Grüntöne (Pigment Blue 15:3, Pigment Green 7) sowie eine Reihe weiterer Substanzen. Das hat die Farbpalette vieler Artists deutlich eingeschränkt.'),
+                      ('Welche Farben sind betroffen?', 'Die bekanntesten verbotenen Pigmente: CI 74160 (Phthalo Blue) und CI 74260 (Phthalo Green) – das sind die leuchtenden, intensiven Blau- und Grüntöne die viele Artists für Watercolor und Neo-Traditional genutzt haben.\n\nViele Hersteller haben reformulierte Versionen auf den Markt gebracht – aber nicht alle Ersatzprodukte überzeugen in Qualität und Farbintensität. Das Testen neuer Farben auf Kunsthaut ist Pflicht bevor sie am Kunden eingesetzt werden.'),
+                      ('Was bedeutet das für Einsteiger?', 'Für alle die jetzt mit dem Tätowieren anfangen: Kauft von Anfang an nur REACH-konforme Farben. Seriöse Hersteller wie Intenze, Eternal Ink und Dynamic haben ihre Produktlinien entsprechend angepasst und kennzeichnen REACH-konforme Produkte klar.\n\nWer mit alten Beständen arbeitet oder auf Märkten günstige Farben kauft riskiert Bußgelder und im schlimmsten Fall Schadensersatzforderungen von Kunden.'),
+                  ],
+                  'tipp': 'Heb immer die Chargenprotokolle deiner Tattoofarben auf. Im Fall einer Reklamation oder Kontrolle durch das Gesundheitsamt musst du nachweisen können welche Farbe du verwendet hast.',
+                  'cta_text': 'Willst du von Anfang an rechtssicher und professionell tätowieren?',
+                  'cta_btn': 'Zur Tattoo Ausbildung',
+                  'cta_href': 'paket.html',
+              },
+              # Samstag
+              {
+                  'slug': f'tattoo-conventions-tipps-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Tattoo Conventions 2026: Die wichtigsten Events in Deutschland',
+                  'cat': 'convention', 'cat_label': 'Convention',
+                  'badge': '🏆 Convention', 'emoji': '🏆',
+                  'lead': 'Conventions sind Pflichtprogramm für jeden der ernsthaft in der Tattoo-Branche Fuß fassen will. Tom Irschina erklärt warum – und welche Events 2026 nicht fehlen dürfen.',
+                  'sections': [
+                      ('Warum Conventions so wichtig sind', 'Auf einer Convention triffst du in zwei Tagen mehr relevante Menschen als in einem Jahr über Social Media. Artists, Kollegen, potenzielle Kunden, Ausrüster – alles auf einem Fleck. Für Einsteiger ist das unersetzlich: Du siehst auf welchem Niveau internationale Artists arbeiten, kannst direkt Fragen stellen und lernst die Community kennen.\n\nFür erfahrene Artists sind Conventions die Möglichkeit Awards zu gewinnen – und die zählen. Ein Convention-Award ist das beste Portfolio-Stück das du haben kannst.'),
+                      ('Die wichtigsten Conventions in Deutschland 2026', 'International Tattoo Convention Köln: Eine der ältesten und renommiertesten in Deutschland, jedes Jahr im Frühjahr. Dortmund TattooCON: Große Halle, viele internationale Artists, Ende Mai. Hamburg Tattoo Convention: Starkes Norddeutschland-Event. Berlin Tattoo Convention: Hauptstadt-Flair mit internationaler Besetzung.\n\nSchweiz und Österreich haben ebenfalls starke Events – Zürich Tattoo Convention und Wien Tattoo Convention sind beide einen Besuch wert.'),
+                      ('Wie du als Artist einen Booth bekommst', 'Der Weg zum eigenen Convention-Booth: Bewerbung 3–6 Monate vorher, Portfolio einschicken, auf Zusage warten. Die Nachfrage übersteigt das Angebot bei guten Conventions bei weitem.\n\nFür Einsteiger empfehle ich erst als Besucher mehrere Conventions zu erleben, Kontakte zu knüpfen, und dann gezielt bei einer kleineren lokalen Convention zu bewerben. Der erste eigene Booth ist ein Meilenstein.'),
+                  ],
+                  'tipp': 'Meld dich für Convention-Wettbewerbe an – auch wenn du noch nicht gewinnst. Das Feedback der Juroren ist unbezahlbar, und die Vorbereitung auf einen Wettbewerb pusht dein Level enorm.',
+                  'cta_text': 'Willst du Convention-taugliches Niveau erreichen?',
+                  'cta_btn': 'Zur Tattoo Ausbildung',
+                  'cta_href': 'paket.html',
+              },
+              # Sonntag
+              {
+                  'slug': f'tattoo-trends-2026-{today.strftime("%Y-%m-%d")}',
+                  'title': 'Tattoo Trends 2026: Was gerade alle wollen',
+                  'cat': 'trends', 'cat_label': 'Trends',
+                  'badge': '📈 Trends', 'emoji': '📈',
+                  'lead': 'Die Tattoo-Welt entwickelt sich schnell. Tom Irschina zeigt welche Stile und Motive 2026 dominieren – und was das für Artists und Kunden bedeutet.',
+                  'sections': [
+                      ('Fine Line bleibt dominant', 'Fine Line ist seit drei Jahren auf dem Vormarsch und zeigt keine Anzeichen des Abschwungs. Im Gegenteil: Die Nachfrage nach ultra-feinen, minimalistischen Arbeiten wächst weiter. Botanische Motive, abstrakte Geometrie, zarte Portraits.\n\nFür Artists bedeutet das: Wer Fine Line nicht beherrscht verliert Kunden. Die Technik erfordert Präzision und die richtigen Maschinen – aber wer sie meistert hat eine gefragte Spezialisierung.'),
+                      ('Blackwork und Dotwork im Aufwind', 'Blackwork – große, mutige Schwarz-Flächen oft mit ornamentalen oder tribalen Einflüssen – erlebt ein Revival. Nicht die alten Tribal-Tattoos der 90er, sondern moderne, durchdachte Designs mit architektonischer Qualität.\n\nDotwork schafft durch Punktraster beeindruckende Texturen und Shading-Effekte ohne klassische Linien. Zeitaufwändig, aber beeindruckend.'),
+                      ('Personalisierung schlägt alles', 'Der größte Trend 2026 ist kein Stil – es ist die Individualität. Kunden wollen keine Flash-Designs von der Stange, sie wollen etwas das nur sie haben. Custom-Designs, persönliche Symbole, Handschriften von Verstorbenen, Orte die bedeutsam sind.\n\nFür Artists bedeutet das: Wer Custom-Designs anbieten kann und die Fähigkeit hat Kundenwünsche in starke Tattoos zu übersetzen, ist gefragt wie nie.'),
+                  ],
+                  'tipp': 'Beobachte nicht nur Tattoo-Instagram für Inspiration – schau auch auf Mode, Architektur und Grafikdesign. Die stärksten Tattoo-Artists der Welt holen ihre Inspirationen aus allen Bereichen der visuellen Kultur.',
+                  'cta_text': 'Willst du die Trends nicht nur kennen, sondern umsetzen können?',
+                  'cta_btn': 'Kostenloses Beratungsgespräch',
+                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
+              },
+          ]
+
+          thema = THEMEN[wd]
+          slug = thema['slug'] + '.html'
+          slug = re.sub(r'[^a-z0-9-]', '-', slug.lower())
+          slug = re.sub(r'-+', '-', slug)
+
+          # HTML generieren
+          nav = '''<nav id="nav" class="solid">
+            <div class="nav-inner">
+              <a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a>
+              <ul class="nav-links">
+                <li class="nav-dropdown"><a>Kurse</a><div class="dropdown-menu"><a href="paket.html">Tattoo Ausbildung</a><a href="quiz.html">🎯 Passt das zu mir?</a><a href="online-grundkurs.html">Grundkurs</a><a href="realismus-kurs.html">Realismus-Kurs</a><a href="business-kurs.html">Business-Kurs</a><a href="coaching.html">Live Calls</a></div></li>
+                <li class="nav-dropdown"><a>Wissen</a><div class="dropdown-menu"><a href="taetowieren-lernen.html">Tätowieren lernen</a><a href="tattoo-stile.html">Tattoo Stile</a><a href="tattoo-abc.html">Tattoo ABC</a><a href="standorte.html">Städte</a><a href="news.html">Journal &amp; News</a></div></li>
+                <li class="nav-dropdown"><a>Ratgeber</a><div class="dropdown-menu"><a href="wie-viel-verdient-ein-taetowierer.html">Tätowierer Verdienst</a><a href="tattoo-maschine-anfaenger.html">Maschinen für Anfänger</a><a href="tattoo-apprenticeship-vs-online.html">Apprenticeship vs. Online</a><a href="tattoo-preise-berechnen.html">Preise berechnen</a><a href="tattoo-business-starten.html">Business starten</a><a href="tattoo-ausbildung-kosten.html">Ausbildung Kosten</a></div></li>
+                <li><a href="tom.html">Über Tom</a></li><li><a href="vorher-nachher.html">Vorher &amp; Nachher</a></li>
+              </ul>
+              <a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim?month=2026-04" target="_blank" rel="noopener" class="btn btn-gold nav-cta">Beratung anfragen</a>
+              <button class="burger" id="burger"><span></span><span></span><span></span></button>
+            </div>
+          </nav>'''
+
+          sections_html = ''
+          for h2, body in thema['sections']:
+              sections_html += f'<h2>{h2}</h2>\n<p>{body}</p>\n\n'
+
+          cta_href = thema['cta_href']
+          cta_target = ' target="_blank" rel="noopener"' if cta_href.startswith('http') else ''
+
+          article_html = f'''<!DOCTYPE html>
+          <html lang="de">
+          <head>
+            <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>{thema["title"]} | 7er Ink Academy</title>
+            <meta name="description" content="{thema["lead"]}">
+            <link rel="canonical" href="https://academy.7erink.com/{slug}">
+            <link rel="icon" type="image/png" href="images/favicon.png">
+            <link rel="stylesheet" href="academy.css?v=240">
+            <script type="application/ld+json">
+            {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{thema["title"]}","datePublished":"{today.isoformat()}","dateModified":"{today.isoformat()}","author":{{"@type":"Person","name":"Tom Irschina"}},"publisher":{{"@type":"Organization","name":"7er Ink Tattoo Academy","url":"https://academy.7erink.com"}},"url":"https://academy.7erink.com/{slug}","articleSection":"{thema["cat_label"]}"}}
+            </script>
+            <script src="nav.js" defer></script>
+            <style>
+            .mobile-menu{{display:none;position:fixed;inset:0;z-index:10000;background:rgba(13,13,15,.97);flex-direction:column;transform:translateX(100%);transition:transform .3s ease}}
+            @media(max-width:900px){{.mobile-menu{{display:flex}}}}
+            .mobile-menu.open{{transform:translateX(0)}}
+            .mobile-menu-close{{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:rgba(255,255,255,.75);font-size:1rem;cursor:pointer;width:2.3rem;height:2.3rem;display:flex;align-items:center;justify-content:center;z-index:2}}
+            .mobile-nav-inner{{flex:1;overflow-y:auto;padding:4.2rem 1.8rem 2rem;display:flex;flex-direction:column}}
+            .nav-group{{margin-bottom:1.6rem}}.nav-group-label{{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:.35rem;display:block}}
+            .mobile-nav-inner a.nav-item{{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:"Cormorant Garamond",serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none}}
+            .mobile-nav-cta{{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}}
+            .mobile-nav-cta .btn{{width:100% !important;text-align:center !important;justify-content:center !important}}
+            .article-wrap{{max-width:780px;margin:0 auto;padding:5rem 2rem 6rem}}
+            .article-back{{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:2.5rem;transition:color .2s}}
+            .article-back:hover{{color:var(--gold)}}
+            .article-cat-badge{{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#080808;background:var(--gold);border-radius:100px;padding:.3rem .85rem;margin-bottom:1.2rem}}
+            .article-meta{{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;flex-wrap:wrap}}
+            .article-meta-dot{{width:3px;height:3px;border-radius:50%;background:var(--muted);flex-shrink:0}}
+            .article-title{{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1.5rem}}
+            .article-lead{{font-size:1.05rem;color:var(--lighter);line-height:1.8;border-left:3px solid var(--gold);padding-left:1.5rem;margin-bottom:3rem;font-style:italic}}
+            .article-body{{font-size:.95rem;color:var(--lighter);line-height:1.9}}
+            .article-body h2{{font-family:"Cormorant Garamond",serif;font-size:1.7rem;font-weight:700;color:var(--white);margin:2.5rem 0 1rem}}
+            .article-body h3{{font-family:"Cormorant Garamond",serif;font-size:1.25rem;font-weight:600;color:var(--gold);margin:2rem 0 .6rem}}
+            .article-body p{{margin-bottom:1.4rem}}
+            .article-body ul{{padding-left:1.2rem;margin-bottom:1.4rem;display:flex;flex-direction:column;gap:.5rem}}
+            .article-body ul li::marker{{color:var(--gold)}}
+            .tip-box{{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:1.5rem 1.8rem;margin:2rem 0}}
+            .tip-box-label{{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}}
+            .tip-box p{{font-size:.88rem;color:var(--lighter);line-height:1.75;margin:0}}
+            .article-author{{display:flex;align-items:center;gap:1.2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:3.5rem}}
+            .article-author-avatar{{width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:1.4rem;color:var(--gold);flex-shrink:0}}
+            .article-author-name{{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem}}
+            .article-author-role{{font-size:.75rem;color:var(--muted)}}
+            .article-cta{{background:linear-gradient(135deg,rgba(201,168,76,.08) 0%,rgba(201,168,76,.04) 100%);border:1px solid rgba(201,168,76,.25);border-radius:var(--radius);padding:2.5rem;margin-top:3rem;text-align:center}}
+            .article-cta h3{{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--white);margin-bottom:.75rem}}
+            .article-cta p{{font-size:.88rem;color:var(--lighter);margin-bottom:1.5rem;line-height:1.7}}
+            </style>
+          </head>
+          <body>
+          {nav}
+          <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" id="mobileClose">✕</button>
+            <div class="mobile-nav-inner">
+              <div class="nav-group"><span class="nav-group-label">Kurse</span><a href="paket.html" class="nav-item">Tattoo Ausbildung <span>→</span></a><a href="online-grundkurs.html" class="nav-item">Grundkurs <span>→</span></a><a href="coaching.html" class="nav-item">Live Calls <span>→</span></a></div>
+              <div class="nav-group"><span class="nav-group-label">Wissen</span><a href="news.html" class="nav-item">Journal &amp; News <span>→</span></a><a href="tattoo-stile.html" class="nav-item">Tattoo Stile <span>→</span></a></div>
+              <div class="mobile-nav-cta"><a href="https://calendly.com/timkrampe/beratungsgespraech-mit-tim" target="_blank" rel="noopener" class="btn btn-gold">Beratung anfragen</a></div>
+            </div>
+          </div>
+
+          <div class="article-wrap">
+            <a href="news.html" class="article-back">← Zurück zum Journal</a>
+            <span class="article-cat-badge">{thema["cat_label"]}</span>
+            <h1 class="article-title">{thema["title"]}</h1>
+            <div class="article-meta">
+              <span>{today_str}</span>
+              <div class="article-meta-dot"></div>
+              <span>Von Tom Irschina</span>
+              <div class="article-meta-dot"></div>
+              <span>5 min Lesezeit</span>
+            </div>
+            <p class="article-lead">{thema["lead"]}</p>
+            <div class="article-body">
+              {sections_html}
+              <div class="tip-box">
+                <div class="tip-box-label">💡 Toms Tipp</div>
+                <p>{thema["tipp"]}</p>
+              </div>
+            </div>
+            <div class="article-author">
+              <div class="article-author-avatar">T</div>
+              <div>
+                <div class="article-author-name">Tom Irschina</div>
+                <div class="article-author-role">Tattoo Artist &amp; Gründer 7er Ink Academy — 16+ Jahre Erfahrung, 50+ Convention Awards</div>
+              </div>
+            </div>
+            <div class="article-cta">
+              <h3>{thema["cta_text"]}</h3>
+              <p>In 90 Tagen vom ersten Strich bis zum ersten Kunden – mit Lernplan, Live-Calls und Community.</p>
+              <a href="{cta_href}"{cta_target} class="btn btn-gold">{thema["cta_btn"]}</a>
+            </div>
+          </div>
+
+          <footer style="border-top:1px solid var(--border);padding:2.5rem 2rem;text-align:center;font-size:.8rem;color:var(--muted)">
+            <a href="index.html" style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;text-decoration:none">7er Ink Academy</a>
+            <div style="margin-top:.75rem"><a href="impressum.html" style="color:var(--muted);text-decoration:none;margin:0 .8rem">Impressum</a><a href="datenschutz.html" style="color:var(--muted);text-decoration:none;margin:0 .8rem">Datenschutz</a><a href="news.html" style="color:var(--muted);text-decoration:none;margin:0 .8rem">← Journal</a></div>
+          </footer>
+          <script src="chatbot.js?v=13" defer></script>
+          <script src="cookie-banner.js" defer></script>
+          </body>
+          </html>'''
+
+          # FTP verbinden
+          ftp = ftplib.FTP()
+          ftp.connect(FTP_HOST, 21, timeout=30)
+          ftp.login(FTP_USER, FTP_PASS)
+
+          # news.html laden und updaten
+          ftp.cwd(FTP_PATHS[0])
+          buf = io.BytesIO()
+          ftp.retrbinary('RETR news.html', buf.write)
+          news_html = buf.getvalue().decode('utf-8')
+
+          new_featured = f'''<section class="journal-featured" data-article-category="{thema['cat']}">
+                <div class="featured-label">Featured · Neuester Bericht</div>
+                <a href="{slug}" class="featured-card">
+                  <div class="featured-cover cover-{thema['cat']}">
+                    <div class="featured-cover-badge">{thema['badge']}</div>
+                    <div class="featured-cover-new">NEU</div>
+                    <div class="featured-cover-date">{today_str}</div>
+                    <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">{thema['emoji']}</div>
+                  </div>
+                  <div class="featured-body">
+                    <div class="featured-cat">{thema['cat_label']} · {today_str}</div>
+                    <h2>{thema['title']}</h2>
+                    <p>{thema['lead'][:120]}...</p>
+                    <div class="featured-meta">
+                      <span class="featured-read-time">⏱ 5 Min. Lesezeit</span>
+                      <span class="featured-link">Vollständigen Artikel lesen →</span>
+                    </div>
+                  </div>
+                </a>
+              </section>'''
+
+          news_html = re.sub(r'<section class="journal-featured".*?</section>', new_featured, news_html, flags=re.DOTALL)
+
+          new_card = f'''<a href="{slug}" class="article-card" data-category="{thema['cat']}">
+                  <div class="article-cover cover-{thema['cat']}">
+                    <div class="article-cover-icon">{thema['emoji']}</div>
+                    <div class="article-cover-badge">{thema['badge']}</div>
+                  </div>
+                  <div class="article-body">
+                    <div class="article-cat cat-{thema['cat']}">{thema['cat_label']}</div>
+                    <h3>{thema['title']}</h3>
+                    <p class="article-excerpt">{thema['lead'][:100]}...</p>
+                    <div class="article-footer">
+                      <span class="article-date">{today_str}</span>
+                      <span class="article-arrow">&#x2192;</span>
+                    </div>
+                  </div>
+                </a>'''
+
+          grid_tag = '<div class="journal-grid" id="articleGrid">'
+          news_html = news_html.replace(grid_tag, grid_tag + '\n      ' + new_card, 1)
+
+          # Auf alle 3 Pfade deployen
+          for path in FTP_PATHS:
+              ftp.cwd(path)
+              ftp.storbinary(f'STOR {slug}', io.BytesIO(article_html.encode('utf-8')))
+              ftp.storbinary('STOR news.html', io.BytesIO(news_html.encode('utf-8')))
+              print(f'✅ Deployed: {path}/{slug}')
+
+          ftp.quit()
+          print(f'✅ Fertig! https://academy.7erink.com/{slug}')
+          PYEOF
