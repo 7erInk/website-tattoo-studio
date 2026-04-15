@@ -37,6 +37,11 @@ RewriteRule ^regional https://academy.7erink.com/ [L,R=301]
 RewriteRule ^tattoo-studio https://7erink.com/ [L,R=301]
 RewriteRule ^pflegecreme https://7erink.com/ [L,R=301]
 
+# --- LiteSpeed Page Cache deaktivieren für HTML ---
+<IfModule LiteSpeed>
+  CacheDisable public /
+</IfModule>
+
 # --- Browser Caching ---
 <IfModule mod_expires.c>
   ExpiresActive On
