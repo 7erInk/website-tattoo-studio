@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  # 1) Hauptseite 7erink.com → public_html/
+  # 1) Hauptseite 7erink.com → domains/7erink.com/public_html/
   deploy-main:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-          server-dir: /public_html/
+          server-dir: /domains/7erink.com/public_html/
           local-dir: ./
           exclude: |
             **/.git*
