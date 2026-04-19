@@ -295,6 +295,12 @@ jobs:
           ftp.retrbinary('RETR news.html', buf.write)
           news_html = buf.getvalue().decode('utf-8')
 
+          # Duplikat-Schutz: Artikel nur einfügen wenn Slug noch nicht vorhanden
+          if slug in news_html:
+              print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
+              ftp.quit()
+              sys.exit(0)
+
           new_featured = f'''<section class="journal-featured" data-article-category="{thema['cat']}">
                 <div class="featured-label">Featured · Neuester Bericht</div>
                 <a href="{slug}" class="featured-card">
