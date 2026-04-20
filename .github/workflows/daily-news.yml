@@ -156,9 +156,10 @@ jobs:
           ]
 
           thema = THEMEN[wd]
-          slug = thema['slug'] + '.html'
-          slug = re.sub(r'[^a-z0-9-]', '-', slug.lower())
-          slug = re.sub(r'-+', '-', slug)
+          # Slug-Bereinigung NUR auf den Basisnamen, dann .html anhängen
+          base = re.sub(r'[^a-z0-9-]', '-', thema['slug'].lower())
+          base = re.sub(r'-+', '-', base).strip('-')
+          slug = base + '.html'
 
           # HTML generieren
           nav = '''<nav id="nav" class="solid">
@@ -295,9 +296,24 @@ jobs:
           ftp.retrbinary('RETR news.html', buf.write)
           news_html = buf.getvalue().decode('utf-8')
 
+          # Bereinigung: kaputte Einträge entfernen (href endet mit -html statt .html)
+          broken_before = len(re.findall(r'<a href="[a-z0-9-]+-html" class="article-card"', news_html))
+          if broken_before > 0:
+              news_html = re.sub(
+                  r'<a href="[a-z0-9-]+-html" class="article-card".*?</a>',
+                  '', news_html, flags=re.DOTALL
+              )
+              print(f'🧹 {broken_before} kaputte Einträge (-html Suffix) entfernt.')
+
           # Duplikat-Schutz: Artikel nur einfügen wenn Slug noch nicht vorhanden
           if slug in news_html:
               print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
+              # news.html trotzdem neu hochladen falls Bereinigung nötig war
+              if broken_before > 0:
+                  for path in FTP_PATHS:
+                      ftp.cwd(path)
+                      ftp.storbinary('STOR news.html', io.BytesIO(news_html.encode('utf-8')))
+                      print(f'✅ news.html bereinigt: {path}')
               ftp.quit()
               sys.exit(0)
 
