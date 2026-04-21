@@ -274,8 +274,8 @@ jobs:
               },
           ]
 
-          # Rotation nach absolutem Tagesnummer (alle 14 Tage andere Themen)
-          thema = THEMEN[today.toordinal() % len(THEMEN)]
+          # Rotation nach absolutem Tagesnummer (alle 14 Tage andere Themen, Offset 5 für sauberen Start)
+          thema = THEMEN[(today.toordinal() + 5) % len(THEMEN)]
           # Slug-Bereinigung NUR auf den Basisnamen, dann .html anhängen
           base = re.sub(r'[^a-z0-9-]', '-', thema['slug'].lower())
           base = re.sub(r'-+', '-', base).strip('-')
@@ -424,6 +424,16 @@ jobs:
                   '', news_html, flags=re.DOTALL
               )
               print(f'🧹 {broken_before} kaputte Einträge (-html Suffix) entfernt.')
+
+          # Einmalige Bereinigung: falscher Artikel vom 21. April (tattoo-trends-2026-2026-04-21) entfernen
+          wrong_slug = 'tattoo-trends-2026-2026-04-21.html'
+          if wrong_slug in news_html:
+              news_html = re.sub(
+                  r'<a href="tattoo-trends-2026-2026-04-21\.html" class="article-card".*?</a>',
+                  '', news_html, flags=re.DOTALL
+              )
+              print(f'🧹 Falschen Artikel ({wrong_slug}) aus news.html entfernt.')
+              broken_before = max(broken_before, 1)  # Damit upload ausgelöst wird
 
           # Duplikat-Schutz: Artikel nur einfügen wenn Slug noch nicht vorhanden
           if slug in news_html:
