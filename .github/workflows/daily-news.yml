@@ -12,15 +12,17 @@ jobs:
       - name: Generate & Deploy Article
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           python3 << 'PYEOF'
-          import ftplib, io, re, json, sys
+          import ftplib, io, re, json, sys, urllib.request, urllib.error, textwrap
           from datetime import date
           import os
 
           FTP_HOST = '82.198.229.223'
           FTP_USER = 'u688179148'
           FTP_PASS = os.environ['FTP_PASSWORD']
+          ANTHROPIC_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
           FTP_PATHS = [
               '/domains/7erink.com/public_html/academy',
               '/domains/academy.7erink.com/public_html',
@@ -28,258 +30,147 @@ jobs:
           ]
 
           today = date.today()
-          wd = today.weekday()
           months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']
           today_str = f'{today.day}. {months[today.month-1]} {today.year}'
 
-          # Themen-Rotation nach absolutem Tagesnummer – 14 verschiedene Themen, alle 2 Wochen
+          # 56 einzigartige Themen – alle über Neuerungen & Veränderungen in der Tattoo-Welt
+          # Keine Wiederholung für fast 2 Monate
           THEMEN = [
-              # 0 – Maschinen-Neuheiten
-              {
-                  'slug': f'neue-tattoo-maschinen-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Neue Tattoo Maschinen 2026: Was der Markt gerade hergibt',
-                  'cat': 'technik', 'cat_label': 'Technik',
-                  'badge': '⚙️ Maschinen', 'emoji': '⚙️',
-                  'lead': 'Der Tattoo-Maschinenmarkt entwickelt sich rasant. Tom Irschina zeigt welche neuen Modelle 2026 wirklich einen Unterschied machen – und welche nur Marketing sind.',
-                  'sections': [
-                      ('Was ist neu auf dem Maschinenmarkt 2026?', 'Die großen Hersteller haben 2026 interessante Neuheiten veröffentlicht. FK Irons hat die Spektra Edge X2 weiterentwickelt – leichter, ruhiger im Lauf, mit verbessertem Stroke-Control. Dragonhawk hat im Einstiegssegment aufgeholt: Die neue Mast Archer ist für den Preis erstaunlich solide.\n\nEin Trend der sich 2026 klar durchsetzt: Wireless-Maschinen. Kabel am Arbeitsplatz gelten zunehmend als veraltet. Bishop, Cheyenne und FK Irons bieten alle akku-betriebene Modelle an – die Akkulaufzeiten sind mittlerweile für ganztägige Sessions ausreichend.'),
-                      ('Wireless vs. Kabelgebunden: Was sollst du wählen?', 'Wireless-Maschinen haben einen echten Vorteil: Bewegungsfreiheit. Kein Kabel das im Weg hängt, keine Stolperfalle, eleganteres Arbeiten. Der Nachteil: Sie sind teurer (200–600 Euro mehr) und du musst an Ladezyklen denken.\n\nFür Einsteiger empfehle ich noch immer eine kabelgebundene Maschine – die sind günstiger, zuverlässiger im Dauerbetrieb und verzeihen mehr. Wer drei Jahre Erfahrung hat und weiß was er will, kann in Wireless investieren.'),
-                      ('Linework vs. Shading: Die richtige Maschine für jeden Einsatz', 'Ein häufiger Fehler: eine Maschine für alles nutzen. Profis haben meist zwei oder drei Maschinen – eine für saubere Outlines (kurzer Hub, präzise), eine für Shading (längerer Hub, weiches Einstechen) und optional eine für Farbfüllungen.\n\nNeu auf dem Markt: Maschinen mit verstellbarem Hub-System. Cheyenne Hawk Thunder und Bishop Rotary Capo erlauben den Hub-Wechsel ohne Werkzeug. Das spart Geld und Platz – du hast quasi mehrere Maschinen in einer.'),
-                  ],
-                  'tipp': 'Teste Maschinen wenn immer möglich vor dem Kauf – auf Conventions können viele Aussteller direkt ausprobiert werden. Was auf dem Papier toll klingt, liegt manchmal nicht gut in der Hand.',
-                  'cta_text': 'Du willst die richtige Ausrüstung von Anfang an kennen?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 1 – Neue Gesetze & Regeln
-              {
-                  'slug': f'tattoo-gesetze-aenderungen-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Neue Tattoo-Gesetze 2026: Was sich in Deutschland und der EU geändert hat',
-                  'cat': 'news', 'cat_label': 'Gesetze',
-                  'badge': '⚖️ Gesetze', 'emoji': '⚖️',
-                  'lead': 'Die rechtlichen Anforderungen ans Tätowieren werden strenger. Tom Irschina erklärt welche neuen Regeln 2026 gelten – und was du als Artist jetzt wissen musst.',
-                  'sections': [
-                      ('REACH-Update: Neue Farbverbote in Kraft', 'Die EU-REACH-Verordnung wird kontinuierlich erweitert. 2026 kamen weitere Pigmente auf die Verbotsliste – darunter bestimmte Azo-Farbstoffe die bisher in roten und orangefarbenen Tattoofarben eingesetzt wurden. Betroffen sind Artists die auf kräftige Farbgebung spezialisiert sind.\n\nDie gute Nachricht: Hersteller wie Intenze, World Famous Ink und Eternal haben REACH-konforme Alternativen entwickelt. Wer aktuell zertifizierte Farben kauft ist auf der sicheren Seite. Das Problem liegt bei älteren Beständen in Schubladen.'),
-                      ('Neue Hygiene-Dokumentationspflicht ab 2026', 'In mehreren deutschen Bundesländern wurden die Dokumentationspflichten für Tätowierstudios verschärft. Konkret: Jeder Tattoo-Vorgang muss mit Datum, verwendeten Materialien (inkl. Chargennummer der Farben und Nadeln) und Kundenangaben dokumentiert werden.\n\nDas klingt bürokratisch – ist aber sinnvoll. Im Fall einer Reklamation oder Infektion hast du damit einen lückenlosen Nachweis. Studios die das nicht umsetzen riskieren bei Gesundheitsamtskontrollen empfindliche Bußgelder.'),
-                      ('Mindestalter und Einwilligungspflicht: Was gilt?', 'Bundesweit gilt: Kein Tattoo unter 18 Jahren – auch nicht mit Einwilligung der Eltern. Einige Studios arbeiten trotzdem mit 16-Jährigen (mit elterlicher Genehmigung) – das ist rechtlich ein Graubereich der von Bundesland zu Bundesland unterschiedlich bewertet wird.\n\nKlar ist: Wer Minderjährige tätowiert geht ein erhebliches Risiko ein. Die Einwilligung muss immer schriftlich vorliegen, das Datum muss überprüft werden. Im Zweifelsfall: Ausweis verlangen.'),
-                  ],
-                  'tipp': 'Führe eine einfache Digitalliste aller verwendeten Farben und Nadeln pro Sitzung – mit Chargen-Nummer. Das dauert 2 Minuten und kann dich bei einer Kontrolle vor erheblichen Problemen bewahren.',
-                  'cta_text': 'Willst du von Anfang an rechtssicher und professionell tätowieren?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 2 – Neue Produkte auf dem Markt
-              {
-                  'slug': f'neue-tattoo-produkte-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Neue Tattoo-Produkte 2026: Was den Unterschied macht',
-                  'cat': 'technik', 'cat_label': 'Produkte',
-                  'badge': '🛒 Produkte', 'emoji': '🛒',
-                  'lead': 'Von neuen Pflegefolien über bessere Kunsthaut bis zu innovativen Nadel-Sets – Tom Irschina zeigt welche neuen Produkte 2026 wirklich einen Unterschied im Studio machen.',
-                  'sections': [
-                      ('Heilungsfolien: Saniderm vs. Dermalize vs. Recovery Derm', 'Transparente Heilungsfolien haben die Tattoo-Aftercare revolutioniert – und der Markt hat sich 2026 weiterentwickelt. Saniderm bleibt der Standard, aber Dermalize Pro hat aufgeholt: besser atmungsaktiv, hält länger an Gelenken.\n\nNeu und interessant: Recovery Derm Shield – besonders dünn, kaum sichtbar, ideal für Stellen die viel Bewegung haben. Der Nachteil: Teurer als die Konkurrenz. Für normale Tattoos reicht Saniderm, für Hände/Füße/Knie lohnt der Aufpreis.'),
-                      ('Neue Nadelgenerationen 2026', 'Kwadron hat 2026 ihre Primus-Linie erweitert – besonders die Cartridge-Nadeln für Fine Line sind jetzt schärfer und konsistenter als je zuvor. Wer Fine Line tätowiert und noch keine Kwadron probiert hat sollte das nachholen.\n\nEin weiterer Fortschritt: Beschichtete Nadeln mit Teflonschicht für weniger Trauma beim Einstechen. Das Gewebe wird weniger belastet, die Heilung läuft smoother. Für empfindliche Körperstellen (Rippen, Knöchel) ein echter Vorteil.'),
-                      ('Smart-Netzgeräte mit App-Anbindung', 'Die neuen Netzgeräte von Cheyenne und Bishop lassen sich per Bluetooth mit dem Smartphone verbinden. Du kannst Lieblingseinstellungen abspeichern, zwischen Artists umschalten und die Volt-Zahl sekundengenau kontrollieren.\n\nPraktisch im Studioalltag – aber kein Muss. Wer mit einem guten analogen Netzgerät zufrieden ist, braucht das Upgrade nicht. Die Apps haben noch Kinderkrankheiten, die Verbindung bricht manchmal ab.'),
-                  ],
-                  'tipp': 'Bestell neue Produkte immer in kleinen Mengen zum Testen – bevor du 200 Stück auf Lager legst. Der Markt ändert sich schnell und was heute top ist kann in einem Jahr veraltet sein.',
-                  'cta_text': 'Willst du wissen welche Ausrüstung in der professionellen Ausbildung eingesetzt wird?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 3 – Neue Stilrichtungen
-              {
-                  'slug': f'neue-tattoo-stile-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Neue Tattoo-Stilrichtungen 2026: Was gerade die Szene bewegt',
-                  'cat': 'trends', 'cat_label': 'Neue Stile',
-                  'badge': '🎨 Neue Stile', 'emoji': '🎨',
-                  'lead': 'Die Tattoo-Kunst entwickelt sich ständig weiter. Tom Irschina stellt die neuen Stilrichtungen vor die 2026 die internationale Szene prägen – und was Artists davon lernen können.',
-                  'sections': [
-                      ('Ignorant Style: Absicht als Konzept', 'Ignorant Style sieht aus als hätte ein Kind mit Kugelschreiber gezeichnet – aber das ist genau der Punkt. Grobe Linien, einfache Motive, keine Shading-Finesse. Der Witz: Es ist verdammt schwer, wirklich gut "schlecht" zu sein.\n\nDer Stil kommt aus dem Street-Art-Umfeld und ist gerade bei jüngeren Kunden extrem gefragt. Für Artists: Wer Ignorant Style macht muss trotzdem sauber stechen – die Linien müssen bewusst grob sein, nicht unbeabsichtigt wackelig.'),
-                      ('Sketch Style und Illustrative Tattoos', 'Sketch-Style simuliert eine Bleistiftzeichnung auf der Haut – mit bewusst unvollständigen Linien, Schraffuren und Skizzen-Ästhetik. Eng verwandt ist der Illustrative Style: Comic-Panels, Buchillustration, Kinderbuch-Ästhetik auf der Haut.\n\nBeide Stile erleben 2026 einen Boom – Instagram-tauglich, gut fotografierbar, und weit weg vom Standard-Tattoo. Für Artists die narratives Storytelling auf der Haut mögen ist das ein dankbares Terrain.'),
-                      ('Grunge und Distressed Aesthetics', 'Gegenentwurf zum makellosen Fine Line: Grunge Tattoos arbeiten bewusst mit Unvollkommenheit. Texturierte Flächen, aufgerissene Ränder, verwitterte Optik. Beeinflusst von Punk und DIY-Kultur.\n\nTechnisch anspruchsvoller als es aussieht: Die richtige Dosierung macht den Unterschied zwischen "gewollt roh" und "schlecht gestochen". Wer diesen Stil beherrscht hat eine echte Nische.'),
-                  ],
-                  'tipp': 'Stile aus Social Media einfach kopieren reicht nicht – versteh die Intention dahinter. Warum funktioniert Ignorant Style? Was macht Sketch Style interessant? Wenn du das verstehst, kannst du eigene Interpretationen entwickeln.',
-                  'cta_text': 'Willst du verschiedene Stile professionell erlernen?',
-                  'cta_btn': 'Kostenloses Beratungsgespräch',
-                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
-              },
-              # 4 – Weltgeschehen mit Tattoo-Bezug
-              {
-                  'slug': f'tattoo-welt-news-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo-Branche weltweit 2026: Was sich gerade verändert',
-                  'cat': 'news', 'cat_label': 'Welt-News',
-                  'badge': '🌍 Welt-News', 'emoji': '🌍',
-                  'lead': 'Die Tattoo-Branche ist global vernetzt. Tom Irschina berichtet was sich 2026 weltweit in der Szene tut – von Regulierungen über neue Märkte bis zu kulturellen Entwicklungen.',
-                  'sections': [
-                      ('Japan öffnet sich: Tattoos und der gesellschaftliche Wandel', 'Japan war jahrzehntelang das problematischste Land für Tätowierer – Tattoos galten als Yakuza-Symbol, Artists wurden verhaftet. 2020 entschied der Oberste Gerichtshof: Tätowieren ist Kunst, keine Medizin, kein Verbot. 2026 erleben japanische Tattoo-Studios einen regelrechten Boom.\n\nJapanische Artists bringen dabei ihre eigene Tradition mit – Tebori (Handstechen), Irezumi (traditionelles Japanese Style) gewinnen international massiv an Interesse. Wer Japanese Style anbieten will sollte die Wurzeln kennen.'),
-                      ('USA: Regulierungswelle trifft Tattoo-Branche', 'In den USA wächst die staatliche Regulierung. Mehrere Bundesstaaten haben 2025/26 neue Hygienestandards eingeführt – Pflicht-Zertifizierungen, regelmäßige Inspektionen, digitale Kundendokumentation. Was in Europa schon länger Standard ist, holt die USA gerade nach.\n\nDas hat Folgewirkungen: Günstig-Studios ohne Professionalisierung werden verdrängt. Kunden achten mehr auf Zertifikate und hygienische Standards. Für qualifizierte Artists ist das eine Chance.'),
-                      ('Social Media reguliert Tattoo-Content', 'Instagram und TikTok haben ihre Richtlinien für Tattoo-Content verschärft – bestimmte Körperstellen werden automatisch verborgen oder Accounts eingeschränkt. Das trifft Artists die auf Social Media ihren Lebensunterhalt aufbauen.\n\nDie Reaktion der Szene: eigene Plattformen, Newsletter, direkte Kundenbeziehungen. Wer 2026 als Tattoo-Artist nur auf Instagram setzt, baut auf Sand. Eine eigene Website und E-Mail-Liste sind wichtiger denn je.'),
-                  ],
-                  'tipp': 'Verfolge internationale Tattoo-News regelmäßig – nicht nur für den Weitblick, sondern weil sich Trends aus Japan, USA und Brasilien oft 2–3 Jahre später auch in Deutschland durchsetzen.',
-                  'cta_text': 'Willst du in einer Branche arbeiten die globale Entwicklungen versteht?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 5 – Business
-              {
-                  'slug': f'tattoo-business-aufbauen-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Als Tätowierer selbstständig machen 2026: Was du wirklich wissen musst',
-                  'cat': 'business', 'cat_label': 'Business',
-                  'badge': '💼 Business', 'emoji': '💼',
-                  'lead': 'Tätowierer werden ist eine Sache. Davon leben eine andere. Tom Irschina erklärt was es wirklich bedeutet, sich als Tätowierer selbstständig zu machen.',
-                  'sections': [
-                      ('Gewerbeanmeldung und rechtliche Grundlagen', 'Wer als Tätowierer arbeitet, braucht ein Gewerbe. Die Anmeldung beim Gewerbeamt kostet je nach Stadt 15–60 Euro und ist in einer Stunde erledigt. Du bist dann Kleinunternehmer oder regelbesteuerter Unternehmer – je nach erwartetem Umsatz.\n\nWichtig: Tätowierer unterliegen der Infektionsschutzbelehrung nach §43 Infektionsschutzgesetz. Diese Belehrung musst du beim Gesundheitsamt durchführen – einmalig, kostenlos, Pflicht.'),
-                      ('Studio oder Mobile: was ist besser zum Start?', 'Ein eigenes Studio klingt toll – ist aber teuer. Miete, Umbau, Ausstattung, Genehmigungen. Für den Einstieg empfehle ich entweder als Gastartist in etablierten Studios zu arbeiten oder in einem Shared-Studio Plätze zu mieten.\n\nMobile Tätowierer gibt es – aber die Anforderungen an Hygiene und Ausstattung sind dieselben wie im Studio. Kein Küchenumbau, keine Wohnzimmersessions. Das Gesundheitsamt nimmt das sehr ernst.'),
-                      ('Preise richtig kalkulieren', 'Der häufigste Fehler beim Start: zu billig anbieten. Du musst kalkulieren: Materialkosten, Studiomiete, Steuer, Krankenversicherung, Rentenversicherung, Ausfall durch Stornierungen. Ein Stundensatz unter 80 Euro ist für die meisten Selbstständigen nicht tragbar.\n\nFang nicht mit Dumpingpreisen an – du wirst nicht die richtigen Kunden anziehen und untergräbst gleichzeitig deinen eigenen Ruf.'),
-                  ],
-                  'tipp': 'Bau dir von Anfang an eine Warteliste auf – auch wenn sie am Anfang leer ist. Ein Buchungssystem signalisiert Professionalität und reduziert No-Shows drastisch.',
-                  'cta_text': 'Willst du nicht nur tätowieren können, sondern auch davon leben?',
-                  'cta_btn': 'Zur Tattoo Ausbildung mit Business-Modul',
-                  'cta_href': 'paket.html',
-              },
-              # 6 – Stile Überblick
-              {
-                  'slug': f'tattoo-stile-uebersicht-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo Stile 2026: Welcher Stil passt zu dir?',
-                  'cat': 'trends', 'cat_label': 'Stile',
-                  'badge': '🎨 Stile', 'emoji': '🎨',
-                  'lead': 'Black & Grey, Fine Line, Neo-Traditional, Realismus – die Tattoo-Welt hat viele Gesichter. Tom Irschina erklärt die wichtigsten Stile und was sie auszeichnet.',
-                  'sections': [
-                      ('Black & Grey Realismus: der zeitlose Klassiker', 'Black & Grey ist der Stil bei dem Tom Irschina zu Hause ist – und einer der anspruchsvollsten überhaupt. Hier zählt nicht die Farbe, sondern die Beherrschung von Licht und Schatten. Porträts, Tiere, Landschaften – alles was dreidimensionale Tiefe braucht.\n\nDer Vorteil: Black & Grey altert besser als Farbtattoos. Keine ausgeblichenen Pigmente nach Jahren in der Sonne. Ein gut gestochenes Black & Grey Tattoo sieht auch mit 50 noch stark aus.'),
-                      ('Fine Line: der Boom-Stil der letzten Jahre', 'Fine Line explodiert seit 2022 – dünne, präzise Linien, oft ohne Shading, minimalistisch oder hochdetailliert. Der Reiz: zart und elegant, besonders beliebt bei Frauen. Der Nachteil: Fine Line verzeiht keine Fehler. Jede Linie muss sitzen.\n\nAußerdem heilt Fine Line kritischer als andere Stile. Zu tief gestochen verlaufen die Linien. Die Technik erfordert echte Präzision – und einen Artist der sie beherrscht.'),
-                      ('Neo-Traditional und Watercolor: Farbe mit Aussage', 'Neo-Traditional verbindet klassische Tattoo-Formen mit moderner Farbgebung und Detailreichtum. Kräftige Outlines, lebendige Farben, oft mit floralen oder tierischen Motiven.\n\nWatercolor-Tattoos simulieren Aquarellmalerei auf der Haut – ohne harte Konturen, mit fließenden Farbübergängen. Spektakulär frisch – aber schwieriger zu erhalten. Ohne solide Outlines verblasst Watercolor schneller.'),
-                  ],
-                  'tipp': 'Such dir einen Artist der auf DEINEN gewünschten Stil spezialisiert ist – nicht einfach den günstigsten. Spezialisierung ist alles.',
-                  'cta_text': 'Du willst selbst einen Stil meistern und damit Kunden begeistern?',
-                  'cta_btn': 'Kostenloses Beratungsgespräch',
-                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
-              },
-              # 7 – Tattoo-Entfernung & Korrektur (Neuheit)
-              {
-                  'slug': f'tattoo-entfernung-laser-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo-Entfernung 2026: Was Laser-Technologie heute kann',
-                  'cat': 'technik', 'cat_label': 'Technik',
-                  'badge': '🔬 Technik', 'emoji': '🔬',
-                  'lead': 'Laser-Tattoo-Entfernung hat sich 2026 dramatisch verbessert. Tom Irschina erklärt was die neuen Technologien können – und was das für Artists und Kunden bedeutet.',
-                  'sections': [
-                      ('PicoSure vs. NdYAG: die neuen Standards', 'PicoSure-Laser sind 2026 der neue Goldstandard für Tattoo-Entfernung. Sie senden kürzere Pulswellen als klassische Q-Switch-Laser – das bedeutet weniger Sitzungen, weniger Narbenrisiko und bessere Ergebnisse bei bunten Tattoos.\n\nDer Preis: PicoSure-Behandlungen kosten 200–600 Euro pro Sitzung, und es braucht trotzdem 6–15 Behandlungen. Eine komplette Entfernung ist teuer – und nicht immer zu 100% möglich bei tiefen Schwarz-Tattoos.'),
-                      ('Was lässt sich entfernen und was nicht?', 'Schwarz ist am einfachsten zu entfernen – schwarze Pigmente absorbieren alle Laserwellenlängen optimal. Gelb und Hellgrün sind notorisch schwierig, manchmal unmöglich vollständig zu entfernen.\n\nWas viele nicht wissen: Professionelle Tattoos sind oft schwieriger zu entfernen als Amateurarbeiten – die Farbe sitzt tiefer und gleichmäßiger. Ein Knäuel-Tattoo vom Kumpel geht schneller raus als ein sauber gestochenes Studio-Tattoo.'),
-                      ('Was bedeutet das für Tätowierer?', 'Als Artist solltest du über Entfernung Bescheid wissen – Kunden fragen danach. Und: Cover-Ups sind oft eine Alternative zu Laser. Gutes Cover-Up-Wissen ist gefragter denn je.\n\nEin Trend 2026: Intentionale "Fade"-Tattoos – Arbeiten die mit der Zeit verblassen sollen, mit Tinten designed für Kurzlebigkeit. Eine neue Nische für Artists die mit Veränderlichkeit arbeiten wollen.'),
-                  ],
-                  'tipp': 'Wenn Kunden ein Cover-Up anfragen, lass sie vorher mindestens 1–2 Laser-Sitzungen machen wenn das Motiv sehr dunkel ist. Ein aufgehelltes Tattoo ist viel einfacher zu überarbeiten.',
-                  'cta_text': 'Willst du alles über Cover-Ups und aktuelle Techniken lernen?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 8 – Konventionen
-              {
-                  'slug': f'tattoo-conventions-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo Conventions 2026: Die wichtigsten Events in Deutschland',
-                  'cat': 'convention', 'cat_label': 'Convention',
-                  'badge': '🏆 Convention', 'emoji': '🏆',
-                  'lead': 'Conventions sind Pflichtprogramm für jeden der ernsthaft in der Tattoo-Branche Fuß fassen will. Tom Irschina erklärt warum – und welche Events 2026 nicht fehlen dürfen.',
-                  'sections': [
-                      ('Warum Conventions so wichtig sind', 'Auf einer Convention triffst du in zwei Tagen mehr relevante Menschen als in einem Jahr über Social Media. Artists, Kollegen, potenzielle Kunden, Ausrüster – alles auf einem Fleck. Für Einsteiger ist das unersetzlich: Du siehst auf welchem Niveau internationale Artists arbeiten.\n\nFür erfahrene Artists sind Conventions die Möglichkeit Awards zu gewinnen – und die zählen. Ein Convention-Award ist das beste Portfolio-Stück das du haben kannst.'),
-                      ('Die wichtigsten Conventions in Deutschland 2026', 'International Tattoo Convention Köln: Eine der ältesten und renommiertesten in Deutschland. Dortmund TattooCON: Große Halle, viele internationale Artists. Hamburg Tattoo Convention: Starkes Norddeutschland-Event. Berlin Tattoo Convention: Hauptstadt-Flair mit internationaler Besetzung.\n\nSchweiz und Österreich haben ebenfalls starke Events – Zürich und Wien sind einen Besuch wert.'),
-                      ('Wie du als Artist einen Booth bekommst', 'Der Weg zum eigenen Convention-Booth: Bewerbung 3–6 Monate vorher, Portfolio einschicken, auf Zusage warten. Die Nachfrage übersteigt das Angebot bei guten Conventions.\n\nFür Einsteiger empfehle ich erst als Besucher mehrere Conventions zu erleben, Kontakte zu knüpfen, und dann gezielt bei einer kleineren lokalen Convention zu bewerben.'),
-                  ],
-                  'tipp': 'Meld dich für Convention-Wettbewerbe an – auch wenn du noch nicht gewinnst. Das Feedback der Juroren ist unbezahlbar.',
-                  'cta_text': 'Willst du Convention-taugliches Niveau erreichen?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 9 – Trends
-              {
-                  'slug': f'tattoo-trends-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo Trends 2026: Was gerade alle wollen',
-                  'cat': 'trends', 'cat_label': 'Trends',
-                  'badge': '📈 Trends', 'emoji': '📈',
-                  'lead': 'Die Tattoo-Welt entwickelt sich schnell. Tom Irschina zeigt welche Stile und Motive 2026 dominieren – und was das für Artists und Kunden bedeutet.',
-                  'sections': [
-                      ('Fine Line bleibt dominant', 'Fine Line ist seit drei Jahren auf dem Vormarsch und zeigt keine Anzeichen des Abschwungs. Botanische Motive, abstrakte Geometrie, zarte Portraits.\n\nFür Artists: Wer Fine Line nicht beherrscht verliert Kunden. Die Technik erfordert Präzision und die richtigen Maschinen.'),
-                      ('Blackwork und Dotwork im Aufwind', 'Blackwork – große, mutige Schwarz-Flächen oft mit ornamentalen oder tribalen Einflüssen – erlebt ein Revival. Nicht die alten Tribal-Tattoos der 90er, sondern moderne, durchdachte Designs mit architektonischer Qualität.\n\nDotwork schafft durch Punktraster beeindruckende Texturen und Shading-Effekte ohne klassische Linien.'),
-                      ('Personalisierung schlägt alles', 'Der größte Trend 2026 ist kein Stil – es ist die Individualität. Kunden wollen keine Flash-Designs von der Stange. Custom-Designs, persönliche Symbole, Handschriften von Verstorbenen, bedeutsame Orte.\n\nFür Artists: Wer Custom-Designs anbieten kann und Kundenwünsche in starke Tattoos übersetzen kann, ist gefragt wie nie.'),
-                  ],
-                  'tipp': 'Beobachte nicht nur Tattoo-Instagram – schau auch auf Mode, Architektur und Grafikdesign für Inspiration.',
-                  'cta_text': 'Willst du die Trends nicht nur kennen, sondern umsetzen können?',
-                  'cta_btn': 'Kostenloses Beratungsgespräch',
-                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
-              },
-              # 10 – KI und Tattoo-Design
-              {
-                  'slug': f'ki-tattoo-design-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'KI und Tattoo-Design 2026: Werkzeug oder Bedrohung?',
-                  'cat': 'technik', 'cat_label': 'Technik',
-                  'badge': '🤖 Technik', 'emoji': '🤖',
-                  'lead': 'Midjourney, Stable Diffusion, Adobe Firefly – KI-generierte Designs sind in der Tattoo-Branche angekommen. Tom Irschina erklärt ehrlich: Was kann KI, was kann sie nicht, und wie soll ein Artist damit umgehen?',
-                  'sections': [
-                      ('Was KI-Tools heute können', 'KI-Tools wie Midjourney erzeugen in Sekunden Tattoo-Designs die visuell beeindruckend sind. Für Inspiration, Moodboards und Varianten sind sie nützlich. Kunden zeigen Artists zunehmend KI-generierte Bilder als Referenz.\n\nDas Problem: KI-Designs ignorieren die Realität der Haut. Sie enthalten feine Details die in der Praxis unleserlich werden, Farbverläufe die sich nicht umsetzen lassen, und Kompositionen die auf einem echten Körper nicht funktionieren.'),
-                      ('Das Copyright-Problem', '2026 ist die Rechtslage noch immer unklar: Wer besitzt das Copyright auf ein KI-generiertes Design? In den meisten Rechtssystemen gilt: niemand – KI-Output ist gemeinfrei. Das bedeutet: Ein Konkurrent kann dasselbe Design bei KI anfragen und es ebenfalls nutzen.\n\nEin weiteres Problem: KI ist auf den Arbeiten echter Artists trainiert – oft ohne deren Wissen oder Erlaubnis. Viele Artists sehen das als Diebstahl ihrer Arbeit.'),
-                      ('Wie du als Artist damit umgehst', 'KI als Inspiration nutzen, nicht als Abkürzung – das ist meine Empfehlung. Wenn ein Kunde ein KI-Bild bringt: nutze es als Ausgangspunkt, aber entwickle daraus ein eigenes, umsetzbares Design. Das ist dein Mehrwert.\n\nDein Handwerk, dein Stilgefühl, dein Verständnis für Hautverhalten und Körperform – das kann keine KI ersetzen. Wer sich jetzt auf KI-Copy verlässt, baut keine echte Karriere.'),
-                  ],
-                  'tipp': 'Lern digitale Grundlagen in Procreate oder Adobe Illustrator – dann kannst du KI-Outputs als Rohmaterial nehmen und professionell weiterverarbeiten. Das hebt dich von Artists ab die KI unkritisch verwenden.',
-                  'cta_text': 'Willst du lernen wie du Designs entwickelst die wirklich stechen können?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 11 – Tattoo-Pflege
-              {
-                  'slug': f'tattoo-pflege-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo-Pflege 2026: So bleibt dein Tattoo jahrelang schön',
-                  'cat': 'trends', 'cat_label': 'Pflege',
-                  'badge': '💧 Pflege', 'emoji': '💧',
-                  'lead': 'Ein frisches Tattoo ist eine offene Wunde. Was du in den ersten Wochen tust – oder nicht tust – entscheidet wie dein Tattoo in zehn Jahren aussieht.',
-                  'sections': [
-                      ('Die ersten 48 Stunden: das Wichtigste', 'Nach der Sitzung klebt dein Artist eine Folie oder einen Verband auf das frische Tattoo. Diese Abdeckung bleibt je nach Material 2–24 Stunden. Danach: vorsichtig mit lauwarmem Wasser und milder Seife abwaschen, sanft abtupfen – nie reiben.\n\nIn den ersten Tagen sondert das Tattoo Lymphflüssigkeit und überschüssige Farbe ab. Das ist normal. Dein Körper reagiert auf die Verletzung. Halte die Stelle sauber und feucht – aber nicht nass.'),
-                      ('Was du unbedingt vermeiden musst', 'Sonne ist der größte Feind eines frischen Tattoos. UV-Strahlen zersetzen die Farbpigmente – ein frisches Tattoo darf die ersten 4 Wochen nicht in direkte Sonne.\n\nKein Schwimmbad, keine Sauna, kein Baden in den ersten 2–3 Wochen. Chlorwasser und stehende Gewässer sind Infektionsrisiken. Nicht kratzen, nicht scheuern. Wenn es juckt – sanft draufklopfen.'),
-                      ('Welche Pflegeprodukte sind gut?', 'Die Branche schwört auf verschiedene Produkte – Bepanthen ist der Klassiker, Hustle Butter der Profi-Favorit. Wichtig ist: keine parfümierten Lotionen, keine Produkte mit Alkohol. Dünn auftragen, mehrmals täglich.\n\nEin gut gepflegtes Tattoo heilt in 2–4 Wochen oberflächlich. Die tiefen Hautschichten brauchen bis zu 6 Monate.'),
-                  ],
-                  'tipp': 'Gönn dir nach der Sitzung 24 Stunden Ruhe. Kein Sport, kein Alkohol, viel Wasser trinken. Dein Körper heilt besser wenn er nicht gleichzeitig mit anderen Stressoren kämpft.',
-                  'cta_text': 'Du willst wissen wie ein Profi-Tattoo von innen heraus entsteht?',
-                  'cta_btn': 'Kostenloses Beratungsgespräch',
-                  'cta_href': 'https://calendly.com/timkrampe/beratungsgespraech-mit-tim',
-              },
-              # 12 – Tattoo & Hauttypen
-              {
-                  'slug': f'tattoo-haut-typen-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoos und Hauttypen: Was Artists wissen müssen',
-                  'cat': 'technik', 'cat_label': 'Technik',
-                  'badge': '🧬 Technik', 'emoji': '🧬',
-                  'lead': 'Nicht jede Haut ist gleich. Tom Irschina erklärt wie Hauttyp, Hautton und Hautzustand das Ergebnis eines Tattoos beeinflussen – und wie du als Artist damit umgehst.',
-                  'sections': [
-                      ('Fitzpatrick-Skala: Was sie für Tätowierer bedeutet', 'Die Fitzpatrick-Skala teilt Hauttypen 1–6 ein – von sehr hell bis sehr dunkel. Für Tätowierer ist das praktisch relevant: Auf hellerer Haut (Typ 1–2) sind feine Details gut sichtbar, aber rote und orange Farben können Hautreizungen auslösen.\n\nAuf dunkler Haut (Typ 4–6) verschwinden viele Farben – Gelb, Hellgrün, Pink sind kaum sichtbar. Black & Grey und dunkle Farben funktionieren am besten. Die Kunst: Design und Farbwahl an den Hauttyp anpassen.'),
-                      ('Gealterte Haut: andere Regeln', 'Mit dem Alter verliert die Haut Elastizität und wird dünner. Das beeinflusst das Tattoo: Linien können schwerer gesetzt werden, Farben heilen anders, Details verlaufen leichter.\n\nFür Artists: Ältere Kunden brauchen mehr Zeit, sanfteres Einstechen und realistischere Erwartungen für filigrane Designs. Einfache, klare Motive mit starken Kontrasten halten besser.'),
-                      ('Narben und Problemhaut: Was geht, was nicht?', 'Vernarbtes Gewebe lässt sich tätowieren – aber die Haut verhält sich anders. Narben nehmen Farbe ungleichmäßig an, es kann zu Keloiden kommen. Vor dem Stechen: Haut begutachten, Alter der Narbe prüfen (mindestens 1–2 Jahre alt), Kundenaufklärung.\n\nSkin Conditions wie Psoriasis oder Ekzeme sind keine absolute Kontraindikation – aber im akuten Schub sollte nicht tätowiert werden. Immer Rücksprache empfehlen.'),
-                  ],
-                  'tipp': 'Mach eine kurze "Haut-Analyse" vor jeder Sitzung – Feuchtigkeitszustand, Sonnenbrand, frische Rasur, Hautprobleme. Zwei Minuten die spätere Probleme vermeiden.',
-                  'cta_text': 'Willst du lernen wie Profis mit verschiedenen Hauttypen arbeiten?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
-              # 13 – Tattoo-Maschinen für Einsteiger
-              {
-                  'slug': f'tattoo-maschinen-einsteiger-2026-{today.strftime("%Y-%m-%d")}',
-                  'title': 'Tattoo Maschinen für Einsteiger 2026: Was du wirklich brauchst',
-                  'cat': 'technik', 'cat_label': 'Technik',
-                  'badge': '⚙️ Technik', 'emoji': '⚙️',
-                  'lead': 'Welche Maschine ist die richtige für den Einstieg? Tom Irschina erklärt worauf es wirklich ankommt – und was du nicht brauchst.',
-                  'sections': [
-                      ('Rotary oder Coil – was ist besser für Anfänger?', 'Die meisten Einsteiger greifen zur Rotary-Maschine – und das zu Recht. Rotary-Maschinen sind leiser, wartungsärmer und gleichmäßiger in der Bewegung. Das gibt dir als Anfänger mehr Kontrolle.\n\nCoil-Maschinen haben ihren eigenen Rhythmus. Viele erfahrene Artists schwören auf sie für bestimmte Stile – aber für den Einstieg ist die Lernkurve steiler. Meine klare Empfehlung: Start mit einer guten Rotary.'),
-                      ('Welche Marken sind empfehlenswert?', 'Im Einstiegssegment hat sich Dragonhawk etabliert – gutes Preis-Leistungs-Verhältnis, zuverlässig. Cheyenne Hawk ist die nächste Stufe: professionell, langlebig, von vielen Convention-Artists benutzt.\n\nWichtig: Kauf keine 20-Euro-Maschinen von Amazon. Die Qualität ist unberechenbar, die Ergebnisse frustrierend. Investiere einmal vernünftig – eine gute Maschine hält Jahre.'),
-                      ('Was kostet ein vernünftiges Starter-Set?', 'Für einen soliden Einstieg rechne mit 150–300 Euro für Maschine, Netzgerät und Grundzubehör. Verteilt auf die Lernzeit sind das Centbeträge pro Sitzung.\n\nWas du NICHT sparen solltest: Nadeln und Hygieneartikel. Einwegnadeln, Handschuhe, Folien – das ist nicht verhandelbar.'),
-                  ],
-                  'tipp': 'Kauf dir zusätzlich zur Maschine mindestens 50 Blatt Kunsthaut. Das ist dein Übungsfeld – nicht echte Haut. Kein Artist der Welt fängt direkt am Kunden an.',
-                  'cta_text': 'Du willst tätowieren lernen – mit der richtigen Ausrüstung von Anfang an?',
-                  'cta_btn': 'Zur Tattoo Ausbildung',
-                  'cta_href': 'paket.html',
-              },
+              {'slug_base':'reach-farbverbot-update','title':'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Neue EU-REACH-Verordnung, welche Pigmente auf der Verbotsliste sind, was das für Studios bedeutet'},
+              {'slug_base':'wireless-maschinen-revolution','title':'Wireless-Maschinen 2026: Ende der Kabelära?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Aktuelle Wireless-Tattoomaschinen, Vor- und Nachteile, Marktübersicht 2026'},
+              {'slug_base':'fine-line-technik-evolution','title':'Fine Line 2026: Wie sich die Technik weiterentwickelt hat','cat':'trends','cat_label':'Trends','badge':'📈 Trends','emoji':'📈','focus':'Neue Entwicklungen im Fine-Line-Tattooing, Nadeln, Maschinen, Kundennachfrage 2026'},
+              {'slug_base':'hygiene-dokumentation-pflicht','title':'Neue Hygiene-Dokumentationspflicht: Was Tätowierer jetzt führen müssen','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Aktuelle Vorschriften für Hygieneprotokoll und Dokumentation in Tattoo-Studios Deutschland'},
+              {'slug_base':'picosure-laser-entfernung','title':'PicoSure & Co: Tattoo-Entfernung 2026 – was Laser heute kann','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neueste Laser-Technologie für Tattoo-Entfernung, PicoSure vs andere, Kosten, Ergebnisse'},
+              {'slug_base':'japan-tattoo-boom','title':'Japan 2026: Der Tattoo-Boom nach dem Rechtsurteil','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Entwicklung der Tattoo-Szene in Japan nach dem Gerichtsurteil, Irezumi-Renaissance'},
+              {'slug_base':'ki-design-tools-update','title':'KI-Design-Tools für Tätowierer: Was 2026 wirklich nützlich ist','cat':'technik','cat_label':'Technik','badge':'🤖 Technik','emoji':'🤖','focus':'Aktuelle KI-Tools wie Midjourney, Firefly für Tattoo-Design, praxisnahe Bewertung'},
+              {'slug_base':'blackwork-revival-trend','title':'Blackwork Revival: Warum der Stil 2026 dominiert','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Blackwork und Neo-Tribal Bewegung, große schwarze Flächen, ornamentale Designs'},
+              {'slug_base':'convention-saison-2026','title':'Convention-Saison 2026: Die wichtigsten Events im Überblick','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Tattoo Conventions in Deutschland und Europa 2026, Termine, Highlights, Tipps für Artists'},
+              {'slug_base':'social-media-algorithmus-artist','title':'Instagram-Algorithmus 2026: Was Tattoo-Artists jetzt wissen müssen','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Instagram-Regeln für Tattoo-Content, Reichweite, was funktioniert und was nicht'},
+              {'slug_base':'kwadron-nadeln-2026','title':'Neue Kwadron Primus Line: Was sich für Tätowierer ändert','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Nadelgenerationen von Kwadron, beschichtete Nadeln, Primus-Erweiterungen'},
+              {'slug_base':'ignorant-style-boom','title':'Ignorant Style: Warum der Anti-Stil 2026 alle begeistert','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Ignorant Style Tattoo-Trend, Ursprünge im Street Art, Technik dahinter'},
+              {'slug_base':'usa-regulierung-tattoo','title':'USA verschärft: Neue Tattoo-Regulierungen und was das weltweit bedeutet','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Neue staatliche Regulierung von Tattoo-Studios in US-Bundesstaaten, Zertifizierungspflicht'},
+              {'slug_base':'tattoo-preiskalkulation-2026','title':'Tattoo-Preise 2026: Wie du richtig kalkulierst und was der Markt zahlt','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Aktuelle Preisentwicklung in der Tattoo-Branche, Stundensatz, Kalkulation, Marktlage'},
+              {'slug_base':'recovery-derm-pflege','title':'Neue Heilungsfolien 2026: Saniderm vs. Dermalize vs. Recovery Derm','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Aktueller Vergleich der besten Tattoo-Heilungsfolien, neue Produkte, was Profis nutzen'},
+              {'slug_base':'sketch-style-illustrativ','title':'Sketch & Illustrative Style: Die neue Welle in der Tattoo-Kunst','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Illustrative und Sketch-Style Tattoos, Comic-Ästhetik, Buchillustration auf der Haut'},
+              {'slug_base':'mindestalter-recht-grauzone','title':'Minderjährige und Tattoos: Die Rechtslage 2026 im Überblick','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Gesetzliche Regelungen zu Tattoos bei Minderjährigen, Bundesländer-Unterschiede, Risiken'},
+              {'slug_base':'tebori-handstechen-comeback','title':'Tebori und Handstechen: Das Comeback der alten Technik','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Tebori-Technik aus Japan, Handstechen weltweit, wachsendes Interesse an traditionellen Methoden'},
+              {'slug_base':'studio-konzept-2026','title':'Das moderne Tattoo-Studio 2026: Wie sich das Konzept verändert','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Studio-Konzepte wie Shared Studios, Boutique-Studios, Appointment-only Modelle'},
+              {'slug_base':'farbverbote-pigmente-liste','title':'Verbotene Tattoofarben: Diese Pigmente dürfen ab 2026 nicht mehr verwendet werden','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Konkrete Liste verbotener Farbpigmente, REACH-konforme Alternativen, was Hersteller anbieten'},
+              {'slug_base':'coil-vs-rotary-2026','title':'Coil vs. Rotary 2026: Welche Maschine ist für was besser?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Aktueller Stand des Maschinen-Vergleichs, für welche Stile welche Maschine, neue Modelle'},
+              {'slug_base':'cover-up-techniken-update','title':'Cover-Up Tattoos 2026: Neue Techniken die unmöglich schien','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Aktuelle Cover-Up-Methoden, was heute möglich ist, Laser-Kombination, Fallbeispiele'},
+              {'slug_base':'tattoo-gesundheitsamt-kontrolle','title':'Gesundheitsamt-Kontrollen: Was Tätowierer 2026 wissen müssen','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Worauf Gesundheitsämter bei Kontrollen achten, häufige Mängel, wie man sich vorbereitet'},
+              {'slug_base':'dotwork-technik-evolution','title':'Dotwork 2026: Wie Punkttechnik neue Dimensionen erreicht','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Entwicklungen im Dotwork, komplexe Texturen, Geometrie und Muster, führende Artists'},
+              {'slug_base':'fk-irons-spektra-edge','title':'FK Irons Spektra Edge X2: Lohnt sich das Upgrade wirklich?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Detailbewertung der neuen FK Irons Spektra Edge X2, Praxis-Erfahrungen, für wen geeignet'},
+              {'slug_base':'narbentattoo-techniken','title':'Narben tätowieren 2026: Was heute möglich ist und was nicht','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Erkenntnisse zum Tätowieren über Narben, Keloide, welche Methoden funktionieren'},
+              {'slug_base':'tattoo-branche-umsatz-2026','title':'Tattoo-Branche 2026: Marktdaten und was sie für Artists bedeuten','cat':'business','cat_label':'Business','emoji':'💼','badge':'💼 Business','focus':'Aktuelle Marktdaten zur Tattoo-Branche, Umsatzentwicklung, Wachstumstrends'},
+              {'slug_base':'grunge-distressed-tattoo','title':'Grunge Tattoos: Der Anti-Perfektion-Trend 2026','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Grunge und Distressed Aesthetics in Tattoos, rohe Optik, Textur, DIY-Einfluss'},
+              {'slug_base':'smart-netzgeraete-bluetooth','title':'Smart-Netzgeräte mit App: Sinnvoll oder Spielerei?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Netzgeräte mit Bluetooth und App-Steuerung, Vor- und Nachteile, Praxis-Test'},
+              {'slug_base':'instagram-content-restriction','title':'Instagram schränkt Tattoo-Content ein: Was du jetzt tun musst','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Content-Richtlinien auf Instagram und TikTok für Tattoos, Algorithmus-Änderungen, Alternativen'},
+              {'slug_base':'hauttyp-farbwahl','title':'Hauttyp und Farbwahl: Was Artists 2026 anders machen','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Erkenntnisse zu Pigmentverhalten auf verschiedenen Hauttönen, Fitzpatrick-Skala, Praxis'},
+              {'slug_base':'convention-award-strategie','title':'Convention-Awards gewinnen: Die Strategie erfolgreicher Artists','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Wie man Convention-Wettbewerbe angeht, was Juroren suchen, Vorbereitung, Kategorien'},
+              {'slug_base':'fade-tattoo-trend','title':'Intentionale Fade-Tattoos: Der neue Trend zur Vergänglichkeit','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Tattoos die verblassen sollen, neue Tinten für Kurzlebigkeit, philosophischer Aspekt'},
+              {'slug_base':'brazil-tattoo-szene','title':'Brasilien: Warum die Tattoo-Szene die Welt beeinflusst','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Brasilianische Tattoo-Szene, Neo-Traditional aus Brasilien, weltweiter Einfluss'},
+              {'slug_base':'infektionsschutz-belehrung','title':'Infektionsschutzbelehrung für Tätowierer: Was sich 2026 geändert hat','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Aktualisierungen bei §43 IfSG Belehrung, neue Anforderungen, wo und wie'},
+              {'slug_base':'procreate-design-workflow','title':'Procreate für Tätowierer 2026: Der neue Design-Workflow','cat':'technik','cat_label':'Technik','badge':'🤖 Technik','emoji':'🤖','focus':'Wie Tätowierer Procreate nutzen, neue Features, KI-Integration, Workflow-Tipps'},
+              {'slug_base':'cheyenne-hawk-thunder','title':'Cheyenne Hawk Thunder: Warum Artists weltweit umsteigen','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Cheyenne Hawk Thunder Bewertung, verstellbarer Hub, Praxis-Erfahrungen'},
+              {'slug_base':'personalisierung-custom-tattoo','title':'Custom-Tattoos 2026: Warum individuelle Designs alles schlagen','cat':'trends','cat_label':'Trends','badge':'📈 Trends','emoji':'📈','focus':'Trend zu personalisierten Tattoos, was Kunden 2026 wollen, wie Artists darauf eingehen'},
+              {'slug_base':'tattoo-copyright-frage','title':'Tattoo-Copyright 2026: Wem gehört das Design?','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Rechtliche Entwicklungen beim Tattoo-Copyright, KI-Designs, Flash-Art, Schutz eigener Arbeit'},
+              {'slug_base':'korea-tattoo-kultur','title':'Südkorea: Die neue Hochburg des Fine-Line-Tattooing','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Koreanische Tattoo-Kultur, Fine-Line-Boom aus Seoul, einflussreiche koreanische Artists'},
+              {'slug_base':'watercolor-alterung-problem','title':'Watercolor-Tattoos altern schlecht: Was die Forschung zeigt','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Langzeitverhalten von Watercolor-Tattoos, warum sie verblassen, was hilft'},
+              {'slug_base':'newsletter-kundenbindung','title':'Newsletter statt Instagram: Wie Tätowierer Kunden halten','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Aufbau eigener E-Mail-Liste für Tattoo-Artists, Newsletter-Strategie, Unabhängigkeit von Social'},
+              {'slug_base':'dragonhawk-einsteiger-2026','title':'Dragonhawk 2026: Was das Einstiegssegment jetzt kann','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Dragonhawk-Modelle für Einsteiger, Qualitätsverbesserungen, Vergleich mit teureren Marken'},
+              {'slug_base':'botanik-tattoo-boom','title':'Botanische Tattoos 2026: Der anhaltende Boom und seine Entwicklung','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Botanische und Pflanzenmotive in Tattoos, Entwicklung seit 2020, neue Ausführungen'},
+              {'slug_base':'tattoo-studio-branding','title':'Studio-Branding 2026: Wie erfolgreiche Studios sich positionieren','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Markenaufbau für Tattoo-Studios, was erfolgreiche Studios anders machen, Online-Präsenz'},
+              {'slug_base':'farbige-tattoos-dunklehaut','title':'Farbige Tattoos auf dunkler Haut: Was 2026 möglich ist','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Pigmente und Techniken für dunkle Hauttypen, welche Farben funktionieren, Trends'},
+              {'slug_base':'tattoo-expo-london-2026','title':'London Tattoo Convention 2026: Trends die die Welt bewegen','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Highlights der London Tattoo Convention 2026, auffällige Artists, neue Stile'},
+              {'slug_base':'neotrad-revival','title':'Neo-Traditional Revival: Warum der Stil 2026 neu durchstartet','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Neo-Traditional-Welle, was sich verändert hat, zeitgenössische Interpretationen'},
+              {'slug_base':'tattoo-stornierung-handling','title':'No-Shows und Stornierungen: Wie Profi-Studios es heute handhaben','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Professioneller Umgang mit Absagen, Anzahlungs-Systeme, rechtliche Lage'},
+              {'slug_base':'uv-tattoo-trend','title':'UV-Tattoos 2026: Hype oder echte Innovation?','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'UV-reaktive Tattoos, aktuelle Sicherheitslage der Tinten, technische Möglichkeiten'},
+              {'slug_base':'tattoo-mindset-professional','title':'Profi-Mindset: Was erfolgreiche Tätowierer 2026 anders denken','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Mentalität erfolgreicher Tattoo-Artists, Weiterbildung, Netzwerk, langfristiger Aufbau'},
+              {'slug_base':'peta-vegan-farben','title':'Vegane Tattoofarben 2026: Was der Markt heute bietet','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Vegane und tierversuchsfreie Tattoofarben, wachsende Nachfrage, beste Marken'},
+              {'slug_base':'abstract-tattoo-evolution','title':'Abstract Tattoos: Die Weiterentwicklung der formfreien Kunst','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Abstrakte Tattoos 2026, neue Einflüsse aus zeitgenössischer Kunst, führende Artists'},
+              {'slug_base':'tattoo-warteliste-aufbauen','title':'Warteliste aufbauen als Tätowierer: Die richtige Strategie','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Wie man als Tätowierer eine Warteliste aufbaut, Buchungssysteme, Kunden-Kommunikation'},
+              {'slug_base':'hautpflege-vor-sitzung','title':'Hautpflege vor dem Tattoo: Was Kunden und Artists wissen müssen','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Optimale Hautvorbereitung vor einer Tattoo-Sitzung, neue Erkenntnisse, Artist-Empfehlungen'},
+              {'slug_base':'hustle-butter-aftercare','title':'Hustle Butter und Co: Neue Aftercare-Produkte im Test','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Aktuelle Aftercare-Produkte für Tattoos, Vergleich, was Profis empfehlen'},
           ]
 
-          # Rotation nach absolutem Tagesnummer (alle 14 Tage andere Themen, Offset 5 für sauberen Start)
+          # Rotation nach absolutem Tagesnummer – 56 Themen = keine Wiederholung für fast 2 Monate
           thema = THEMEN[(today.toordinal() + 5) % len(THEMEN)]
-          # Slug-Bereinigung NUR auf den Basisnamen, dann .html anhängen
-          base = re.sub(r'[^a-z0-9-]', '-', thema['slug'].lower())
+          slug_base = f'{thema["slug_base"]}-{today.strftime("%Y-%m-%d")}'
+          base = re.sub(r'[^a-z0-9-]', '-', slug_base.lower())
           base = re.sub(r'-+', '-', base).strip('-')
           slug = base + '.html'
+
+          # Claude API aufrufen für einzigartigen Artikel-Inhalt
+          def generate_content(title, focus, api_key):
+              if not api_key:
+                  return None
+              prompt = textwrap.dedent(f"""\
+                  Du schreibst einen professionellen Tattoo-Journal-Artikel fuer die Academy-Website von Tom Irschina (7er Ink Academy, Muenchen).
+
+                  Thema: {title}
+                  Fokus: {focus}
+
+                  Schreibe authentisch aus Toms Perspektive - erfahrener Taetowierer mit 16+ Jahren Erfahrung, 50+ Convention Awards, Black & Grey Spezialist.
+                  Der Artikel soll ueber aktuelle Aenderungen und Neuerungen in der Tattoo-Welt berichten. Praxisnah, direkt, ohne Marketing-Sprache.
+
+                  Antworte NUR mit gueltigem JSON, kein Text davor oder danach:
+                  {{
+                    "lead": "Einleitung (2-3 Saetze, packend, Toms Perspektive)",
+                    "s1_h2": "Ueberschrift Abschnitt 1",
+                    "s1_text": "Text Abschnitt 1 (3-5 Saetze, konkret und informativ, Neuigkeiten betonen)",
+                    "s2_h2": "Ueberschrift Abschnitt 2",
+                    "s2_text": "Text Abschnitt 2 (3-5 Saetze)",
+                    "s3_h2": "Ueberschrift Abschnitt 3",
+                    "s3_text": "Text Abschnitt 3 (3-5 Saetze)",
+                    "tipp": "Toms praktischer Tipp (1-2 Saetze)"
+                  }}""")
+              try:
+                  req = urllib.request.Request(
+                      'https://api.anthropic.com/v1/messages',
+                      data=json.dumps({
+                          'model': 'claude-haiku-4-5-20251001',
+                          'max_tokens': 1200,
+                          'messages': [{'role': 'user', 'content': prompt}]
+                      }).encode(),
+                      headers={
+                          'Content-Type': 'application/json',
+                          'x-api-key': api_key,
+                          'anthropic-version': '2023-06-01'
+                      }
+                  )
+                  response = urllib.request.urlopen(req, timeout=30)
+                  data = json.loads(response.read())
+                  text = data['content'][0]['text'].strip()
+                  # JSON aus Antwort extrahieren
+                  json_match = re.search(r'\{[\s\S]*\}', text)
+                  if json_match:
+                      return json.loads(json_match.group())
+              except Exception as e:
+                  print(f'⚠️ API-Fehler: {e}')
+              return None
+
+          content = generate_content(thema['title'], thema['focus'], ANTHROPIC_KEY)
+
+          if content:
+              lead = content.get('lead', '')
+              sections = [
+                  (content.get('s1_h2', ''), content.get('s1_text', '')),
+                  (content.get('s2_h2', ''), content.get('s2_text', '')),
+                  (content.get('s3_h2', ''), content.get('s3_text', '')),
+              ]
+              tipp = content.get('tipp', '')
+              print(f'✅ Inhalt via Claude API generiert für: {thema["title"]}')
+          else:
+              # Fallback: kurzer Platzhalter-Text
+              lead = f'Tom Irschina über aktuelle Entwicklungen zum Thema {thema["title"]}.'
+              sections = [
+                  ('Aktuelle Entwicklungen', 'Die Tattoo-Branche entwickelt sich ständig weiter. Was heute gilt, kann morgen schon überholt sein.'),
+                  ('Was das für Artists bedeutet', 'Wer auf dem aktuellen Stand bleibt, hat klare Vorteile im Wettbewerb.'),
+                  ('Fazit und Ausblick', 'Bleib informiert, bilde dich weiter und passe deine Praxis an neue Erkenntnisse an.'),
+              ]
+              tipp = 'Verfolge Branchen-News regelmäßig und tausch dich mit anderen Artists aus.'
+              print(f'⚠️ Fallback-Inhalt verwendet (kein API-Key oder Fehler)')
 
           # HTML generieren
           nav = '''<nav id="nav" class="solid">
@@ -297,18 +188,16 @@ jobs:
           </nav>'''
 
           sections_html = ''
-          for h2, body in thema['sections']:
-              sections_html += f'<h2>{h2}</h2>\n<p>{body}</p>\n\n'
-
-          cta_href = thema['cta_href']
-          cta_target = ' target="_blank" rel="noopener"' if cta_href.startswith('http') else ''
+          for h2, body in sections:
+              if h2 and body:
+                  sections_html += f'<h2>{h2}</h2>\n<p>{body}</p>\n\n'
 
           article_html = f'''<!DOCTYPE html>
           <html lang="de">
           <head>
             <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>{thema["title"]} | 7er Ink Academy</title>
-            <meta name="description" content="{thema["lead"]}">
+            <meta name="description" content="{lead[:155]}">
             <link rel="canonical" href="https://academy.7erink.com/{slug}">
             <link rel="icon" type="image/png" href="images/favicon.png">
             <link rel="stylesheet" href="academy.css?v=240">
@@ -336,10 +225,7 @@ jobs:
             .article-lead{{font-size:1.05rem;color:var(--lighter);line-height:1.8;border-left:3px solid var(--gold);padding-left:1.5rem;margin-bottom:3rem;font-style:italic}}
             .article-body{{font-size:.95rem;color:var(--lighter);line-height:1.9}}
             .article-body h2{{font-family:"Cormorant Garamond",serif;font-size:1.7rem;font-weight:700;color:var(--white);margin:2.5rem 0 1rem}}
-            .article-body h3{{font-family:"Cormorant Garamond",serif;font-size:1.25rem;font-weight:600;color:var(--gold);margin:2rem 0 .6rem}}
             .article-body p{{margin-bottom:1.4rem}}
-            .article-body ul{{padding-left:1.2rem;margin-bottom:1.4rem;display:flex;flex-direction:column;gap:.5rem}}
-            .article-body ul li::marker{{color:var(--gold)}}
             .tip-box{{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:1.5rem 1.8rem;margin:2rem 0}}
             .tip-box-label{{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}}
             .tip-box p{{font-size:.88rem;color:var(--lighter);line-height:1.75;margin:0}}
@@ -374,12 +260,12 @@ jobs:
               <div class="article-meta-dot"></div>
               <span>5 min Lesezeit</span>
             </div>
-            <p class="article-lead">{thema["lead"]}</p>
+            <p class="article-lead">{lead}</p>
             <div class="article-body">
               {sections_html}
               <div class="tip-box">
                 <div class="tip-box-label">💡 Toms Tipp</div>
-                <p>{thema["tipp"]}</p>
+                <p>{tipp}</p>
               </div>
             </div>
             <div class="article-author">
@@ -390,9 +276,9 @@ jobs:
               </div>
             </div>
             <div class="article-cta">
-              <h3>{thema["cta_text"]}</h3>
+              <h3>Willst du in der Tattoo-Branche immer up-to-date bleiben?</h3>
               <p>In 90 Tagen vom ersten Strich bis zum ersten Kunden – mit Lernplan, Live-Calls und Community.</p>
-              <a href="{cta_href}"{cta_target} class="btn btn-gold">{thema["cta_btn"]}</a>
+              <a href="paket.html" class="btn btn-gold">Zur Tattoo Ausbildung</a>
             </div>
           </div>
 
@@ -425,20 +311,9 @@ jobs:
               )
               print(f'🧹 {broken_before} kaputte Einträge (-html Suffix) entfernt.')
 
-          # Einmalige Bereinigung: falscher Artikel vom 21. April (tattoo-trends-2026-2026-04-21) entfernen
-          wrong_slug = 'tattoo-trends-2026-2026-04-21.html'
-          if wrong_slug in news_html:
-              news_html = re.sub(
-                  r'<a href="tattoo-trends-2026-2026-04-21\.html" class="article-card".*?</a>',
-                  '', news_html, flags=re.DOTALL
-              )
-              print(f'🧹 Falschen Artikel ({wrong_slug}) aus news.html entfernt.')
-              broken_before = max(broken_before, 1)  # Damit upload ausgelöst wird
-
           # Duplikat-Schutz: Artikel nur einfügen wenn Slug noch nicht vorhanden
           if slug in news_html:
               print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
-              # news.html trotzdem neu hochladen falls Bereinigung nötig war
               if broken_before > 0:
                   for path in FTP_PATHS:
                       ftp.cwd(path)
@@ -459,7 +334,7 @@ jobs:
                   <div class="featured-body">
                     <div class="featured-cat">{thema['cat_label']} · {today_str}</div>
                     <h2>{thema['title']}</h2>
-                    <p>{thema['lead'][:120]}...</p>
+                    <p>{lead[:120]}...</p>
                     <div class="featured-meta">
                       <span class="featured-read-time">⏱ 5 Min. Lesezeit</span>
                       <span class="featured-link">Vollständigen Artikel lesen →</span>
@@ -478,7 +353,7 @@ jobs:
                   <div class="article-body">
                     <div class="article-cat cat-{thema['cat']}">{thema['cat_label']}</div>
                     <h3>{thema['title']}</h3>
-                    <p class="article-excerpt">{thema['lead'][:100]}...</p>
+                    <p class="article-excerpt">{lead[:100]}...</p>
                     <div class="article-footer">
                       <span class="article-date">{today_str}</span>
                       <span class="article-arrow">&#x2192;</span>
@@ -497,5 +372,4 @@ jobs:
               print(f'✅ Deployed: {path}/{slug}')
 
           ftp.quit()
-          print(f'✅ Fertig! https://academy.7erink.com/{slug}')
           PYEOF
