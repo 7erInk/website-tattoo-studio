@@ -15,9 +15,9 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           python3 << 'PYEOF'
-          import ftplib, io, re, json, sys, urllib.request, urllib.error, textwrap
+          import ftplib, io, re, json, sys, urllib.request, urllib.error, textwrap, xml.etree.ElementTree as ET
           from datetime import date
-          import os
+          import os, random, html
 
           FTP_HOST = '82.198.229.223'
           FTP_USER = 'u688179148'
@@ -33,98 +33,134 @@ jobs:
           months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']
           today_str = f'{today.day}. {months[today.month-1]} {today.year}'
 
-          # 56 einzigartige Themen – alle über Neuerungen & Veränderungen in der Tattoo-Welt
-          # Keine Wiederholung für fast 2 Monate
-          THEMEN = [
-              {'slug_base':'reach-farbverbot-update','title':'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Neue EU-REACH-Verordnung, welche Pigmente auf der Verbotsliste sind, was das für Studios bedeutet'},
-              {'slug_base':'wireless-maschinen-revolution','title':'Wireless-Maschinen 2026: Ende der Kabelära?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Aktuelle Wireless-Tattoomaschinen, Vor- und Nachteile, Marktübersicht 2026'},
-              {'slug_base':'fine-line-technik-evolution','title':'Fine Line 2026: Wie sich die Technik weiterentwickelt hat','cat':'trends','cat_label':'Trends','badge':'📈 Trends','emoji':'📈','focus':'Neue Entwicklungen im Fine-Line-Tattooing, Nadeln, Maschinen, Kundennachfrage 2026'},
-              {'slug_base':'hygiene-dokumentation-pflicht','title':'Neue Hygiene-Dokumentationspflicht: Was Tätowierer jetzt führen müssen','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Aktuelle Vorschriften für Hygieneprotokoll und Dokumentation in Tattoo-Studios Deutschland'},
-              {'slug_base':'picosure-laser-entfernung','title':'PicoSure & Co: Tattoo-Entfernung 2026 – was Laser heute kann','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neueste Laser-Technologie für Tattoo-Entfernung, PicoSure vs andere, Kosten, Ergebnisse'},
-              {'slug_base':'japan-tattoo-boom','title':'Japan 2026: Der Tattoo-Boom nach dem Rechtsurteil','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Entwicklung der Tattoo-Szene in Japan nach dem Gerichtsurteil, Irezumi-Renaissance'},
-              {'slug_base':'ki-design-tools-update','title':'KI-Design-Tools für Tätowierer: Was 2026 wirklich nützlich ist','cat':'technik','cat_label':'Technik','badge':'🤖 Technik','emoji':'🤖','focus':'Aktuelle KI-Tools wie Midjourney, Firefly für Tattoo-Design, praxisnahe Bewertung'},
-              {'slug_base':'blackwork-revival-trend','title':'Blackwork Revival: Warum der Stil 2026 dominiert','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Blackwork und Neo-Tribal Bewegung, große schwarze Flächen, ornamentale Designs'},
-              {'slug_base':'convention-saison-2026','title':'Convention-Saison 2026: Die wichtigsten Events im Überblick','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Tattoo Conventions in Deutschland und Europa 2026, Termine, Highlights, Tipps für Artists'},
-              {'slug_base':'social-media-algorithmus-artist','title':'Instagram-Algorithmus 2026: Was Tattoo-Artists jetzt wissen müssen','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Instagram-Regeln für Tattoo-Content, Reichweite, was funktioniert und was nicht'},
-              {'slug_base':'kwadron-nadeln-2026','title':'Neue Kwadron Primus Line: Was sich für Tätowierer ändert','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Nadelgenerationen von Kwadron, beschichtete Nadeln, Primus-Erweiterungen'},
-              {'slug_base':'ignorant-style-boom','title':'Ignorant Style: Warum der Anti-Stil 2026 alle begeistert','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Ignorant Style Tattoo-Trend, Ursprünge im Street Art, Technik dahinter'},
-              {'slug_base':'usa-regulierung-tattoo','title':'USA verschärft: Neue Tattoo-Regulierungen und was das weltweit bedeutet','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Neue staatliche Regulierung von Tattoo-Studios in US-Bundesstaaten, Zertifizierungspflicht'},
-              {'slug_base':'tattoo-preiskalkulation-2026','title':'Tattoo-Preise 2026: Wie du richtig kalkulierst und was der Markt zahlt','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Aktuelle Preisentwicklung in der Tattoo-Branche, Stundensatz, Kalkulation, Marktlage'},
-              {'slug_base':'recovery-derm-pflege','title':'Neue Heilungsfolien 2026: Saniderm vs. Dermalize vs. Recovery Derm','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Aktueller Vergleich der besten Tattoo-Heilungsfolien, neue Produkte, was Profis nutzen'},
-              {'slug_base':'sketch-style-illustrativ','title':'Sketch & Illustrative Style: Die neue Welle in der Tattoo-Kunst','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Illustrative und Sketch-Style Tattoos, Comic-Ästhetik, Buchillustration auf der Haut'},
-              {'slug_base':'mindestalter-recht-grauzone','title':'Minderjährige und Tattoos: Die Rechtslage 2026 im Überblick','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Gesetzliche Regelungen zu Tattoos bei Minderjährigen, Bundesländer-Unterschiede, Risiken'},
-              {'slug_base':'tebori-handstechen-comeback','title':'Tebori und Handstechen: Das Comeback der alten Technik','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Tebori-Technik aus Japan, Handstechen weltweit, wachsendes Interesse an traditionellen Methoden'},
-              {'slug_base':'studio-konzept-2026','title':'Das moderne Tattoo-Studio 2026: Wie sich das Konzept verändert','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Studio-Konzepte wie Shared Studios, Boutique-Studios, Appointment-only Modelle'},
-              {'slug_base':'farbverbote-pigmente-liste','title':'Verbotene Tattoofarben: Diese Pigmente dürfen ab 2026 nicht mehr verwendet werden','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Konkrete Liste verbotener Farbpigmente, REACH-konforme Alternativen, was Hersteller anbieten'},
-              {'slug_base':'coil-vs-rotary-2026','title':'Coil vs. Rotary 2026: Welche Maschine ist für was besser?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Aktueller Stand des Maschinen-Vergleichs, für welche Stile welche Maschine, neue Modelle'},
-              {'slug_base':'cover-up-techniken-update','title':'Cover-Up Tattoos 2026: Neue Techniken die unmöglich schien','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Aktuelle Cover-Up-Methoden, was heute möglich ist, Laser-Kombination, Fallbeispiele'},
-              {'slug_base':'tattoo-gesundheitsamt-kontrolle','title':'Gesundheitsamt-Kontrollen: Was Tätowierer 2026 wissen müssen','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Worauf Gesundheitsämter bei Kontrollen achten, häufige Mängel, wie man sich vorbereitet'},
-              {'slug_base':'dotwork-technik-evolution','title':'Dotwork 2026: Wie Punkttechnik neue Dimensionen erreicht','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Entwicklungen im Dotwork, komplexe Texturen, Geometrie und Muster, führende Artists'},
-              {'slug_base':'fk-irons-spektra-edge','title':'FK Irons Spektra Edge X2: Lohnt sich das Upgrade wirklich?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Detailbewertung der neuen FK Irons Spektra Edge X2, Praxis-Erfahrungen, für wen geeignet'},
-              {'slug_base':'narbentattoo-techniken','title':'Narben tätowieren 2026: Was heute möglich ist und was nicht','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Erkenntnisse zum Tätowieren über Narben, Keloide, welche Methoden funktionieren'},
-              {'slug_base':'tattoo-branche-umsatz-2026','title':'Tattoo-Branche 2026: Marktdaten und was sie für Artists bedeuten','cat':'business','cat_label':'Business','emoji':'💼','badge':'💼 Business','focus':'Aktuelle Marktdaten zur Tattoo-Branche, Umsatzentwicklung, Wachstumstrends'},
-              {'slug_base':'grunge-distressed-tattoo','title':'Grunge Tattoos: Der Anti-Perfektion-Trend 2026','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Grunge und Distressed Aesthetics in Tattoos, rohe Optik, Textur, DIY-Einfluss'},
-              {'slug_base':'smart-netzgeraete-bluetooth','title':'Smart-Netzgeräte mit App: Sinnvoll oder Spielerei?','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Netzgeräte mit Bluetooth und App-Steuerung, Vor- und Nachteile, Praxis-Test'},
-              {'slug_base':'instagram-content-restriction','title':'Instagram schränkt Tattoo-Content ein: Was du jetzt tun musst','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Neue Content-Richtlinien auf Instagram und TikTok für Tattoos, Algorithmus-Änderungen, Alternativen'},
-              {'slug_base':'hauttyp-farbwahl','title':'Hauttyp und Farbwahl: Was Artists 2026 anders machen','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Erkenntnisse zu Pigmentverhalten auf verschiedenen Hauttönen, Fitzpatrick-Skala, Praxis'},
-              {'slug_base':'convention-award-strategie','title':'Convention-Awards gewinnen: Die Strategie erfolgreicher Artists','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Wie man Convention-Wettbewerbe angeht, was Juroren suchen, Vorbereitung, Kategorien'},
-              {'slug_base':'fade-tattoo-trend','title':'Intentionale Fade-Tattoos: Der neue Trend zur Vergänglichkeit','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Tattoos die verblassen sollen, neue Tinten für Kurzlebigkeit, philosophischer Aspekt'},
-              {'slug_base':'brazil-tattoo-szene','title':'Brasilien: Warum die Tattoo-Szene die Welt beeinflusst','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Brasilianische Tattoo-Szene, Neo-Traditional aus Brasilien, weltweiter Einfluss'},
-              {'slug_base':'infektionsschutz-belehrung','title':'Infektionsschutzbelehrung für Tätowierer: Was sich 2026 geändert hat','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Aktualisierungen bei §43 IfSG Belehrung, neue Anforderungen, wo und wie'},
-              {'slug_base':'procreate-design-workflow','title':'Procreate für Tätowierer 2026: Der neue Design-Workflow','cat':'technik','cat_label':'Technik','badge':'🤖 Technik','emoji':'🤖','focus':'Wie Tätowierer Procreate nutzen, neue Features, KI-Integration, Workflow-Tipps'},
-              {'slug_base':'cheyenne-hawk-thunder','title':'Cheyenne Hawk Thunder: Warum Artists weltweit umsteigen','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Cheyenne Hawk Thunder Bewertung, verstellbarer Hub, Praxis-Erfahrungen'},
-              {'slug_base':'personalisierung-custom-tattoo','title':'Custom-Tattoos 2026: Warum individuelle Designs alles schlagen','cat':'trends','cat_label':'Trends','badge':'📈 Trends','emoji':'📈','focus':'Trend zu personalisierten Tattoos, was Kunden 2026 wollen, wie Artists darauf eingehen'},
-              {'slug_base':'tattoo-copyright-frage','title':'Tattoo-Copyright 2026: Wem gehört das Design?','cat':'news','cat_label':'Gesetze','badge':'⚖️ Gesetze','emoji':'⚖️','focus':'Rechtliche Entwicklungen beim Tattoo-Copyright, KI-Designs, Flash-Art, Schutz eigener Arbeit'},
-              {'slug_base':'korea-tattoo-kultur','title':'Südkorea: Die neue Hochburg des Fine-Line-Tattooing','cat':'news','cat_label':'Welt-News','badge':'🌍 Welt-News','emoji':'🌍','focus':'Koreanische Tattoo-Kultur, Fine-Line-Boom aus Seoul, einflussreiche koreanische Artists'},
-              {'slug_base':'watercolor-alterung-problem','title':'Watercolor-Tattoos altern schlecht: Was die Forschung zeigt','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Langzeitverhalten von Watercolor-Tattoos, warum sie verblassen, was hilft'},
-              {'slug_base':'newsletter-kundenbindung','title':'Newsletter statt Instagram: Wie Tätowierer Kunden halten','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Aufbau eigener E-Mail-Liste für Tattoo-Artists, Newsletter-Strategie, Unabhängigkeit von Social'},
-              {'slug_base':'dragonhawk-einsteiger-2026','title':'Dragonhawk 2026: Was das Einstiegssegment jetzt kann','cat':'technik','cat_label':'Technik','badge':'⚙️ Technik','emoji':'⚙️','focus':'Neue Dragonhawk-Modelle für Einsteiger, Qualitätsverbesserungen, Vergleich mit teureren Marken'},
-              {'slug_base':'botanik-tattoo-boom','title':'Botanische Tattoos 2026: Der anhaltende Boom und seine Entwicklung','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Botanische und Pflanzenmotive in Tattoos, Entwicklung seit 2020, neue Ausführungen'},
-              {'slug_base':'tattoo-studio-branding','title':'Studio-Branding 2026: Wie erfolgreiche Studios sich positionieren','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Markenaufbau für Tattoo-Studios, was erfolgreiche Studios anders machen, Online-Präsenz'},
-              {'slug_base':'farbige-tattoos-dunklehaut','title':'Farbige Tattoos auf dunkler Haut: Was 2026 möglich ist','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Neue Pigmente und Techniken für dunkle Hauttypen, welche Farben funktionieren, Trends'},
-              {'slug_base':'tattoo-expo-london-2026','title':'London Tattoo Convention 2026: Trends die die Welt bewegen','cat':'convention','cat_label':'Convention','badge':'🏆 Convention','emoji':'🏆','focus':'Highlights der London Tattoo Convention 2026, auffällige Artists, neue Stile'},
-              {'slug_base':'neotrad-revival','title':'Neo-Traditional Revival: Warum der Stil 2026 neu durchstartet','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Neue Neo-Traditional-Welle, was sich verändert hat, zeitgenössische Interpretationen'},
-              {'slug_base':'tattoo-stornierung-handling','title':'No-Shows und Stornierungen: Wie Profi-Studios es heute handhaben','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Professioneller Umgang mit Absagen, Anzahlungs-Systeme, rechtliche Lage'},
-              {'slug_base':'uv-tattoo-trend','title':'UV-Tattoos 2026: Hype oder echte Innovation?','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'UV-reaktive Tattoos, aktuelle Sicherheitslage der Tinten, technische Möglichkeiten'},
-              {'slug_base':'tattoo-mindset-professional','title':'Profi-Mindset: Was erfolgreiche Tätowierer 2026 anders denken','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Mentalität erfolgreicher Tattoo-Artists, Weiterbildung, Netzwerk, langfristiger Aufbau'},
-              {'slug_base':'peta-vegan-farben','title':'Vegane Tattoofarben 2026: Was der Markt heute bietet','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Vegane und tierversuchsfreie Tattoofarben, wachsende Nachfrage, beste Marken'},
-              {'slug_base':'abstract-tattoo-evolution','title':'Abstract Tattoos: Die Weiterentwicklung der formfreien Kunst','cat':'trends','cat_label':'Trends','badge':'🎨 Trends','emoji':'🎨','focus':'Abstrakte Tattoos 2026, neue Einflüsse aus zeitgenössischer Kunst, führende Artists'},
-              {'slug_base':'tattoo-warteliste-aufbauen','title':'Warteliste aufbauen als Tätowierer: Die richtige Strategie','cat':'business','cat_label':'Business','badge':'💼 Business','emoji':'💼','focus':'Wie man als Tätowierer eine Warteliste aufbaut, Buchungssysteme, Kunden-Kommunikation'},
-              {'slug_base':'hautpflege-vor-sitzung','title':'Hautpflege vor dem Tattoo: Was Kunden und Artists wissen müssen','cat':'technik','cat_label':'Technik','badge':'🔬 Technik','emoji':'🔬','focus':'Optimale Hautvorbereitung vor einer Tattoo-Sitzung, neue Erkenntnisse, Artist-Empfehlungen'},
-              {'slug_base':'hustle-butter-aftercare','title':'Hustle Butter und Co: Neue Aftercare-Produkte im Test','cat':'technik','cat_label':'Technik','badge':'🛒 Produkte','emoji':'🛒','focus':'Aktuelle Aftercare-Produkte für Tattoos, Vergleich, was Profis empfehlen'},
+          # ── Echte News via Google News RSS holen ──────────────────────────────
+          RSS_FEEDS = [
+              'https://news.google.com/rss/search?q=tattoo+news&hl=de&gl=DE&ceid=DE:de',
+              'https://news.google.com/rss/search?q=tattoo+trend+2026&hl=de&gl=DE&ceid=DE:de',
+              'https://news.google.com/rss/search?q=t%C3%A4towierung+gesetze+EU&hl=de&gl=DE&ceid=DE:de',
+              'https://news.google.com/rss/search?q=tattoo+convention+2026&hl=de&gl=DE&ceid=DE:de',
+              'https://news.google.com/rss/search?q=tattoo+artist+news&hl=en&gl=US&ceid=US:en',
+              'https://news.google.com/rss/search?q=tattoo+ink+health+2026&hl=en&gl=US&ceid=US:en',
           ]
 
-          # Rotation nach absolutem Tagesnummer – 56 Themen = keine Wiederholung für fast 2 Monate
-          thema = THEMEN[(today.toordinal() + 5) % len(THEMEN)]
-          slug_base = f'{thema["slug_base"]}-{today.strftime("%Y-%m-%d")}'
-          base = re.sub(r'[^a-z0-9-]', '-', slug_base.lower())
-          base = re.sub(r'-+', '-', base).strip('-')
-          slug = base + '.html'
+          def fetch_rss_items(url):
+              try:
+                  req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                  resp = urllib.request.urlopen(req, timeout=10)
+                  root = ET.fromstring(resp.read())
+                  items = []
+                  for item in root.iter('item'):
+                      title = item.find('title')
+                      desc = item.find('description')
+                      pub = item.find('pubDate')
+                      items.append({
+                          'title': html.unescape(title.text or '') if title is not None else '',
+                          'desc': html.unescape(re.sub(r'<[^>]+>', '', desc.text or '')) if desc is not None else '',
+                          'date': pub.text or '' if pub is not None else '',
+                      })
+                  return items[:5]
+              except Exception as e:
+                  print(f'⚠️ RSS Fehler {url}: {e}')
+                  return []
 
-          # Claude API aufrufen für einzigartigen Artikel-Inhalt
-          def generate_content(title, focus, api_key):
+          all_items = []
+          for feed_url in RSS_FEEDS:
+              all_items.extend(fetch_rss_items(feed_url))
+
+          # Duplikate entfernen (nach Titel)
+          seen = set()
+          unique_items = []
+          for item in all_items:
+              key = item['title'][:60].lower()
+              if key and key not in seen:
+                  seen.add(key)
+                  unique_items.append(item)
+
+          print(f'📰 {len(unique_items)} echte News-Artikel gefunden')
+
+          # ── Fallback-Themen wenn RSS leer ──────────────────────────────────────
+          FALLBACK_THEMEN = [
+              {'title': 'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?', 'focus': 'Neue EU-REACH-Verordnung, verbotene Pigmente, was für Studios gilt', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'reach-farbverbot-update'},
+              {'title': 'Tattoo-Trend 2026: Was Kunden jetzt wirklich wollen', 'focus': 'Aktuelle Nachfrage nach bestimmten Stilen, was boomt, was abnimmt', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '📈 Trends', 'emoji': '📈', 'slug_base': 'tattoo-trend-aktuell'},
+              {'title': 'Hygiene-Dokumentation im Studio: Was sich geändert hat', 'focus': 'Aktuelle Vorschriften, worauf Gesundheitsämter achten, neue Pflichten', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'hygiene-dokumentation-studio'},
+              {'title': 'Convention-Saison 2026: Die wichtigsten Termine im Überblick', 'focus': 'Tattoo Conventions Deutschland und Europa 2026, Highlights, Tipps', 'cat': 'convention', 'cat_label': 'Convention', 'badge': '🏆 Convention', 'emoji': '🏆', 'slug_base': 'convention-saison-2026'},
+              {'title': 'Fine Line vs. Blackwork: Was dominiert 2026?', 'focus': 'Stilvergleich, aktuelle Nachfrage, Vor- und Nachteile beider Stile', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'fine-line-blackwork-2026'},
+          ]
+
+          # ── Claude API aufrufen ────────────────────────────────────────────────
+          def generate_from_real_news(news_items, api_key):
+              if not api_key:
+                  return None, None
+
+              # Top 5 News als Kontext für Claude
+              news_context = '\n'.join([
+                  f'- {item["title"]}: {item["desc"][:200]}'
+                  for item in news_items[:5]
+              ])
+
+              prompt = textwrap.dedent(f"""\
+                  Du bist Tom Irschina, erfahrener Tätowierer (16+ Jahre, 50+ Convention Awards, Black & Grey Spezialist, 7er Ink Academy München).
+
+                  Hier sind aktuelle Neuigkeiten aus der Tattoo-Welt von heute:
+
+                  {news_context}
+
+                  Wähle das relevanteste und interessanteste Thema aus diesen echten News aus.
+                  Schreibe dann einen professionellen Artikel für die Academy-Website — aus Toms Perspektive, auf Deutsch.
+                  Beziehe dich auf die echten Ereignisse. Ergänze mit Praxiswissen und Einschätzungen.
+
+                  Antworte NUR mit gültigem JSON:
+                  {{
+                    "title": "Artikel-Überschrift (prägnant, 6-10 Wörter, bezieht sich auf echte News)",
+                    "cat": "news|trends|technik|business|convention",
+                    "cat_label": "Gesetze|Trends|Technik|Business|Convention|Welt-News",
+                    "badge": "⚖️ Gesetze|📈 Trends|⚙️ Technik|💼 Business|🏆 Convention|🌍 Welt-News",
+                    "emoji": "⚖️|📈|⚙️|💼|🏆|🌍|🎨|🔬|🛒",
+                    "slug_base": "kurzer-slug-ohne-datum",
+                    "lead": "Einleitung (2-3 Sätze, packend, auf echte News bezogen)",
+                    "s1_h2": "Überschrift Abschnitt 1",
+                    "s1_text": "Text Abschnitt 1 (3-5 Sätze, konkreter Bezug auf aktuelle Ereignisse)",
+                    "s2_h2": "Überschrift Abschnitt 2",
+                    "s2_text": "Text Abschnitt 2 (3-5 Sätze, Praxisrelevanz für Tätowierer)",
+                    "s3_h2": "Überschrift Abschnitt 3",
+                    "s3_text": "Text Abschnitt 3 (3-5 Sätze, Ausblick oder Handlungsempfehlung)",
+                    "tipp": "Toms praktischer Tipp (1-2 Sätze, konkret)"
+                  }}""")
+
+              try:
+                  req = urllib.request.Request(
+                      'https://api.anthropic.com/v1/messages',
+                      data=json.dumps({
+                          'model': 'claude-haiku-4-5-20251001',
+                          'max_tokens': 1500,
+                          'messages': [{'role': 'user', 'content': prompt}]
+                      }).encode(),
+                      headers={
+                          'Content-Type': 'application/json',
+                          'x-api-key': api_key,
+                          'anthropic-version': '2023-06-01'
+                      }
+                  )
+                  response = urllib.request.urlopen(req, timeout=30)
+                  data = json.loads(response.read())
+                  text = data['content'][0]['text'].strip()
+                  json_match = re.search(r'\{[\s\S]*\}', text)
+                  if json_match:
+                      result = json.loads(json_match.group())
+                      return result, news_items[:3]
+              except Exception as e:
+                  print(f'⚠️ API-Fehler: {e}')
+              return None, None
+
+          def generate_from_fallback(thema, api_key):
               if not api_key:
                   return None
               prompt = textwrap.dedent(f"""\
-                  Du schreibst einen professionellen Tattoo-Journal-Artikel fuer die Academy-Website von Tom Irschina (7er Ink Academy, Muenchen).
-
-                  Thema: {title}
-                  Fokus: {focus}
-
-                  Schreibe authentisch aus Toms Perspektive - erfahrener Taetowierer mit 16+ Jahren Erfahrung, 50+ Convention Awards, Black & Grey Spezialist.
-                  Der Artikel soll ueber aktuelle Aenderungen und Neuerungen in der Tattoo-Welt berichten. Praxisnah, direkt, ohne Marketing-Sprache.
-
-                  Antworte NUR mit gueltigem JSON, kein Text davor oder danach:
-                  {{
-                    "lead": "Einleitung (2-3 Saetze, packend, Toms Perspektive)",
-                    "s1_h2": "Ueberschrift Abschnitt 1",
-                    "s1_text": "Text Abschnitt 1 (3-5 Saetze, konkret und informativ, Neuigkeiten betonen)",
-                    "s2_h2": "Ueberschrift Abschnitt 2",
-                    "s2_text": "Text Abschnitt 2 (3-5 Saetze)",
-                    "s3_h2": "Ueberschrift Abschnitt 3",
-                    "s3_text": "Text Abschnitt 3 (3-5 Saetze)",
-                    "tipp": "Toms praktischer Tipp (1-2 Saetze)"
-                  }}""")
+                  Du bist Tom Irschina, erfahrener Tätowierer (16+ Jahre, 50+ Convention Awards, Black & Grey Spezialist).
+                  Thema: {thema['title']}
+                  Fokus: {thema['focus']}
+                  Schreibe einen praxisnahen Artikel auf Deutsch. Nur JSON:
+                  {{"lead":"...","s1_h2":"...","s1_text":"...","s2_h2":"...","s2_text":"...","s3_h2":"...","s3_text":"...","tipp":"..."}}""")
               try:
                   req = urllib.request.Request(
                       'https://api.anthropic.com/v1/messages',
@@ -142,37 +178,62 @@ jobs:
                   response = urllib.request.urlopen(req, timeout=30)
                   data = json.loads(response.read())
                   text = data['content'][0]['text'].strip()
-                  # JSON aus Antwort extrahieren
                   json_match = re.search(r'\{[\s\S]*\}', text)
                   if json_match:
                       return json.loads(json_match.group())
               except Exception as e:
-                  print(f'⚠️ API-Fehler: {e}')
+                  print(f'⚠️ Fallback API-Fehler: {e}')
               return None
 
-          content = generate_content(thema['title'], thema['focus'], ANTHROPIC_KEY)
+          # ── Artikel generieren ─────────────────────────────────────────────────
+          thema_data = None
+          source_news = None
 
-          if content:
-              lead = content.get('lead', '')
-              sections = [
-                  (content.get('s1_h2', ''), content.get('s1_text', '')),
-                  (content.get('s2_h2', ''), content.get('s2_text', '')),
-                  (content.get('s3_h2', ''), content.get('s3_text', '')),
-              ]
-              tipp = content.get('tipp', '')
-              print(f'✅ Inhalt via Claude API generiert für: {thema["title"]}')
-          else:
-              # Fallback: kurzer Platzhalter-Text
-              lead = f'Tom Irschina über aktuelle Entwicklungen zum Thema {thema["title"]}.'
-              sections = [
-                  ('Aktuelle Entwicklungen', 'Die Tattoo-Branche entwickelt sich ständig weiter. Was heute gilt, kann morgen schon überholt sein.'),
-                  ('Was das für Artists bedeutet', 'Wer auf dem aktuellen Stand bleibt, hat klare Vorteile im Wettbewerb.'),
-                  ('Fazit und Ausblick', 'Bleib informiert, bilde dich weiter und passe deine Praxis an neue Erkenntnisse an.'),
-              ]
-              tipp = 'Verfolge Branchen-News regelmäßig und tausch dich mit anderen Artists aus.'
-              print(f'⚠️ Fallback-Inhalt verwendet (kein API-Key oder Fehler)')
+          if unique_items:
+              print(f'✅ Generiere Artikel aus echten News...')
+              result, source_news = generate_from_real_news(unique_items, ANTHROPIC_KEY)
+              if result:
+                  thema_data = result
+                  print(f'✅ Artikel basierend auf echten News: {result.get("title", "")}')
 
-          # HTML generieren
+          if not thema_data:
+              # Fallback: rotierendes Thema
+              fallback = FALLBACK_THEMEN[today.toordinal() % len(FALLBACK_THEMEN)]
+              print(f'⚠️ Kein RSS-Inhalt, nutze Fallback: {fallback["title"]}')
+              fb_content = generate_from_fallback(fallback, ANTHROPIC_KEY)
+              if fb_content:
+                  thema_data = {**fallback, **fb_content}
+              else:
+                  thema_data = {
+                      **fallback,
+                      'lead': f'Tom Irschina über: {fallback["title"]}.',
+                      's1_h2': 'Aktuelle Entwicklungen', 's1_text': 'Die Branche entwickelt sich weiter.',
+                      's2_h2': 'Was das bedeutet', 's2_text': 'Tätowierer müssen informiert bleiben.',
+                      's3_h2': 'Fazit', 's3_text': 'Weiterbildung ist entscheidend.',
+                      'tipp': 'Bleib informiert und tausch dich aus.'
+                  }
+
+          # ── Slug & Metadaten ───────────────────────────────────────────────────
+          slug_base_raw = thema_data.get('slug_base', 'tattoo-news')
+          slug_base = f'{slug_base_raw}-{today.strftime("%Y-%m-%d")}'
+          base = re.sub(r'[^a-z0-9-]', '-', slug_base.lower())
+          base = re.sub(r'-+', '-', base).strip('-')
+          slug = base + '.html'
+
+          title = thema_data.get('title', 'Tattoo News')
+          cat = thema_data.get('cat', 'news')
+          cat_label = thema_data.get('cat_label', 'News')
+          badge = thema_data.get('badge', '📰 News')
+          emoji = thema_data.get('emoji', '📰')
+          lead = thema_data.get('lead', '')
+          sections = [
+              (thema_data.get('s1_h2', ''), thema_data.get('s1_text', '')),
+              (thema_data.get('s2_h2', ''), thema_data.get('s2_text', '')),
+              (thema_data.get('s3_h2', ''), thema_data.get('s3_text', '')),
+          ]
+          tipp = thema_data.get('tipp', '')
+
+          # ── HTML generieren ────────────────────────────────────────────────────
           nav = '''<nav id="nav" class="solid">
             <div class="nav-inner">
               <a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a>
@@ -196,13 +257,13 @@ jobs:
           <html lang="de">
           <head>
             <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>{thema["title"]} | 7er Ink Academy</title>
+            <title>{title} | 7er Ink Academy</title>
             <meta name="description" content="{lead[:155]}">
             <link rel="canonical" href="https://academy.7erink.com/{slug}">
             <link rel="icon" type="image/png" href="images/favicon.png">
             <link rel="stylesheet" href="academy.css?v=240">
             <script type="application/ld+json">
-            {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{thema["title"]}","datePublished":"{today.isoformat()}","dateModified":"{today.isoformat()}","author":{{"@type":"Person","name":"Tom Irschina"}},"publisher":{{"@type":"Organization","name":"7er Ink Tattoo Academy","url":"https://academy.7erink.com"}},"url":"https://academy.7erink.com/{slug}","articleSection":"{thema["cat_label"]}"}}
+            {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{title}","datePublished":"{today.isoformat()}","dateModified":"{today.isoformat()}","author":{{"@type":"Person","name":"Tom Irschina"}},"publisher":{{"@type":"Organization","name":"7er Ink Tattoo Academy","url":"https://academy.7erink.com"}},"url":"https://academy.7erink.com/{slug}","articleSection":"{cat_label}"}}
             </script>
             <script src="nav.js" defer></script>
             <style>
@@ -251,8 +312,8 @@ jobs:
 
           <div class="article-wrap">
             <a href="news.html" class="article-back">← Zurück zum Journal</a>
-            <span class="article-cat-badge">{thema["cat_label"]}</span>
-            <h1 class="article-title">{thema["title"]}</h1>
+            <span class="article-cat-badge">{cat_label}</span>
+            <h1 class="article-title">{title}</h1>
             <div class="article-meta">
               <span>{today_str}</span>
               <div class="article-meta-dot"></div>
@@ -291,49 +352,44 @@ jobs:
           </body>
           </html>'''
 
-          # FTP verbinden
+          # ── FTP Deploy ─────────────────────────────────────────────────────────
           ftp = ftplib.FTP()
           ftp.connect(FTP_HOST, 21, timeout=30)
           ftp.login(FTP_USER, FTP_PASS)
 
-          # news.html laden und updaten
           ftp.cwd(FTP_PATHS[0])
           buf = io.BytesIO()
           ftp.retrbinary('RETR news.html', buf.write)
           news_html = buf.getvalue().decode('utf-8')
 
-          # Bereinigung: kaputte Einträge entfernen (href endet mit -html statt .html)
+          # Kaputte Einträge bereinigen
           broken_before = len(re.findall(r'<a href="[a-z0-9-]+-html" class="article-card"', news_html))
           if broken_before > 0:
-              news_html = re.sub(
-                  r'<a href="[a-z0-9-]+-html" class="article-card".*?</a>',
-                  '', news_html, flags=re.DOTALL
-              )
-              print(f'🧹 {broken_before} kaputte Einträge (-html Suffix) entfernt.')
+              news_html = re.sub(r'<a href="[a-z0-9-]+-html" class="article-card".*?</a>', '', news_html, flags=re.DOTALL)
+              print(f'🧹 {broken_before} kaputte Einträge entfernt.')
 
-          # Duplikat-Schutz: Artikel nur einfügen wenn Slug noch nicht vorhanden
+          # Duplikat-Schutz
           if slug in news_html:
               print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
               if broken_before > 0:
                   for path in FTP_PATHS:
                       ftp.cwd(path)
                       ftp.storbinary('STOR news.html', io.BytesIO(news_html.encode('utf-8')))
-                      print(f'✅ news.html bereinigt: {path}')
               ftp.quit()
               sys.exit(0)
 
-          new_featured = f'''<section class="journal-featured" data-article-category="{thema['cat']}">
+          new_featured = f'''<section class="journal-featured" data-article-category="{cat}">
                 <div class="featured-label">Featured · Neuester Bericht</div>
                 <a href="{slug}" class="featured-card">
-                  <div class="featured-cover cover-{thema['cat']}">
-                    <div class="featured-cover-badge">{thema['badge']}</div>
+                  <div class="featured-cover cover-{cat}">
+                    <div class="featured-cover-badge">{badge}</div>
                     <div class="featured-cover-new">NEU</div>
                     <div class="featured-cover-date">{today_str}</div>
-                    <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">{thema['emoji']}</div>
+                    <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">{emoji}</div>
                   </div>
                   <div class="featured-body">
-                    <div class="featured-cat">{thema['cat_label']} · {today_str}</div>
-                    <h2>{thema['title']}</h2>
+                    <div class="featured-cat">{cat_label} · {today_str}</div>
+                    <h2>{title}</h2>
                     <p>{lead[:120]}...</p>
                     <div class="featured-meta">
                       <span class="featured-read-time">⏱ 5 Min. Lesezeit</span>
@@ -345,14 +401,14 @@ jobs:
 
           news_html = re.sub(r'<section class="journal-featured".*?</section>', new_featured, news_html, flags=re.DOTALL)
 
-          new_card = f'''<a href="{slug}" class="article-card" data-category="{thema['cat']}">
-                  <div class="article-cover cover-{thema['cat']}">
-                    <div class="article-cover-icon">{thema['emoji']}</div>
-                    <div class="article-cover-badge">{thema['badge']}</div>
+          new_card = f'''<a href="{slug}" class="article-card" data-category="{cat}">
+                  <div class="article-cover cover-{cat}">
+                    <div class="article-cover-icon">{emoji}</div>
+                    <div class="article-cover-badge">{badge}</div>
                   </div>
                   <div class="article-body">
-                    <div class="article-cat cat-{thema['cat']}">{thema['cat_label']}</div>
-                    <h3>{thema['title']}</h3>
+                    <div class="article-cat cat-{cat}">{cat_label}</div>
+                    <h3>{title}</h3>
                     <p class="article-excerpt">{lead[:100]}...</p>
                     <div class="article-footer">
                       <span class="article-date">{today_str}</span>
@@ -364,7 +420,6 @@ jobs:
           grid_tag = '<div class="journal-grid" id="articleGrid">'
           news_html = news_html.replace(grid_tag, grid_tag + '\n      ' + new_card, 1)
 
-          # Auf alle 3 Pfade deployen
           for path in FTP_PATHS:
               ftp.cwd(path)
               ftp.storbinary(f'STOR {slug}', io.BytesIO(article_html.encode('utf-8')))
@@ -372,4 +427,5 @@ jobs:
               print(f'✅ Deployed: {path}/{slug}')
 
           ftp.quit()
+          print(f'🎉 Fertig: {title}')
           PYEOF
