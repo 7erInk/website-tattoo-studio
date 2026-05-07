@@ -80,11 +80,20 @@ jobs:
 
           # ── Fallback-Themen wenn RSS leer ──────────────────────────────────────
           FALLBACK_THEMEN = [
-              {'title': 'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?', 'focus': 'Neue EU-REACH-Verordnung, verbotene Pigmente, was für Studios gilt', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'reach-farbverbot-update'},
-              {'title': 'Tattoo-Trend 2026: Was Kunden jetzt wirklich wollen', 'focus': 'Aktuelle Nachfrage nach bestimmten Stilen, was boomt, was abnimmt', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '📈 Trends', 'emoji': '📈', 'slug_base': 'tattoo-trend-aktuell'},
-              {'title': 'Hygiene-Dokumentation im Studio: Was sich geändert hat', 'focus': 'Aktuelle Vorschriften, worauf Gesundheitsämter achten, neue Pflichten', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'hygiene-dokumentation-studio'},
-              {'title': 'Convention-Saison 2026: Die wichtigsten Termine im Überblick', 'focus': 'Tattoo Conventions Deutschland und Europa 2026, Highlights, Tipps', 'cat': 'convention', 'cat_label': 'Convention', 'badge': '🏆 Convention', 'emoji': '🏆', 'slug_base': 'convention-saison-2026'},
-              {'title': 'Fine Line vs. Blackwork: Was dominiert 2026?', 'focus': 'Stilvergleich, aktuelle Nachfrage, Vor- und Nachteile beider Stile', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'fine-line-blackwork-2026'},
+              {'title': 'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?', 'focus': 'Neue EU-REACH-Verordnung, verbotene Pigmente, was für Studios gilt', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'reach-farbverbot-update-2026'},
+              {'title': 'Tattoo-Trends 2026: Was Kunden jetzt wirklich buchen', 'focus': 'Aktuelle Nachfrage nach Stilen, was boomt, was abnimmt, welche Motive dominieren', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '📈 Trends', 'emoji': '📈', 'slug_base': 'tattoo-trends-kunden-2026'},
+              {'title': 'Hygiene-Dokumentation im Studio: Die neuen Pflichten', 'focus': 'Aktuelle Vorschriften, worauf Gesundheitsämter achten, Checkliste für Studios', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'hygiene-pflichten-studio-2026'},
+              {'title': 'Convention-Saison 2026: Die besten Termine in Europa', 'focus': 'Tattoo Conventions Deutschland, Österreich, Schweiz 2026, Tipps für Artists', 'cat': 'convention', 'cat_label': 'Convention', 'badge': '🏆 Convention', 'emoji': '🏆', 'slug_base': 'tattoo-conventions-europa-2026'},
+              {'title': 'Fine Line vs. Blackwork: Was dominiert dieses Jahr?', 'focus': 'Stilvergleich, Nachfrage-Analyse, Vor- und Nachteile für Tätowierer', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'fine-line-vs-blackwork-2026'},
+              {'title': 'Preiskalkulation im Tattoo-Studio: So rechnest du richtig', 'focus': 'Stundensatz, Materialkosten, Mindestpreis, was andere Studios verlangen', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'preiskalkulation-tattoo-studio'},
+              {'title': 'Tattoo-Maschinen 2026: Coil, Rotary oder Pen?', 'focus': 'Aktuelle Maschinentypen im Vergleich, was Profi-Artists empfehlen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-maschinen-vergleich-2026'},
+              {'title': 'Kundenkommunikation: Wie du schwierige Anfragen professionell handhabst', 'focus': 'Umgang mit unrealistischen Wünschen, Preisverhandlung, No-Shows verhindern', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'kundenkommunikation-tattoo-profi'},
+              {'title': 'Realistisches Tattoo stechen: Worauf es wirklich ankommt', 'focus': 'Technik, Schattierung, Referenzfotos nutzen, häufige Anfängerfehler', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'realismus-tattoo-technik-tipps'},
+              {'title': 'Social Media für Tätowierer: Was 2026 wirklich funktioniert', 'focus': 'Instagram vs TikTok, Content-Strategie, Algorithmus-Tipps für Artists', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'social-media-taetowierer-2026'},
+              {'title': 'Tattoo-Pflege: Was du deinen Kunden empfehlen solltest', 'focus': 'Aktuelle Heilungsempfehlungen, Produkte, was Dermatologen sagen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-pflege-empfehlungen-2026'},
+              {'title': 'Schwarz & Grau Realismus: Warum dieser Stil so gefragt ist', 'focus': 'Geschichte des Stils, technische Anforderungen, Warum Kunden ihn lieben', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'black-grey-realismus-gefragt'},
+              {'title': 'Steuerliche Grundlagen für selbstständige Tätowierer', 'focus': 'Umsatzsteuer, Betriebsausgaben, Kassenbuch, was Finanzamt prüft', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'steuer-grundlagen-taetowierer'},
+              {'title': 'Tattoo-Farben: Welche Pigmente halten am längsten?', 'focus': 'Farbqualität, Verblassen, Unterschiede zwischen Marken, was Profis nutzen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-farben-pigmente-qualitaet'},
           ]
 
           # ── Claude API aufrufen ────────────────────────────────────────────────
@@ -368,13 +377,23 @@ jobs:
               news_html = re.sub(r'<a href="[a-z0-9-]+-html" class="article-card".*?</a>', '', news_html, flags=re.DOTALL)
               print(f'🧹 {broken_before} kaputte Einträge entfernt.')
 
-          # Duplikat-Schutz
+          # Duplikat-Schutz: gleicher Slug heute
           if slug in news_html:
               print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
               if broken_before > 0:
                   for path in FTP_PATHS:
                       ftp.cwd(path)
                       ftp.storbinary('STOR news.html', io.BytesIO(news_html.encode('utf-8')))
+              ftp.quit()
+              sys.exit(0)
+
+          # Duplikat-Schutz: gleiches Thema (slug_base ohne Datum) schon mal gepostet
+          existing_slug_bases = set(
+              re.sub(r'-\d{4}-\d{2}-\d{2}$', '', s)
+              for s in re.findall(r'href="([a-z0-9-]+-\d{4}-\d{2}-\d{2})\.html"', news_html)
+          )
+          if slug_base_raw in existing_slug_bases:
+              print(f'⏭ Thema bereits veröffentlicht ({slug_base_raw}), überspringe.')
               ftp.quit()
               sys.exit(0)
 
