@@ -1,8 +1,8 @@
-name: Daily Journal Article
+name: Weekly Journal Article
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 8:00 Uhr Berlin (UTC+2)
+    - cron: '0 6 * * 1'  # Montags 8:00 Uhr Berlin (UTC+2)
   workflow_dispatch:      # Manuell auslösbar
 
 jobs:
@@ -387,15 +387,25 @@ jobs:
               ftp.quit()
               sys.exit(0)
 
-          # Duplikat-Schutz: gleiches Thema (slug_base ohne Datum) schon mal gepostet
-          existing_slug_bases = set(
-              re.sub(r'-\d{4}-\d{2}-\d{2}$', '', s)
-              for s in re.findall(r'href="([a-z0-9-]+-\d{4}-\d{2}-\d{2})\.html"', news_html)
-          )
+          # Duplikat-Schutz: gleiches Thema oder ähnlicher Slug bereits vorhanden
+          existing_slugs = set(re.findall(r'href="([a-z0-9-]+-\d{4}-\d{2}-\d{2})\.html"', news_html))
+          existing_slug_bases = set(re.sub(r'-\d{4}-\d{2}-\d{2}$', '', s) for s in existing_slugs)
+
+          # Prüfe exakten slug_base
           if slug_base_raw in existing_slug_bases:
               print(f'⏭ Thema bereits veröffentlicht ({slug_base_raw}), überspringe.')
               ftp.quit()
               sys.exit(0)
+
+          # Prüfe ob Schlüsselwörter des neuen Themas zu stark mit vorhandenen übereinstimmen
+          new_keywords = set(w for w in re.split(r'[-_]', slug_base_raw) if len(w) > 4)
+          for existing_base in existing_slug_bases:
+              existing_keywords = set(w for w in re.split(r'[-_]', existing_base) if len(w) > 4)
+              overlap = new_keywords & existing_keywords
+              if len(overlap) >= 2:  # 2+ gemeinsame Schlüsselwörter = Duplikat
+                  print(f'⏭ Zu ähnlich zu bestehendem Artikel ({existing_base}, gemeinsam: {overlap}), überspringe.')
+                  ftp.quit()
+                  sys.exit(0)
 
           new_featured = f'''<section class="journal-featured" data-article-category="{cat}">
                 <div class="featured-label">Featured · Neuester Bericht</div>
