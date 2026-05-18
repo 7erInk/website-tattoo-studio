@@ -16,8 +16,8 @@ jobs:
         run: |
           python3 << 'PYEOF'
           import ftplib, io, re, json, sys, urllib.request, urllib.error, textwrap, xml.etree.ElementTree as ET
-          from datetime import date
-          import os, random, html
+          from datetime import date, timedelta
+          import os, html, time
 
           FTP_HOST = '82.198.229.223'
           FTP_USER = 'u688179148'
@@ -33,107 +33,139 @@ jobs:
           months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']
           today_str = f'{today.day}. {months[today.month-1]} {today.year}'
 
-          # ── Echte News via Google News RSS holen ──────────────────────────────
+          # ── Echte Tattoo-Fachmedien + spezifische News-Quellen ────────────────
+          # Kombination aus Fachmagazinen, Reddit, Conventions und Regulierung
           RSS_FEEDS = [
-              'https://news.google.com/rss/search?q=tattoo+news&hl=de&gl=DE&ceid=DE:de',
-              'https://news.google.com/rss/search?q=tattoo+trend+2026&hl=de&gl=DE&ceid=DE:de',
-              'https://news.google.com/rss/search?q=t%C3%A4towierung+gesetze+EU&hl=de&gl=DE&ceid=DE:de',
-              'https://news.google.com/rss/search?q=tattoo+convention+2026&hl=de&gl=DE&ceid=DE:de',
-              'https://news.google.com/rss/search?q=tattoo+artist+news&hl=en&gl=US&ceid=US:en',
-              'https://news.google.com/rss/search?q=tattoo+ink+health+2026&hl=en&gl=US&ceid=US:en',
+              # Tattoo-Fachmagazine (echte Branchenquellen)
+              ('magazine', 'https://www.inkedmag.com/feed/'),
+              ('magazine', 'https://www.tattoolifemagazine.com/feed/'),
+              ('magazine', 'https://www.tattooartistmagazine.com/feed/'),
+              # Google News mit sehr spezifischen Branchenthemen
+              ('news_de', 'https://news.google.com/rss/search?q=tattoo+convention+2025+2026&hl=de&gl=DE&ceid=DE:de'),
+              ('news_de', 'https://news.google.com/rss/search?q=REACH+Verordnung+Tattoofarbe&hl=de&gl=DE&ceid=DE:de'),
+              ('news_de', 'https://news.google.com/rss/search?q=tattoo+artist+award+championship&hl=de&gl=DE&ceid=DE:de'),
+              ('news_de', 'https://news.google.com/rss/search?q=tattoo+verbot+gesundheit+studie&hl=de&gl=DE&ceid=DE:de'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+industry+news+2026&hl=en&gl=US&ceid=US:en'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+ban+law+regulation+2026&hl=en&gl=US&ceid=US:en'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+convention+championship+world+2026&hl=en&gl=US&ceid=US:en'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+artist+celebrity+famous+2026&hl=en&gl=US&ceid=US:en'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+ink+health+study+research&hl=en&gl=US&ceid=US:en'),
+              ('news_en', 'https://news.google.com/rss/search?q=tattoo+removal+technology+laser&hl=en&gl=US&ceid=US:en'),
+              # Reddit via RSS (echte Community-Diskussionen)
+              ('reddit', 'https://www.reddit.com/r/tattoo/hot/.rss?limit=10'),
+              ('reddit', 'https://www.reddit.com/r/tattooartists/hot/.rss?limit=10'),
           ]
 
-          def fetch_rss_items(url):
+          def fetch_rss(source_type, url):
               try:
-                  req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-                  resp = urllib.request.urlopen(req, timeout=10)
-                  root = ET.fromstring(resp.read())
+                  req = urllib.request.Request(url, headers={
+                      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                      'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+                  })
+                  resp = urllib.request.urlopen(req, timeout=12)
+                  content = resp.read()
+                  root = ET.fromstring(content)
                   items = []
+                  # Standard RSS
                   for item in root.iter('item'):
-                      title = item.find('title')
-                      desc = item.find('description')
-                      pub = item.find('pubDate')
+                      title_el = item.find('title')
+                      desc_el = item.find('description')
+                      pub_el = item.find('pubDate')
+                      link_el = item.find('link')
+                      if title_el is None: continue
+                      title_text = html.unescape(re.sub(r'<[^>]+>', '', title_el.text or ''))
+                      desc_text = html.unescape(re.sub(r'<[^>]+>', '', desc_el.text or '')) if desc_el is not None else ''
                       items.append({
-                          'title': html.unescape(title.text or '') if title is not None else '',
-                          'desc': html.unescape(re.sub(r'<[^>]+>', '', desc.text or '')) if desc is not None else '',
-                          'date': pub.text or '' if pub is not None else '',
+                          'source': source_type,
+                          'title': title_text[:200],
+                          'desc': desc_text[:300],
+                          'date': pub_el.text if pub_el is not None else '',
+                          'url': link_el.text if link_el is not None else '',
                       })
-                  return items[:5]
+                  # Atom feed (Reddit)
+                  ns = {'atom': 'http://www.w3.org/2005/Atom'}
+                  for entry in root.findall('atom:entry', ns):
+                      title_el = entry.find('atom:title', ns)
+                      content_el = entry.find('atom:content', ns)
+                      if title_el is None: continue
+                      title_text = html.unescape(re.sub(r'<[^>]+>', '', title_el.text or ''))
+                      desc_text = html.unescape(re.sub(r'<[^>]+>', '', content_el.text or ''))[:300] if content_el is not None else ''
+                      items.append({
+                          'source': source_type,
+                          'title': title_text[:200],
+                          'desc': desc_text,
+                          'date': '',
+                          'url': '',
+                      })
+                  print(f'  ✓ {source_type} {url[:60]}: {len(items)} Artikel')
+                  return items[:6]
               except Exception as e:
-                  print(f'⚠️ RSS Fehler {url}: {e}')
+                  print(f'  ⚠ {source_type} {url[:60]}: {e}')
                   return []
 
+          print('📡 Lade News aus Tattoo-Fachquellen...')
           all_items = []
-          for feed_url in RSS_FEEDS:
-              all_items.extend(fetch_rss_items(feed_url))
+          for source_type, feed_url in RSS_FEEDS:
+              all_items.extend(fetch_rss(source_type, feed_url))
+              time.sleep(0.3)  # Höfliche Pause zwischen Requests
 
-          # Duplikate entfernen (nach Titel)
-          seen = set()
+          # Duplikate entfernen (nach Titel-Ähnlichkeit)
+          seen_titles = set()
           unique_items = []
           for item in all_items:
-              key = item['title'][:60].lower()
-              if key and key not in seen:
-                  seen.add(key)
+              key = re.sub(r'[^a-z]', '', item['title'].lower())[:50]
+              if key and key not in seen_titles:
+                  seen_titles.add(key)
                   unique_items.append(item)
 
-          print(f'📰 {len(unique_items)} echte News-Artikel gefunden')
+          # Filtere irrelevante Einträge (Werbung, Off-Topic)
+          FILTER_WORDS = ['casino', 'poker', 'betting', 'buy now', 'discount', 'sale', 'signup', 'subscribe now']
+          unique_items = [i for i in unique_items if not any(w in i['title'].lower() for w in FILTER_WORDS)]
 
-          # ── Fallback-Themen wenn RSS leer ──────────────────────────────────────
-          FALLBACK_THEMEN = [
-              {'title': 'REACH-Update 2026: Welche Tattoofarben sind jetzt verboten?', 'focus': 'Neue EU-REACH-Verordnung, verbotene Pigmente, was für Studios gilt', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'reach-farbverbot-update-2026'},
-              {'title': 'Tattoo-Trends 2026: Was Kunden jetzt wirklich buchen', 'focus': 'Aktuelle Nachfrage nach Stilen, was boomt, was abnimmt, welche Motive dominieren', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '📈 Trends', 'emoji': '📈', 'slug_base': 'tattoo-trends-kunden-2026'},
-              {'title': 'Hygiene-Dokumentation im Studio: Die neuen Pflichten', 'focus': 'Aktuelle Vorschriften, worauf Gesundheitsämter achten, Checkliste für Studios', 'cat': 'news', 'cat_label': 'Gesetze', 'badge': '⚖️ Gesetze', 'emoji': '⚖️', 'slug_base': 'hygiene-pflichten-studio-2026'},
-              {'title': 'Convention-Saison 2026: Die besten Termine in Europa', 'focus': 'Tattoo Conventions Deutschland, Österreich, Schweiz 2026, Tipps für Artists', 'cat': 'convention', 'cat_label': 'Convention', 'badge': '🏆 Convention', 'emoji': '🏆', 'slug_base': 'tattoo-conventions-europa-2026'},
-              {'title': 'Fine Line vs. Blackwork: Was dominiert dieses Jahr?', 'focus': 'Stilvergleich, Nachfrage-Analyse, Vor- und Nachteile für Tätowierer', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'fine-line-vs-blackwork-2026'},
-              {'title': 'Preiskalkulation im Tattoo-Studio: So rechnest du richtig', 'focus': 'Stundensatz, Materialkosten, Mindestpreis, was andere Studios verlangen', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'preiskalkulation-tattoo-studio'},
-              {'title': 'Tattoo-Maschinen 2026: Coil, Rotary oder Pen?', 'focus': 'Aktuelle Maschinentypen im Vergleich, was Profi-Artists empfehlen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-maschinen-vergleich-2026'},
-              {'title': 'Kundenkommunikation: Wie du schwierige Anfragen professionell handhabst', 'focus': 'Umgang mit unrealistischen Wünschen, Preisverhandlung, No-Shows verhindern', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'kundenkommunikation-tattoo-profi'},
-              {'title': 'Realistisches Tattoo stechen: Worauf es wirklich ankommt', 'focus': 'Technik, Schattierung, Referenzfotos nutzen, häufige Anfängerfehler', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'realismus-tattoo-technik-tipps'},
-              {'title': 'Social Media für Tätowierer: Was 2026 wirklich funktioniert', 'focus': 'Instagram vs TikTok, Content-Strategie, Algorithmus-Tipps für Artists', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'social-media-taetowierer-2026'},
-              {'title': 'Tattoo-Pflege: Was du deinen Kunden empfehlen solltest', 'focus': 'Aktuelle Heilungsempfehlungen, Produkte, was Dermatologen sagen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-pflege-empfehlungen-2026'},
-              {'title': 'Schwarz & Grau Realismus: Warum dieser Stil so gefragt ist', 'focus': 'Geschichte des Stils, technische Anforderungen, Warum Kunden ihn lieben', 'cat': 'trends', 'cat_label': 'Trends', 'badge': '🎨 Trends', 'emoji': '🎨', 'slug_base': 'black-grey-realismus-gefragt'},
-              {'title': 'Steuerliche Grundlagen für selbstständige Tätowierer', 'focus': 'Umsatzsteuer, Betriebsausgaben, Kassenbuch, was Finanzamt prüft', 'cat': 'business', 'cat_label': 'Business', 'badge': '💼 Business', 'emoji': '💼', 'slug_base': 'steuer-grundlagen-taetowierer'},
-              {'title': 'Tattoo-Farben: Welche Pigmente halten am längsten?', 'focus': 'Farbqualität, Verblassen, Unterschiede zwischen Marken, was Profis nutzen', 'cat': 'technik', 'cat_label': 'Technik', 'badge': '⚙️ Technik', 'emoji': '⚙️', 'slug_base': 'tattoo-farben-pigmente-qualitaet'},
-          ]
+          print(f'📰 {len(unique_items)} einzigartige Artikel aus Tattoo-Quellen gefunden')
 
-          # ── Claude API aufrufen ────────────────────────────────────────────────
-          def generate_from_real_news(news_items, api_key):
-              if not api_key:
-                  return None, None
+          # ── Claude wählt das beste Thema und schreibt den Artikel ─────────────
+          def generate_article(news_items, api_key):
+              if not api_key or not news_items:
+                  return None
 
-              # Top 5 News als Kontext für Claude
+              # Alle gefundenen Artikel als Kontext
               news_context = '\n'.join([
-                  f'- {item["title"]}: {item["desc"][:200]}'
-                  for item in news_items[:5]
+                  f'[{i["source"].upper()}] {i["title"]}: {i["desc"][:200]}'
+                  for i in news_items[:20]
               ])
 
               prompt = textwrap.dedent(f"""\
-                  Du bist Tom Irschina, erfahrener Tätowierer (16+ Jahre, 50+ Convention Awards, Black & Grey Spezialist, 7er Ink Academy München).
+                  Du bist Tom Irschina — Tätowierer seit 16+ Jahren, 50+ Convention Awards, Black & Grey Spezialist, Gründer der 7er Ink Academy München.
 
-                  Hier sind aktuelle Neuigkeiten aus der Tattoo-Welt von heute:
+                  Hier sind aktuelle echte News und Diskussionen aus der internationalen Tattoo-Welt dieser Woche:
 
                   {news_context}
 
-                  Wähle das relevanteste und interessanteste Thema aus diesen echten News aus.
-                  Schreibe dann einen professionellen Artikel für die Academy-Website — aus Toms Perspektive, auf Deutsch.
-                  Beziehe dich auf die echten Ereignisse. Ergänze mit Praxiswissen und Einschätzungen.
+                  Deine Aufgabe:
+                  1. Wähle das INTERESSANTESTE und RELEVANTESTE Thema für deutschsprachige Tätowierer aus
+                  2. Bevorzuge: echte Ereignisse, Gesetze/Regulierungen, Conventions, Gesundheitsstudien, Branchentrends
+                  3. Schreibe einen professionellen, meinungsstarken Artikel auf Deutsch — aus Toms Perspektive
+                  4. Beziehe dich auf die echten Ereignisse und ergänze mit 16 Jahren Praxiserfahrung
+                  5. Sei konkret und faktenbasiert — keine leeren Phrasen
 
                   Antworte NUR mit gültigem JSON:
                   {{
-                    "title": "Artikel-Überschrift (prägnant, 6-10 Wörter, bezieht sich auf echte News)",
-                    "cat": "news|trends|technik|business|convention",
-                    "cat_label": "Gesetze|Trends|Technik|Business|Convention|Welt-News",
-                    "badge": "⚖️ Gesetze|📈 Trends|⚙️ Technik|💼 Business|🏆 Convention|🌍 Welt-News",
-                    "emoji": "⚖️|📈|⚙️|💼|🏆|🌍|🎨|🔬|🛒",
-                    "slug_base": "kurzer-slug-ohne-datum",
-                    "lead": "Einleitung (2-3 Sätze, packend, auf echte News bezogen)",
+                    "title": "Prägnante Überschrift (8-12 Wörter, bezieht sich auf das echte Ereignis)",
+                    "cat": "news|trends|technik|business|convention|gesetze",
+                    "cat_label": "Welt-News|Trends|Technik|Business|Convention|Gesetze",
+                    "badge": "🌍 Welt-News|📈 Trends|⚙️ Technik|💼 Business|🏆 Convention|⚖️ Gesetze",
+                    "emoji": "🌍|📈|⚙️|💼|🏆|⚖️|🎨|🔬|🩺",
+                    "slug_base": "kurzer-einzigartiger-slug-ohne-datum-max-5-woerter",
+                    "source_summary": "Kurze Beschreibung welche echten Quellen/Ereignisse du verwendest",
+                    "lead": "Einleitung (3-4 Sätze, packend, bezieht sich direkt auf das Ereignis, nennt konkrete Details)",
                     "s1_h2": "Überschrift Abschnitt 1",
-                    "s1_text": "Text Abschnitt 1 (3-5 Sätze, konkreter Bezug auf aktuelle Ereignisse)",
+                    "s1_text": "Text Abschnitt 1 (4-6 Sätze, konkreter Bezug auf Fakten, Zahlen, Namen)",
                     "s2_h2": "Überschrift Abschnitt 2",
-                    "s2_text": "Text Abschnitt 2 (3-5 Sätze, Praxisrelevanz für Tätowierer)",
+                    "s2_text": "Text Abschnitt 2 (4-6 Sätze, Praxisrelevanz für DACH-Tätowierer, Toms Einschätzung)",
                     "s3_h2": "Überschrift Abschnitt 3",
-                    "s3_text": "Text Abschnitt 3 (3-5 Sätze, Ausblick oder Handlungsempfehlung)",
-                    "tipp": "Toms praktischer Tipp (1-2 Sätze, konkret)"
+                    "s3_text": "Text Abschnitt 3 (4-6 Sätze, Ausblick, konkrete Handlungsempfehlung)",
+                    "tipp": "Toms persönlicher Tipp aus der Praxis (2-3 Sätze, sehr konkret)"
                   }}""")
 
               try:
@@ -141,7 +173,7 @@ jobs:
                       'https://api.anthropic.com/v1/messages',
                       data=json.dumps({
                           'model': 'claude-haiku-4-5-20251001',
-                          'max_tokens': 1500,
+                          'max_tokens': 2000,
                           'messages': [{'role': 'user', 'content': prompt}]
                       }).encode(),
                       headers={
@@ -150,79 +182,31 @@ jobs:
                           'anthropic-version': '2023-06-01'
                       }
                   )
-                  response = urllib.request.urlopen(req, timeout=30)
+                  response = urllib.request.urlopen(req, timeout=45)
                   data = json.loads(response.read())
                   text = data['content'][0]['text'].strip()
                   json_match = re.search(r'\{[\s\S]*\}', text)
                   if json_match:
                       result = json.loads(json_match.group())
-                      return result, news_items[:3]
+                      print(f'✅ Claude wählte: {result.get("title", "")}')
+                      print(f'   Quellen: {result.get("source_summary", "")}')
+                      return result
               except Exception as e:
-                  print(f'⚠️ API-Fehler: {e}')
-              return None, None
-
-          def generate_from_fallback(thema, api_key):
-              if not api_key:
-                  return None
-              prompt = textwrap.dedent(f"""\
-                  Du bist Tom Irschina, erfahrener Tätowierer (16+ Jahre, 50+ Convention Awards, Black & Grey Spezialist).
-                  Thema: {thema['title']}
-                  Fokus: {thema['focus']}
-                  Schreibe einen praxisnahen Artikel auf Deutsch. Nur JSON:
-                  {{"lead":"...","s1_h2":"...","s1_text":"...","s2_h2":"...","s2_text":"...","s3_h2":"...","s3_text":"...","tipp":"..."}}""")
-              try:
-                  req = urllib.request.Request(
-                      'https://api.anthropic.com/v1/messages',
-                      data=json.dumps({
-                          'model': 'claude-haiku-4-5-20251001',
-                          'max_tokens': 1200,
-                          'messages': [{'role': 'user', 'content': prompt}]
-                      }).encode(),
-                      headers={
-                          'Content-Type': 'application/json',
-                          'x-api-key': api_key,
-                          'anthropic-version': '2023-06-01'
-                      }
-                  )
-                  response = urllib.request.urlopen(req, timeout=30)
-                  data = json.loads(response.read())
-                  text = data['content'][0]['text'].strip()
-                  json_match = re.search(r'\{[\s\S]*\}', text)
-                  if json_match:
-                      return json.loads(json_match.group())
-              except Exception as e:
-                  print(f'⚠️ Fallback API-Fehler: {e}')
+                  print(f'⚠️ Claude API Fehler: {e}')
               return None
 
-          # ── Artikel generieren ─────────────────────────────────────────────────
+          # ── Artikel generieren ────────────────────────────────────────────────
           thema_data = None
-          source_news = None
 
           if unique_items:
-              print(f'✅ Generiere Artikel aus echten News...')
-              result, source_news = generate_from_real_news(unique_items, ANTHROPIC_KEY)
-              if result:
-                  thema_data = result
-                  print(f'✅ Artikel basierend auf echten News: {result.get("title", "")}')
+              print(f'✅ Übergebe {len(unique_items)} Artikel an Claude zur Auswahl...')
+              thema_data = generate_article(unique_items, ANTHROPIC_KEY)
 
           if not thema_data:
-              # Fallback: rotierendes Thema
-              fallback = FALLBACK_THEMEN[today.toordinal() % len(FALLBACK_THEMEN)]
-              print(f'⚠️ Kein RSS-Inhalt, nutze Fallback: {fallback["title"]}')
-              fb_content = generate_from_fallback(fallback, ANTHROPIC_KEY)
-              if fb_content:
-                  thema_data = {**fallback, **fb_content}
-              else:
-                  thema_data = {
-                      **fallback,
-                      'lead': f'Tom Irschina über: {fallback["title"]}.',
-                      's1_h2': 'Aktuelle Entwicklungen', 's1_text': 'Die Branche entwickelt sich weiter.',
-                      's2_h2': 'Was das bedeutet', 's2_text': 'Tätowierer müssen informiert bleiben.',
-                      's3_h2': 'Fazit', 's3_text': 'Weiterbildung ist entscheidend.',
-                      'tipp': 'Bleib informiert und tausch dich aus.'
-                  }
+              print('❌ Kein Artikel generiert — überspringe diese Woche')
+              sys.exit(0)
 
-          # ── Slug & Metadaten ───────────────────────────────────────────────────
+          # ── Slug & Metadaten ──────────────────────────────────────────────────
           slug_base_raw = thema_data.get('slug_base', 'tattoo-news')
           slug_base = f'{slug_base_raw}-{today.strftime("%Y-%m-%d")}'
           base = re.sub(r'[^a-z0-9-]', '-', slug_base.lower())
@@ -231,9 +215,9 @@ jobs:
 
           title = thema_data.get('title', 'Tattoo News')
           cat = thema_data.get('cat', 'news')
-          cat_label = thema_data.get('cat_label', 'News')
-          badge = thema_data.get('badge', '📰 News')
-          emoji = thema_data.get('emoji', '📰')
+          cat_label = thema_data.get('cat_label', 'Welt-News')
+          badge = thema_data.get('badge', '🌍 Welt-News')
+          emoji = thema_data.get('emoji', '🌍')
           lead = thema_data.get('lead', '')
           sections = [
               (thema_data.get('s1_h2', ''), thema_data.get('s1_text', '')),
@@ -242,7 +226,7 @@ jobs:
           ]
           tipp = thema_data.get('tipp', '')
 
-          # ── HTML generieren ────────────────────────────────────────────────────
+          # ── HTML generieren ───────────────────────────────────────────────────
           nav = '''<nav id="nav" class="solid">
             <div class="nav-inner">
               <a href="index.html" class="nav-logo">7er Ink <span class="accent">Academy</span></a>
@@ -260,19 +244,23 @@ jobs:
           sections_html = ''
           for h2, body in sections:
               if h2 and body:
-                  sections_html += f'<h2>{h2}</h2>\n<p>{body}</p>\n\n'
+                  sections_html += f'<h2>{html.escape(h2)}</h2>\n<p>{html.escape(body)}</p>\n\n'
+
+          esc_title = html.escape(title)
+          esc_lead = html.escape(lead)
+          esc_tipp = html.escape(tipp)
 
           article_html = f'''<!DOCTYPE html>
           <html lang="de">
           <head>
             <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>{title} | 7er Ink Academy</title>
-            <meta name="description" content="{lead[:155]}">
+            <title>{esc_title} | 7er Ink Academy</title>
+            <meta name="description" content="{html.escape(lead[:155])}">
             <link rel="canonical" href="https://academy.7erink.com/{slug}">
             <link rel="icon" type="image/png" href="images/favicon.png">
-            <link rel="stylesheet" href="academy.css?v=240">
+            <link rel="stylesheet" href="academy.css?v=241">
             <script type="application/ld+json">
-            {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{title}","datePublished":"{today.isoformat()}","dateModified":"{today.isoformat()}","author":{{"@type":"Person","name":"Tom Irschina"}},"publisher":{{"@type":"Organization","name":"7er Ink Tattoo Academy","url":"https://academy.7erink.com"}},"url":"https://academy.7erink.com/{slug}","articleSection":"{cat_label}"}}
+            {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{esc_title}","datePublished":"{today.isoformat()}","dateModified":"{today.isoformat()}","author":{{"@type":"Person","name":"Tom Irschina","url":"https://academy.7erink.com/tom.html"}},"publisher":{{"@type":"Organization","name":"7er Ink Tattoo Academy","url":"https://academy.7erink.com","logo":{{"@type":"ImageObject","url":"https://academy.7erink.com/images/7erink-logo.png"}}}},"url":"https://academy.7erink.com/{slug}","articleSection":"{cat_label}","inLanguage":"de-DE"}}
             </script>
             <script src="nav.js" defer></script>
             <style>
@@ -285,20 +273,20 @@ jobs:
             .mobile-nav-inner a.nav-item{{display:flex !important;align-items:center;justify-content:space-between;padding:.8rem 0;font-family:"Cormorant Garamond",serif;font-size:1.08rem;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none}}
             .mobile-nav-cta{{margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.08)}}
             .mobile-nav-cta .btn{{width:100% !important;text-align:center !important;justify-content:center !important}}
-            .article-wrap{{max-width:780px;margin:0 auto;padding:5rem 2rem 6rem}}
+            .article-wrap{{max-width:820px;margin:0 auto;padding:5rem 2rem 6rem}}
             .article-back{{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:2.5rem;transition:color .2s}}
             .article-back:hover{{color:var(--gold)}}
             .article-cat-badge{{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#080808;background:var(--gold);border-radius:100px;padding:.3rem .85rem;margin-bottom:1.2rem}}
             .article-meta{{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;flex-wrap:wrap}}
             .article-meta-dot{{width:3px;height:3px;border-radius:50%;background:var(--muted);flex-shrink:0}}
-            .article-title{{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1.5rem}}
+            .article-title{{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1.5rem}}
             .article-lead{{font-size:1.05rem;color:var(--lighter);line-height:1.8;border-left:3px solid var(--gold);padding-left:1.5rem;margin-bottom:3rem;font-style:italic}}
             .article-body{{font-size:.95rem;color:var(--lighter);line-height:1.9}}
-            .article-body h2{{font-family:"Cormorant Garamond",serif;font-size:1.7rem;font-weight:700;color:var(--white);margin:2.5rem 0 1rem}}
+            .article-body h2{{font-family:"Cormorant Garamond",serif;font-size:1.75rem;font-weight:700;color:var(--white);margin:2.5rem 0 1rem}}
             .article-body p{{margin-bottom:1.4rem}}
             .tip-box{{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:1.5rem 1.8rem;margin:2rem 0}}
             .tip-box-label{{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}}
-            .tip-box p{{font-size:.88rem;color:var(--lighter);line-height:1.75;margin:0}}
+            .tip-box p{{font-size:.9rem;color:var(--lighter);line-height:1.75;margin:0}}
             .article-author{{display:flex;align-items:center;gap:1.2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:3.5rem}}
             .article-author-avatar{{width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:1.4rem;color:var(--gold);flex-shrink:0}}
             .article-author-name{{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem}}
@@ -306,6 +294,7 @@ jobs:
             .article-cta{{background:linear-gradient(135deg,rgba(201,168,76,.08) 0%,rgba(201,168,76,.04) 100%);border:1px solid rgba(201,168,76,.25);border-radius:var(--radius);padding:2.5rem;margin-top:3rem;text-align:center}}
             .article-cta h3{{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--white);margin-bottom:.75rem}}
             .article-cta p{{font-size:.88rem;color:var(--lighter);margin-bottom:1.5rem;line-height:1.7}}
+            .source-note{{font-size:.72rem;color:var(--muted);margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)}}
             </style>
           </head>
           <body>
@@ -322,32 +311,33 @@ jobs:
           <div class="article-wrap">
             <a href="news.html" class="article-back">← Zurück zum Journal</a>
             <span class="article-cat-badge">{cat_label}</span>
-            <h1 class="article-title">{title}</h1>
+            <h1 class="article-title">{esc_title}</h1>
             <div class="article-meta">
               <span>{today_str}</span>
               <div class="article-meta-dot"></div>
               <span>Von Tom Irschina</span>
               <div class="article-meta-dot"></div>
-              <span>5 min Lesezeit</span>
+              <span>6 min Lesezeit</span>
             </div>
-            <p class="article-lead">{lead}</p>
+            <p class="article-lead">{esc_lead}</p>
             <div class="article-body">
               {sections_html}
               <div class="tip-box">
-                <div class="tip-box-label">💡 Toms Tipp</div>
-                <p>{tipp}</p>
+                <div class="tip-box-label">💡 Toms Tipp aus der Praxis</div>
+                <p>{esc_tipp}</p>
               </div>
+              <p class="source-note">Dieser Artikel basiert auf aktuellen Berichten aus internationalen Tattoo-Fachmedien und Branchenquellen.</p>
             </div>
             <div class="article-author">
               <div class="article-author-avatar">T</div>
               <div>
                 <div class="article-author-name">Tom Irschina</div>
-                <div class="article-author-role">Tattoo Artist &amp; Gründer 7er Ink Academy — 16+ Jahre Erfahrung, 50+ Convention Awards</div>
+                <div class="article-author-role">Tattoo Artist &amp; Gründer 7er Ink Academy · 16+ Jahre · 50+ Convention Awards · Black &amp; Grey Spezialist</div>
               </div>
             </div>
             <div class="article-cta">
-              <h3>Willst du in der Tattoo-Branche immer up-to-date bleiben?</h3>
-              <p>In 90 Tagen vom ersten Strich bis zum ersten Kunden – mit Lernplan, Live-Calls und Community.</p>
+              <h3>Immer auf dem neuesten Stand der Tattoo-Branche?</h3>
+              <p>In der 7er Ink Academy lernst du nicht nur stechen — du verstehst die Branche, die Gesetze, die Trends. In 90 Tagen startklar.</p>
               <a href="paket.html" class="btn btn-gold">Zur Tattoo Ausbildung</a>
             </div>
           </div>
@@ -361,7 +351,7 @@ jobs:
           </body>
           </html>'''
 
-          # ── FTP Deploy ─────────────────────────────────────────────────────────
+          # ── FTP: news.html laden, prüfen, aktualisieren ───────────────────────
           ftp = ftplib.FTP()
           ftp.connect(FTP_HOST, 21, timeout=30)
           ftp.login(FTP_USER, FTP_PASS)
@@ -371,42 +361,33 @@ jobs:
           ftp.retrbinary('RETR news.html', buf.write)
           news_html = buf.getvalue().decode('utf-8')
 
-          # Kaputte Einträge bereinigen
-          broken_before = len(re.findall(r'<a href="[a-z0-9-]+-html" class="article-card"', news_html))
-          if broken_before > 0:
-              news_html = re.sub(r'<a href="[a-z0-9-]+-html" class="article-card".*?</a>', '', news_html, flags=re.DOTALL)
-              print(f'🧹 {broken_before} kaputte Einträge entfernt.')
-
-          # Duplikat-Schutz: gleicher Slug heute
+          # Duplikat-Schutz: Slug heute schon vorhanden?
           if slug in news_html:
               print(f'⏭ Artikel für heute bereits vorhanden ({slug}), überspringe.')
-              if broken_before > 0:
-                  for path in FTP_PATHS:
-                      ftp.cwd(path)
-                      ftp.storbinary('STOR news.html', io.BytesIO(news_html.encode('utf-8')))
               ftp.quit()
               sys.exit(0)
 
-          # Duplikat-Schutz: gleiches Thema oder ähnlicher Slug bereits vorhanden
+          # Duplikat-Schutz: Keyword-Overlap mit bestehenden Artikeln
           existing_slugs = set(re.findall(r'href="([a-z0-9-]+-\d{4}-\d{2}-\d{2})\.html"', news_html))
           existing_slug_bases = set(re.sub(r'-\d{4}-\d{2}-\d{2}$', '', s) for s in existing_slugs)
 
-          # Prüfe exakten slug_base
           if slug_base_raw in existing_slug_bases:
-              print(f'⏭ Thema bereits veröffentlicht ({slug_base_raw}), überspringe.')
+              print(f'⏭ Gleicher Slug-Base bereits vorhanden ({slug_base_raw}), überspringe.')
               ftp.quit()
               sys.exit(0)
 
-          # Prüfe ob Schlüsselwörter des neuen Themas zu stark mit vorhandenen übereinstimmen
           new_keywords = set(w for w in re.split(r'[-_]', slug_base_raw) if len(w) > 4)
           for existing_base in existing_slug_bases:
               existing_keywords = set(w for w in re.split(r'[-_]', existing_base) if len(w) > 4)
               overlap = new_keywords & existing_keywords
-              if len(overlap) >= 2:  # 2+ gemeinsame Schlüsselwörter = Duplikat
-                  print(f'⏭ Zu ähnlich zu bestehendem Artikel ({existing_base}, gemeinsam: {overlap}), überspringe.')
+              if len(overlap) >= 2:
+                  print(f'⏭ Zu ähnlich zu "{existing_base}" (gemeinsam: {overlap}), Claude soll anderes Thema wählen.')
+                  # Versuche erneut mit Hinweis auf bereits verwendete Themen
+                  # (Für jetzt: überspringen)
                   ftp.quit()
                   sys.exit(0)
 
+          # ── News-Seite aktualisieren ──────────────────────────────────────────
           new_featured = f'''<section class="journal-featured" data-article-category="{cat}">
                 <div class="featured-label">Featured · Neuester Bericht</div>
                 <a href="{slug}" class="featured-card">
@@ -418,10 +399,10 @@ jobs:
                   </div>
                   <div class="featured-body">
                     <div class="featured-cat">{cat_label} · {today_str}</div>
-                    <h2>{title}</h2>
-                    <p>{lead[:120]}...</p>
+                    <h2>{esc_title}</h2>
+                    <p>{html.escape(lead[:120])}...</p>
                     <div class="featured-meta">
-                      <span class="featured-read-time">⏱ 5 Min. Lesezeit</span>
+                      <span class="featured-read-time">⏱ 6 Min. Lesezeit</span>
                       <span class="featured-link">Vollständigen Artikel lesen →</span>
                     </div>
                   </div>
@@ -437,8 +418,8 @@ jobs:
                   </div>
                   <div class="article-body">
                     <div class="article-cat cat-{cat}">{cat_label}</div>
-                    <h3>{title}</h3>
-                    <p class="article-excerpt">{lead[:100]}...</p>
+                    <h3>{esc_title}</h3>
+                    <p class="article-excerpt">{html.escape(lead[:100])}...</p>
                     <div class="article-footer">
                       <span class="article-date">{today_str}</span>
                       <span class="article-arrow">&#x2192;</span>
@@ -449,6 +430,7 @@ jobs:
           grid_tag = '<div class="journal-grid" id="articleGrid">'
           news_html = news_html.replace(grid_tag, grid_tag + '\n      ' + new_card, 1)
 
+          # ── Deploy auf alle FTP-Pfade ─────────────────────────────────────────
           for path in FTP_PATHS:
               ftp.cwd(path)
               ftp.storbinary(f'STOR {slug}', io.BytesIO(article_html.encode('utf-8')))
