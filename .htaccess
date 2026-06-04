@@ -36,11 +36,35 @@ RewriteRule ^produkt-kategorie https://academy.7erink.com/paket.html [L,R=301]
 RewriteRule ^regional https://academy.7erink.com/ [L,R=301]
 RewriteRule ^tattoo-studio https://7erink.com/ [L,R=301]
 RewriteRule ^pflegecreme https://7erink.com/ [L,R=301]
+RewriteRule ^produkt/online-grundkurs/?$ https://academy.7erink.com/online-grundkurs.html [L,R=301]
+RewriteRule ^produkt/realismus-profi-seminar/?$ https://academy.7erink.com/realismus-kurs.html [L,R=301]
+RewriteRule ^produkt/(.*)$ https://academy.7erink.com/ [L,R=301]
+RewriteRule ^wp-json https://7erink.com/ [L,R=301]
 
-# --- LiteSpeed Page Cache deaktivieren für HTML ---
+# --- 404-Fixes: Clean-URLs → korrekte Seiten ---
+RewriteRule ^agb/?$ /agb.html [L,R=301]
+RewriteRule ^datenschutz/?$ / [L,R=301]
+RewriteRule ^kontakt/?$ /#kontakt [L,R=301]
+RewriteRule ^ueber-uns/?$ / [L,R=301]
+RewriteRule ^impressum/?$ / [L,R=301]
+RewriteRule ^tattoo-ideen-frau/?$ /tattoo-ideen-frauen.html [L,R=301]
+RewriteRule ^tattoo-ideen-mann/?$ /tattoo-ideen-maenner.html [L,R=301]
+RewriteRule ^tattoo-ausbildung/(.*)$ https://academy.7erink.com/tattoo-ausbildung/$1 [L,R=301]
+RewriteRule ^tattoo-ausbildung/?$ https://academy.7erink.com/ [L,R=301]
+
+# --- LiteSpeed Page Cache deaktivieren ---
 <IfModule LiteSpeed>
   CacheDisable public /
+  CacheLookup public off
+  CacheLookup private off
 </IfModule>
+
+# --- Force no-cache für alle HTML ---
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+  Header set Expires "0"
+</FilesMatch>
 
 # --- Browser Caching ---
 <IfModule mod_expires.c>
@@ -52,7 +76,7 @@ RewriteRule ^pflegecreme https://7erink.com/ [L,R=301]
   ExpiresByType image/x-icon          "access plus 1 year"
   ExpiresByType text/css               "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType text/html              "access plus 1 hour"
+  ExpiresByType text/html              "access plus 0 seconds"
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -63,7 +87,7 @@ RewriteRule ^pflegecreme https://7erink.com/ [L,R=301]
     Header set Cache-Control "max-age=2592000, public"
   </FilesMatch>
   <FilesMatch "\.html$">
-    Header set Cache-Control "max-age=3600, public, must-revalidate"
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 </IfModule>
 
