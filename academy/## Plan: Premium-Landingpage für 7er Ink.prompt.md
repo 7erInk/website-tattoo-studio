@@ -1,3 +1,4 @@
+
 ## Plan: Premium-Landingpage für 7er Ink Tattoo Studio
 
 Erstellung einer modernen, hochwertigen, conversionstarken Website für das Tattoo Studio „7er Ink“ mit Fokus auf Premium-Kunden, Exklusivität und Terminbuchung. Die Seite wird als Onepager/Landingpage konzipiert, mit klarer Markenpositionierung, luxuriösem Design und optimaler UX für Desktop und Mobile.
