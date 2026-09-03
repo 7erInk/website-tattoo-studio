@@ -283,21 +283,21 @@
   <div class="journal-inner">
 
     <!-- Featured Article -->
-    <section class="journal-featured" data-article-category="recht">
+    <section class="journal-featured" data-article-category="trends">
       <div class="featured-label">Featured · Neuester Bericht</div>
-      <a href="journal-ki-urheberrecht-2026.html" class="featured-card">
-        <div class="featured-cover cover-recht">
-          <div class="featured-cover-badge">⚖ Recht &amp; Gesetze</div>
+      <a href="journal-tattoo-placement-2026.html" class="featured-card">
+        <div class="featured-cover cover-trends">
+          <div class="featured-cover-badge">✦ Trends &amp; Lifestyle</div>
           <div class="featured-cover-new">NEU</div>
-          <div class="featured-cover-date">4. Juni 2026</div>
-          <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">🤖</div>
+          <div class="featured-cover-date">3. September 2026</div>
+          <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">📍</div>
         </div>
         <div class="featured-body">
-          <div class="featured-cat">Recht &amp; Gesetze · 4. Juni 2026</div>
-          <h2>KI &amp; Urheberrecht: Was das <em>OLG-Urteil</em> für Tattoo Artists bedeutet</h2>
-          <p>Das OLG Düsseldorf hat entschieden: KI schützt nicht vor Urheberrechtsverletzungen. Tom erklärt, was das für Tattoo Artists bedeutet – besonders wenn Kunden KI-generierte Vorlagen mitbringen.</p>
+          <div class="featured-cat">Trends &amp; Lifestyle · 3. September 2026</div>
+          <h2>Tattoo Placement 2026: Welcher <em>Körperbereich</em> passt zu deinem Motiv?</h2>
+          <p>Unterarm, Rippen, Oberschenkel oder Rücken? Tom Irschina erklärt, wie du die perfekte Körperstelle für dein Tattoo findest – von Schmerzlevel bis Alterungsverhalten.</p>
           <div class="featured-meta">
-            <span class="featured-read-time">⏱ 7 Min. Lesezeit</span>
+            <span class="featured-read-time">⏱ 6 Min. Lesezeit</span>
             <span class="featured-link">Vollständigen Artikel lesen →</span>
           </div>
         </div>
@@ -307,6 +307,23 @@
     <!-- Article Grid -->
     <div class="journal-grid-label">Alle Artikel</div>
     <div class="journal-grid" id="articleGrid">
+
+      <!-- Tattoo Placement 2026 -->
+      <a href="journal-tattoo-placement-2026.html" class="article-card" data-category="trends">
+        <div class="article-cover cover-trends">
+          <div class="article-cover-icon">📍</div>
+          <div class="article-cover-badge">✦ Trends</div>
+        </div>
+        <div class="article-body">
+          <div class="article-cat cat-trends">Trends &amp; Lifestyle</div>
+          <h3>Tattoo Placement 2026:<br><em>Welcher Körperbereich passt zu deinem Motiv?</em></h3>
+          <p class="article-excerpt">Unterarm, Rippen, Rücken oder Oberschenkel? Tom erklärt, warum Placement alles entscheidet – und welcher Stil wo am besten funktioniert.</p>
+          <div class="article-footer">
+            <span class="article-date">3. September 2026</span>
+            <span class="article-arrow">→</span>
+          </div>
+        </div>
+      </a>
 
       <!-- Mois Kollaboration -->
       <a href="journal-mois-collab-2026.html" class="article-card" data-category="business">
@@ -453,8 +470,8 @@ filterBtns.forEach(btn => {
     btn.classList.add('active');
     const filter = btn.dataset.filter;
 
-    // Featured article visibility (featured is Widerrufsrecht = recht)
-    if (filter === 'alle' || filter === 'recht') {
+    // Featured article visibility (featured is Tattoo Placement = trends)
+    if (filter === 'alle' || filter === 'trends') {
       if (featuredSection) featuredSection.style.display = '';
     } else {
       if (featuredSection) featuredSection.style.display = 'none';
