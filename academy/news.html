@@ -283,19 +283,19 @@
   <div class="journal-inner">
 
     <!-- Featured Article -->
-    <section class="journal-featured" data-article-category="trends">
+    <section class="journal-featured" data-article-category="business">
       <div class="featured-label">Featured · Neuester Bericht</div>
-      <a href="journal-tattoo-placement-2026.html" class="featured-card">
-        <div class="featured-cover cover-trends">
-          <div class="featured-cover-badge">✦ Trends &amp; Lifestyle</div>
+      <a href="journal-anfaenger-fehler-taetowieren-2026.html" class="featured-card">
+        <div class="featured-cover cover-business">
+          <div class="featured-cover-badge">🎯 Academy · Karriere-Tipps</div>
           <div class="featured-cover-new">NEU</div>
-          <div class="featured-cover-date">3. September 2026</div>
-          <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">📍</div>
+          <div class="featured-cover-date">4. September 2026</div>
+          <div style="font-size:7rem;position:absolute;bottom:-1rem;right:1rem;opacity:.12;line-height:1">🎯</div>
         </div>
         <div class="featured-body">
-          <div class="featured-cat">Trends &amp; Lifestyle · 3. September 2026</div>
-          <h2>Tattoo Placement 2026: Welcher <em>Körperbereich</em> passt zu deinem Motiv?</h2>
-          <p>Unterarm, Rippen, Oberschenkel oder Rücken? Tom Irschina erklärt, wie du die perfekte Körperstelle für dein Tattoo findest – von Schmerzlevel bis Alterungsverhalten.</p>
+          <div class="featured-cat">Academy · Karriere-Tipps · 4. September 2026</div>
+          <h2>Die 5 größten <em>Anfängerfehler</em> beim Tätowieren – und wie du sie vermeidest</h2>
+          <p>Zu früh auf echte Haut, falsche Maschineneinstellungen, Fehler überarbeiten – Tom Irschina zeigt, was wirklich schiefläuft und wie du es von Anfang an besser machst.</p>
           <div class="featured-meta">
             <span class="featured-read-time">⏱ 6 Min. Lesezeit</span>
             <span class="featured-link">Vollständigen Artikel lesen →</span>
@@ -307,6 +307,23 @@
     <!-- Article Grid -->
     <div class="journal-grid-label">Alle Artikel</div>
     <div class="journal-grid" id="articleGrid">
+
+      <!-- Anfängerfehler Tätowieren 2026 -->
+      <a href="journal-anfaenger-fehler-taetowieren-2026.html" class="article-card" data-category="business">
+        <div class="article-cover cover-business">
+          <div class="article-cover-icon">🎯</div>
+          <div class="article-cover-badge">🎯 Academy</div>
+        </div>
+        <div class="article-body">
+          <div class="article-cat cat-business">Academy · Karriere-Tipps</div>
+          <h3>Die 5 größten Anfängerfehler<br><em>beim Tätowieren lernen</em></h3>
+          <p class="article-excerpt">Zu früh auf echte Haut, falsche Maschineneinstellungen, Fehler überarbeiten – Tom zeigt, was schiefläuft und wie du es von Anfang an besser machst.</p>
+          <div class="article-footer">
+            <span class="article-date">4. September 2026</span>
+            <span class="article-arrow">→</span>
+          </div>
+        </div>
+      </a>
 
       <!-- Tattoo Placement 2026 -->
       <a href="journal-tattoo-placement-2026.html" class="article-card" data-category="trends">
@@ -470,8 +487,8 @@ filterBtns.forEach(btn => {
     btn.classList.add('active');
     const filter = btn.dataset.filter;
 
-    // Featured article visibility (featured is Tattoo Placement = trends)
-    if (filter === 'alle' || filter === 'trends') {
+    // Featured article visibility (featured is Anfängerfehler = business)
+    if (filter === 'alle' || filter === 'business') {
       if (featuredSection) featuredSection.style.display = '';
     } else {
       if (featuredSection) featuredSection.style.display = 'none';
