@@ -583,7 +583,7 @@
   <!-- Journal / News -->
   <url>
     <loc>https://academy.7erink.com/news.html</loc>
-    <lastmod>2026-09-19</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -710,6 +710,92 @@
   <url>
     <loc>https://academy.7erink.com/journal-bvt-2026.html</loc>
     <lastmod>2026-04-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Journal / News – Runde 2 -->
+  <url>
+    <loc>https://academy.7erink.com/journal-langzeitpflege-sonnenschutz-2026.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-convention-jury-kriterien-2026.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-single-needle-realism-2026.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-dsgvo-vorher-nachher-fotos-2026.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-digitale-stencil-technologie-2026.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-conventions-fruehjahr-2027.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-piercer-business-crossover-2026.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-aftercare-produkte-2026.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-social-media-algorithmus-2026.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-fachkraeftemangel-branche-2026.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-berufshaftpflicht-taetowierer-2026.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-mrt-tattoo-mythos-2026.html</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-vegane-tattoofarben-2026.html</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://academy.7erink.com/journal-numbing-cream-regulierung-2026.html</loc>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
